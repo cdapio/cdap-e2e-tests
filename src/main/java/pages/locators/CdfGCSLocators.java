@@ -33,6 +33,12 @@ public class CdfGCSLocators {
     @FindBy(how = How.XPATH, using = "//*[contains(text(),'Get Schema')]")
     public static WebElement getSchemaButton;
 
+    @FindBy(how = How.XPATH, using = "//*[@value='JSON']")
+    public static WebElement serviceAccountJsonRadio;
+
+    @FindBy(how = How.XPATH, using = "//*[@data-cy='serviceAccountJSON' and @type='text']")
+    public static WebElement serviceAccountJsonText;
+
 
 
 

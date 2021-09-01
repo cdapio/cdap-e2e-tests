@@ -24,10 +24,25 @@ public class SeleniumDriver {
     public final static int TIMEOUT = 50;
     public final static int PAGE_LOAD_TIMEOUT = 50;
     public static URL url;
+    public static String chromeLinux=System.getProperty("user.dir")+ ("//executables/linux/chromedriver");
+    public static String chromeWindow=System.getProperty("user.dir")+ ("//executables/window/chromedriver.exe");
+    public static String chromeMac=System.getProperty("user.dir")+ ("//executables/mac/chromedriver");
+    public static String currentOS;
 
       SeleniumDriver() {
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/webdriverFiles/chromedriver");
-        // driver = new ChromeDriver();
+          currentOS=System.getProperty("os.name");
+          System.out.println("++++++++"+currentOS);
+          if(currentOS.toLowerCase().contains("mac")) {
+              System.setProperty("webdriver.chrome.driver", chromeMac);
+
+          }
+          else if (currentOS.toLowerCase().contains("window")) {
+              System.setProperty("webdriver.chrome.driver", chromeWindow);
+          }
+
+          else if (currentOS.toLowerCase().contains("linux")) {
+              System.setProperty("webdriver.chrome.driver", chromeLinux);
+          }
         chromeDriver=new ChromeDriver();
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
