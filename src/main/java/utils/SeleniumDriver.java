@@ -24,10 +24,26 @@ public class SeleniumDriver {
     public final static int TIMEOUT = 50;
     public final static int PAGE_LOAD_TIMEOUT = 50;
     public static URL url;
+    public static String chromeLinux=System.getProperty("user.dir")+ ("//executables/linux/chromedriver");
+    public static String chromeWindow=System.getProperty("user.dir")+ ("//executables/window/chromedriver.exe");
+    public static String chromeMac=System.getProperty("user.dir")+ ("//executables/mac/chromedriver");
+    public static String currentOS;
 
       SeleniumDriver() {
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/webdriverFiles/chromedriver");
-        // driver = new ChromeDriver();
+          currentOS=System.getProperty("os.name");
+          System.out.println("Current OS is :"+currentOS);
+          if(currentOS.toLowerCase().contains("mac")) {
+              System.setProperty("webdriver.chrome.driver", chromeMac);
+
+          }
+          else if (currentOS.toLowerCase().contains("window")) {
+              System.setProperty("webdriver.chrome.driver", chromeWindow);
+          }
+
+          else if (currentOS.toLowerCase().contains("Linux")) {
+              System.setProperty("webdriver.chrome.driver", chromeLinux);
+
+          }
         chromeDriver=new ChromeDriver();
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
@@ -46,16 +62,13 @@ public class SeleniumDriver {
 
     public static SessionId session()
     {
-
         SessionId session = chromeDriver.getSessionId();
-       // System.out.println("Check thos one------"+session);
         return session;
     }
 
     public static void getWaitDriver() {
     new WebDriverWait(chromeDriver, 40000).until(ExpectedConditions.invisibilityOf(chromeDriver.
              findElement(By.className("loading-bar"))));
-
     }
 
 
@@ -73,7 +86,6 @@ public class SeleniumDriver {
     public static void setUpDriver() {
         if (seleniumDriver == null)
             seleniumDriver = new SeleniumDriver();
-
     }
 
     public static void tearDown() {
@@ -88,10 +100,8 @@ public class SeleniumDriver {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-
 }
 

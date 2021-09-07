@@ -12,7 +12,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import pages.actions.*;
-import pages.locators.CdfStudioLocators;
+import pages.locators.CDAPBigQueryPropertiesLocators;
+import pages.locators.CDAPStudioLocators;
 import utils.SeleniumDriver;
 import utils.SeleniumHelper;
 
@@ -46,32 +47,32 @@ public class GCSBasicDemo {
 
     @When("Source is GCS bucket")
     public void sourceIsGCSBucket() throws InterruptedException {
-        CdfStudioActions.selectGCS();
+        CDAPStudioActions.selectGCS();
     }
 
 
     @When("Target is BigQuery")
     public void targetIsBigQuery() {
-        CdfStudioActions.SinkBigQuery();
+        CDAPStudioActions.SinkBigQuery();
     }
 
     @Then("Link Source and Sink to establish connection")
     public void linkSourceAndSinkToEstablishConnection() throws InterruptedException {
         Thread.sleep(2000);
        // CdfStudioActions.clickSource();
-        SeleniumHelper.dragAndDrop(CdfStudioLocators.fromGCS,CdfStudioLocators.toBigQiery);
+        SeleniumHelper.dragAndDrop(CDAPStudioLocators.fromGCS, CDAPStudioLocators.toBigQiery);
     }
 
     @Then("Enter the GCS Properties with {string} GCS bucket")
     public void enterTheGCSPropertiesWithGCSBucket(String bucket) throws InterruptedException, IOException {
 
-        CdfGcsActions.gcsProperties();
-        CdfGcsActions.enterReferenceName();
-        CdfGcsActions.enterProjectId();
-        CdfGcsActions.enterGcsBucket(bucket);
-        CdfGcsActions.enterFormat();
-        CdfGcsActions.skipHeader();
-        CdfGcsActions.getSchema();
+        CDAPGcsActions.gcsProperties();
+        CDAPGcsActions.enterReferenceName();
+        CDAPGcsActions.enterProjectId();
+        CDAPGcsActions.enterGcsBucket(bucket);
+        CDAPGcsActions.enterFormat();
+        CDAPGcsActions.skipHeader();
+        CDAPGcsActions.getSchema();
         Thread.sleep(10000);
 
     }
@@ -80,19 +81,19 @@ public class GCSBasicDemo {
     @Then("Run and Preview")
     public void runAndPreview() throws InterruptedException {
 
-        CdfStudioActions.runAndPreviewData();
+        CDAPStudioActions.runAndPreviewData();
     }
 
     @Then("Overrride the BigQuery Properties")
     public void overrrideTheBigQueryProperties() throws InterruptedException {
-        pages.locators.CdfStudioLocators.bigQueryProperties.click();
+        CDAPStudioLocators.bigQueryProperties.click();
         SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")).click();
         Thread.sleep(5000);
         Select drp=new Select(SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")));
         drp.selectByValue("string");
-        pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
+        CDAPBigQueryPropertiesLocators.validateBttn.click();
         Thread.sleep(6000);
-        CdfGcsActions.closeButton();
+        CDAPGcsActions.closeButton();
     }
 
     @Then("Open {string} link to login")
@@ -115,16 +116,16 @@ public class GCSBasicDemo {
 
     @Then("Save and Deploy Pipeline")
     public void saveAndDeployPipeline() throws InterruptedException {
-        CdfStudioActions.pipelineName();
-        CdfStudioActions.pipelineNameIp("TestPipeline"+ UUID.randomUUID().toString());
-        CdfStudioActions.pipelineSave();
+        CDAPStudioActions.pipelineName();
+        CDAPStudioActions.pipelineNameIp("TestPipeline"+ UUID.randomUUID().toString());
+        CDAPStudioActions.pipelineSave();
         Thread.sleep(3000);
-        CdfStudioActions.pipelineDeploy();
+        CDAPStudioActions.pipelineDeploy();
     }
 
     @Then("Run the Pipeline in Runtime")
     public void runThePipelineInRuntime() {
-        CdfPipelineRunAction.runClick();
+        CDAPPipelineRunAction.runClick();
     }
 
     @Then("Wait till pipeline is in running state")
@@ -142,35 +143,35 @@ public class GCSBasicDemo {
 
     @Then("Open Logs")
     public void openLogs() {
-        CdfPipelineRunAction.logsClick();
+        CDAPPipelineRunAction.logsClick();
     }
 
     @Then("validate successMessage is displayed")
     public void validateSuccessMessageIsDisplayed() {
-        CdfLogActions.validateSucceeded();
+        CDAPLogActions.validateSucceeded();
     }
 
     @Then("Click on Advance logs and validate the success message")
     public void clickOnAdvanceLogsAndValidateTheSuccessMessage() {
-        CdfLogActions.goToAdvanceLogs();
-        CdfLogActions.validateSucceeded();
+        CDAPLogActions.goToAdvanceLogs();
+        CDAPLogActions.validateSucceeded();
     }
 
 
     @Then("Enter the BigQuery Properties for table {string}")
     public void enterTheBigQueryPropertiesForTable(String arg0) throws InterruptedException {
-        CdfBigQueryPropertiesActions.enterBigQueryProperties(arg0);
+        CDAPBigQueryPropertiesActions.enterBigQueryProperties(arg0);
     }
 
 
     @Then("Close the GCS Properties")
     public void closeTheGCSProperties() {
-        CdfGcsActions.closeButton();
+        CDAPGcsActions.closeButton();
     }
 
     @Then("Close the BigQuery Properties")
     public void closeTheBigQueryProperties() {
-        CdfGcsActions.closeButton();
+        CDAPGcsActions.closeButton();
     }
 }
 
