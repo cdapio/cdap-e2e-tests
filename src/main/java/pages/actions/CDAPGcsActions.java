@@ -3,6 +3,7 @@ package pages.actions;
 import java.io.IOException;
 import java.util.UUID;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.PageFactory;
 import pages.locators.CDAPGCSLocators;
 import utils.SeleniumDriver;
@@ -20,6 +21,7 @@ public class CDAPGcsActions {
     }
 
     public static void enterProjectId()  {
+        for (int i = 0; i <=20; i++) { CDAPGCSLocators.projectID.sendKeys(Keys.BACK_SPACE); }
         CDAPGCSLocators.projectID.sendKeys("cdf-athena");
     }
 
