@@ -20,9 +20,9 @@ public class CDAPGcsActions {
         CDAPGCSLocators.referenceName.sendKeys(UUID.randomUUID().toString());
     }
 
-    public static void enterProjectId()  {
+    public static void enterProjectId() throws IOException {
         for (int i = 0; i <=20; i++) { CDAPGCSLocators.projectID.sendKeys(Keys.BACK_SPACE); }
-        CDAPGCSLocators.projectID.sendKeys("cdf-athena");
+        CDAPGCSLocators.projectID.sendKeys(SeleniumHelper.readParameters("project-id"));
     }
 
     public static void enterGcsBucket(String bucket) throws IOException {

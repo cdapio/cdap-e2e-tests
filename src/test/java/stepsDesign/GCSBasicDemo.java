@@ -31,11 +31,7 @@ public class GCSBasicDemo {
 
         SeleniumDriver.waitForPageToLoad();
         if (i==0){
-           // SeleniumDriver.openPage(SeleniumHelper.readParameters("BigQuery")); non sandbox
-
-           // GoogleSignInActions.corpLogin();
             SeleniumDriver.openPage(SeleniumHelper.readParameters("CDFURL"));
-          //  GoogleSignInActions.login();
         }
         else {
             SeleniumDriver.openPage(SeleniumHelper.readParameters("CDFURL"));
