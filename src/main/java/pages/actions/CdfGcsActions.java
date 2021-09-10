@@ -19,8 +19,8 @@ public class CdfGcsActions {
         CdfGCSLocators.referenceName.sendKeys(UUID.randomUUID().toString());
     }
 
-    public static void enterProjectId()  {
-        CdfGCSLocators.projectID.sendKeys("cdf-athena");
+    public static void enterProjectId() throws IOException {
+        CdfGCSLocators.projectID.sendKeys(SeleniumHelper.readParameters("Project-ID"));
     }
 
     public static void enterGcsBucket(String bucket) throws IOException {
