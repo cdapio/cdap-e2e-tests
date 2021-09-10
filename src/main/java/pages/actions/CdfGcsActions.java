@@ -3,8 +3,10 @@ package pages.actions;
 import java.io.IOException;
 import java.util.UUID;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.PageFactory;
 import pages.locators.CdfGCSLocators;
+import pages.locators.CdfSysAdminLocators;
 import utils.SeleniumDriver;
 import utils.SeleniumHelper;
 
@@ -20,6 +22,9 @@ public class CdfGcsActions {
     }
 
     public static void enterProjectId()  {
+        for (int i = 0; i <=100; i++) {
+            CdfGCSLocators.projectID.sendKeys(Keys.BACK_SPACE);
+        }
         CdfGCSLocators.projectID.sendKeys("cdf-athena");
     }
 
