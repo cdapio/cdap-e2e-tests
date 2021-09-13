@@ -2,15 +2,14 @@
 
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.junit.Assert;
 
-import org.testng.asserts.SoftAssert;
 import pages.locators.CdfSysAdminLocators;
 import utils.SeleniumDriver;
 
 public class CdfSysAdminActions {
     public static pages.locators.CdfSysAdminLocators cdfSysAdminLocators = null;
-    static SoftAssert softAssertion;
-    static boolean checkParam=false;
+    static String checkParam="false";
     static {
         cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), pages.locators.CdfSysAdminLocators.class);
     }
@@ -43,11 +42,11 @@ public class CdfSysAdminActions {
            String verify= CdfSysAdminLocators.success200.getText();
             if (verify.contains("200"))
             {
-                checkParam=true;
+                checkParam="true";
                 System.out.println("Succeess");
             }
-            softAssertion=new SoftAssert();
-            softAssertion.assertEquals(checkParam,true);
+
+            Assert.assertTrue(checkParam,true);
     }
 
 }
