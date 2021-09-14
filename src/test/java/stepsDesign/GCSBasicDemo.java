@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.asserts.SoftAssert;
+
 import pages.actions.*;
 import pages.locators.CdfStudioLocators;
 import utils.SeleniumDriver;
@@ -20,8 +20,6 @@ import static utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
-
-    static SoftAssert softAssert;
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -136,8 +134,8 @@ public class GCSBasicDemo {
 
     @Then("Verify the pipeline status is {string}")
     public void verifyThePipelineStatusIs(String status) {
-        softAssert =new SoftAssert();
-        softAssert.assertTrue( SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='"+status+"']")).isDisplayed());
+
+
     }
 
     @Then("Open Logs")
