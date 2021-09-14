@@ -1,5 +1,6 @@
 package utils;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,8 +27,7 @@ public class SeleniumDriver {
     public static URL url;
 
       SeleniumDriver() {
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/webdriverFiles/chromedriver");
-        // driver = new ChromeDriver();
+          WebDriverManager.chromedriver().setup();
         chromeDriver=new ChromeDriver();
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
