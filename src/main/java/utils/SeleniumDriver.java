@@ -27,7 +27,7 @@ public class SeleniumDriver {
     public static URL url;
 
       SeleniumDriver() {
-        WebDriverManager wdm = WebDriverManager.chromedriver().browserInDocker();
+        WebDriverManager wdm = WebDriverManager.chromedriver();
         chromeDriver= (ChromeDriver) wdm.create();
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
