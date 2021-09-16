@@ -21,11 +21,8 @@ public class CdfGcsActions {
         CdfGCSLocators.referenceName.sendKeys(UUID.randomUUID().toString());
     }
 
-    public static void enterProjectId()  {
-        for (int i = 0; i <=100; i++) {
-            CdfGCSLocators.projectID.sendKeys(Keys.BACK_SPACE);
-        }
-        CdfGCSLocators.projectID.sendKeys("cdf-athena");
+    public static void enterProjectId() {
+        SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID,"cdf-athena");
     }
 
     public static void enterGcsBucket(String bucket) throws IOException {

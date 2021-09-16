@@ -1,11 +1,10 @@
  package pages.actions;
 
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.junit.Assert;
-
-import pages.locators.CdfSysAdminLocators;
-import utils.SeleniumDriver;
+ import org.junit.Assert;
+ import org.openqa.selenium.support.PageFactory;
+ import org.openqa.selenium.support.ui.Select;
+ import pages.locators.CdfSysAdminLocators;
+ import utils.SeleniumDriver;
 
 public class CdfSysAdminActions {
     public static pages.locators.CdfSysAdminLocators cdfSysAdminLocators = null;

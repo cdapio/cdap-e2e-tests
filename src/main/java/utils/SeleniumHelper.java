@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.*;
 import java.util.Properties;
+import pages.locators.CdfGCSLocators;
 
 public class SeleniumHelper {
 
@@ -90,6 +91,18 @@ public class SeleniumHelper {
             e.printStackTrace();
         }
         return property;
+    }
+
+    /**
+     * Replacing the value of the text box when clear is not working
+     * https://github.com/SeleniumHQ/selenium/issues/6741
+     */
+    public static void replaceElementValue(WebElement element, String value)
+    {
+        for (int i = 0; i <=100; i++) {
+            element.sendKeys(Keys.BACK_SPACE);
+        }
+        element.sendKeys(value);
     }
 
 }
