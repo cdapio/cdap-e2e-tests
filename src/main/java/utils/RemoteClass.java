@@ -1,13 +1,12 @@
 package utils;
 
 import org.openqa.selenium.remote.*;
-import org.openqa.selenium.remote.http.W3CHttpCommandCodec;
-import org.openqa.selenium.remote.http.W3CHttpResponseCodec;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collections;
+import org.openqa.selenium.remote.codec.w3c.W3CHttpCommandCodec;
+import org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec;
 
 public class RemoteClass {
 
