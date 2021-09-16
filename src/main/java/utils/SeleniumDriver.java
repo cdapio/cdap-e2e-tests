@@ -27,8 +27,8 @@ public class SeleniumDriver {
     public static URL url;
 
       SeleniumDriver() {
-          WebDriverManager.chromedriver().browserInDocker().setup();
-        chromeDriver=new ChromeDriver();
+        WebDriverManager wdm = WebDriverManager.chromedriver().browserInDocker();
+        chromeDriver= (ChromeDriver) wdm.create();
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
             url = executor.getAddressOfRemoteServer();
