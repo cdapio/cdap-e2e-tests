@@ -3,8 +3,10 @@ package pages.actions;
 import java.io.IOException;
 import java.util.UUID;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.PageFactory;
 import pages.locators.CdfGCSLocators;
+import pages.locators.CdfSysAdminLocators;
 import utils.SeleniumDriver;
 import utils.SeleniumHelper;
 
@@ -19,8 +21,8 @@ public class CdfGcsActions {
         CdfGCSLocators.referenceName.sendKeys(UUID.randomUUID().toString());
     }
 
-    public static void enterProjectId()  {
-        CdfGCSLocators.projectID.sendKeys("cdf-athena");
+    public static void enterProjectId() {
+        SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID,"cdf-athena");
     }
 
     public static void enterGcsBucket(String bucket) throws IOException {
