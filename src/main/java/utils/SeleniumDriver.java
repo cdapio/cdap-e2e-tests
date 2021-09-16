@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,8 +28,12 @@ public class SeleniumDriver {
     public static URL url;
 
       SeleniumDriver() {
-        WebDriverManager wdm = WebDriverManager.chromedriver();
-        chromeDriver= (ChromeDriver) wdm.create();
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--disable-gpu");
+        chromeDriver= new ChromeDriver(chromeOptions);
         chromeDriver.manage().window().maximize();
           HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
             url = executor.getAddressOfRemoteServer();
