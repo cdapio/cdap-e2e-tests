@@ -21,8 +21,8 @@ public class CdfGcsActions {
         CdfGCSLocators.referenceName.sendKeys(UUID.randomUUID().toString());
     }
 
-    public static void enterProjectId() {
-        SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID,"cdf-athena");
+    public static void enterProjectId() throws IOException {
+        SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID,SeleniumHelper.readParameters("Project-ID"));
     }
 
     public static void enterGcsBucket(String bucket) throws IOException {
