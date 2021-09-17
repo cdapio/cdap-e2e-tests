@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.w2a</groupId>
 	<artifactId>CucumberJVMReporting</artifactId>
@@ -22,11 +22,30 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
+				<configuration>
+					<includes>
+						<include>TestRunner.java</include>
+					</includes>
+				</configuration>
 			</plugin>
 
-
-			<!-- Latest Cucumber JVM Reports Plugin-->
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.0.0-M5</version>
+				<configuration>
+					<includes>
+						<include>TestRunner.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 			<plugin>
 				<groupId>net.masterthought</groupId>
@@ -43,22 +62,17 @@
 						<configuration>
 							<projectName> Cucumber Reports</projectName> <!-- Replace with project name -->
 							<outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
-
 							<buildNumber>1</buildNumber>
-
 							<skip>false</skip>
 							<inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
 							<jsonFiles> <!-- supports wildcard or name pattern -->
 								<param>**/*.json</param>
 							</jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
 							<classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
-							<checkBuildResult>false</checkBuildResult>
+							<checkBuildResult>true</checkBuildResult>
 						</configuration>
 					</execution>
 				</executions>
-
-
-
 			</plugin>
 
 		</plugins>
@@ -66,36 +80,30 @@
 	<dependencies>
 
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
-			<dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version>
 			<scope>compile</scope>
 		</dependency>
 
-
-		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java8 -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java8</artifactId>
 			<version>4.8.1</version>
 		</dependency>
 
-
-		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-core</artifactId>
 			<version>6.10.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>4.0.0-alpha-1</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>io.cucumber</groupId>
@@ -127,40 +135,41 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-core</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.10.3</version>
-            <scope>compile</scope>
-        </dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.10.3</version>
+			<scope>compile</scope>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
 		<dependency>
 			<groupId>net.masterthought</groupId>
 			<artifactId>cucumber-reporting</artifactId>
 			<version>5.5.3</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-chrome-driver</artifactId>
 			<version>4.0.0-rc-1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>5.0.1</version>
 		</dependency>
 
-
-		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
-
-
-
 	</dependencies>
 
 </project>
+
