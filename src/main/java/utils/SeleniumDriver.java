@@ -32,6 +32,7 @@ public class SeleniumDriver {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("window-size=1920x1040");
         chromeOptions.addArguments("--disable-gpu");
         chromeDriver= new ChromeDriver(chromeOptions);
         chromeDriver.manage().window().maximize();
