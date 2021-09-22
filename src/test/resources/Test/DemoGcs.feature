@@ -17,3 +17,4 @@ Feature: Demo1
     Then Open Logs
     Then validate successMessage is displayed
     Then Get Count of no of records transferred to BigQuery in "TableDemo"
+    Then Delete the table

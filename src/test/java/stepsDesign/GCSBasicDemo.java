@@ -174,5 +174,10 @@ public class GCSBasicDemo {
         countRecords = GcpClient.countBqQuery("tableDemo");
         Assert.assertTrue(countRecords>0);
     }
+
+    @Then("Delete the table")
+    public void deleteTheTable() throws IOException {
+        GcpClient.dropBqQuery("tableDemo");
+    }
 }
 

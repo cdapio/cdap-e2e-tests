@@ -9,7 +9,6 @@ public class GcpClient {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
         String datasetName = SeleniumHelper.readParameters("Data-Set");
-        ;
         String tableName = SeleniumHelper.readParameters(table);
         String query = "SELECT count(*) "
                 + " FROM `"
@@ -20,6 +19,22 @@ public class GcpClient {
                 + tableName
                 + "`";
         return query(query);
+    }
+
+    public static void dropBqQuery(String table) throws IOException {
+
+        String projectId = SeleniumHelper.readParameters("Project-ID");
+        String datasetName = SeleniumHelper.readParameters("Data-Set");
+        ;
+        String tableName = SeleniumHelper.readParameters(table);
+        String query = "DROP TABLE `"
+                + projectId
+                + "."
+                + datasetName
+                + "."
+                + tableName
+                + "`";
+
     }
 
     public static int query(String query) {
