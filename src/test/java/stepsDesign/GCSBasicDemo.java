@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.actions.*;
 import pages.locators.CdfStudioLocators;
+import utils.GcpClient;
 import utils.SeleniumDriver;
 import utils.SeleniumHelper;
 
@@ -20,6 +21,7 @@ import static utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
+    static int countRecords;
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -165,6 +167,12 @@ public class GCSBasicDemo {
     @Then("Close the BigQuery Properties")
     public void closeTheBigQueryProperties() {
         CdfGcsActions.closeButton();
+    }
+
+    @Then("Get Count of no of records transferred to BigQuery in {string}")
+    public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException {
+        countRecords = GcpClient.countBqQuery("tableDemo");
+        Assert.assertTrue(countRecords>0);
     }
 }
 

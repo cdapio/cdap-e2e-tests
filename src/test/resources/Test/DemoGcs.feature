@@ -16,6 +16,4 @@ Feature: Demo1
     Then Verify the pipeline status is "Succeeded"
     Then Open Logs
     Then validate successMessage is displayed
-    Then Open "BigQuery" link to login
-    Then enter the Query to check the count of table created "DemoCheck1"
-    Then capture the count
+    Then Get Count of no of records transferred to BigQuery in "TableDemo"
