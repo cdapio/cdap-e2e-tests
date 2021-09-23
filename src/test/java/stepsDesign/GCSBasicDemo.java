@@ -171,13 +171,13 @@ public class GCSBasicDemo {
 
     @Then("Get Count of no of records transferred to BigQuery in {string}")
     public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException {
-        countRecords = GcpClient.countBqQuery("tableDemo");
+        countRecords = GcpClient.countBqQuery(arg0);
         Assert.assertTrue(countRecords>0);
     }
 
-    @Then("Delete the table")
-    public void deleteTheTable() throws IOException {
-        GcpClient.dropBqQuery("tableDemo");
+    @Then("Delete the table {string}")
+    public void deleteTheTable(String arg0) throws IOException {
+        GcpClient.dropBqQuery(arg0);
     }
 }
 
