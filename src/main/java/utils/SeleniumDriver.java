@@ -1,6 +1,7 @@
 package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.io.IOException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,12 +28,12 @@ public class SeleniumDriver {
     public final static int PAGE_LOAD_TIMEOUT = 50;
     public static URL url;
 
-      SeleniumDriver() {
+      SeleniumDriver() throws IOException {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("window-size=1920x1040");
+        chromeOptions.addArguments(SeleniumHelper.readParameters("windowSize"));
         chromeOptions.addArguments("--disable-gpu");
         chromeDriver= new ChromeDriver(chromeOptions);
         chromeDriver.manage().window().maximize();
@@ -76,7 +77,7 @@ public class SeleniumDriver {
         return chromeDriver;
     }
 
-    public static void setUpDriver() {
+    public static void setUpDriver() throws IOException {
         if (seleniumDriver == null)
             seleniumDriver = new SeleniumDriver();
 
