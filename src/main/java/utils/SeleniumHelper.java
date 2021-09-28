@@ -73,10 +73,9 @@ public class SeleniumHelper {
         element.sendKeys(keys);
     }
 
-    public static boolean waitElementInvisible(String element) throws InterruptedException {
-        Thread.sleep(7000);
+    public static boolean waitElementIsVisible(WebElement element) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 60);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(element)));
+        wait.until(ExpectedConditions.visibilityOf(element));
         return true;
     }
 
@@ -103,6 +102,15 @@ public class SeleniumHelper {
             element.sendKeys(Keys.BACK_SPACE);
         }
         element.sendKeys(value);
+    }
+    public static boolean verifyElementPresent(String locator) {
+
+        try {
+            SeleniumDriver.getDriver().findElement(By.xpath(locator));
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
 }

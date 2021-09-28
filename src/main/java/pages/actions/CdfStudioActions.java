@@ -33,11 +33,6 @@ public class CdfStudioActions {
     public static void runAndPreviewData() throws InterruptedException {
         pages.locators.CdfStudioLocators.previewButton.click();
         pages.locators.CdfStudioLocators.runButton.click();
-        SeleniumHelper.waitElementInvisible("//*[@class='fa fa-stop text-danger']");
-        System.out.println("fa fa-stop text-danger");
-        SeleniumHelper.waitElementInvisible("//*[@class='fa fa-play text-success']");
-        System.out.println("text-success");
-
     }
 
     public static void previewSelect()
@@ -70,9 +65,4 @@ public class CdfStudioActions {
 
     }
 
-    public static void runfromConfigure() throws InterruptedException {
-        pages.locators.CdfStudioLocators.configRun.click();
-        SeleniumHelper.waitElementInvisible("//*[@class='fa fa-stop text-danger']");
-
-    }
 }

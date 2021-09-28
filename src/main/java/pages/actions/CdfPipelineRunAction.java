@@ -4,6 +4,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 import pages.locators.CdfPipelineRunLocators;
 import utils.SeleniumDriver;
+import utils.SeleniumHelper;
 
 public class CdfPipelineRunAction {
     public static CdfPipelineRunLocators cdfPipelineRunLocators=null;
@@ -12,7 +13,8 @@ public class CdfPipelineRunAction {
         cdfPipelineRunLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfPipelineRunLocators.class);
     }
 
-    public static void runClick(){
+    public static void runClick() throws InterruptedException {
+        SeleniumHelper.waitElementIsVisible(cdfPipelineRunLocators.run);
         cdfPipelineRunLocators.run.click();
     }
 

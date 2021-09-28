@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.actions.*;
 import pages.locators.CdfStudioLocators;
+import utils.GcpClient;
 import utils.SeleniumDriver;
 import utils.SeleniumHelper;
 
@@ -20,6 +21,7 @@ import static utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
+    static boolean webelement=false;
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -117,7 +119,7 @@ public class GCSBasicDemo {
     }
 
     @Then("Run the Pipeline in Runtime")
-    public void runThePipelineInRuntime() {
+    public void runThePipelineInRuntime() throws InterruptedException {
         CdfPipelineRunAction.runClick();
     }
 
@@ -125,13 +127,15 @@ public class GCSBasicDemo {
     public void waitTillPipelineIsInRunningState() throws InterruptedException {
         Boolean bool= true;
         WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 1000000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Succeeded']")));
+        wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Succeeded']")),
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Failed']"))));
     }
 
     @Then("Verify the pipeline status is {string}")
     public void verifyThePipelineStatusIs(String status) {
-
-        Assert.assertTrue( SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='"+status+"']")).isDisplayed());
+        webelement=false;
+        webelement =SeleniumHelper.verifyElementPresent("//*[@data-cy='"+status+"']");
+        Assert.assertTrue(webelement);
     }
 
     @Then("Open Logs")
@@ -152,8 +156,8 @@ public class GCSBasicDemo {
 
 
     @Then("Enter the BigQuery Properties for table {string}")
-    public void enterTheBigQueryPropertiesForTable(String arg0) throws InterruptedException {
-        CdfBigQueryPropertiesActions.enterBigQueryProperties(arg0);
+    public void enterTheBigQueryPropertiesForTable(String arg0) throws InterruptedException, IOException {
+        CdfBigQueryPropertiesActions.enterBigQueryProperties(SeleniumHelper.readParameters(arg0));
     }
 
 
@@ -166,5 +170,19 @@ public class GCSBasicDemo {
     public void closeTheBigQueryProperties() {
         CdfGcsActions.closeButton();
     }
+
+    @Then("Get Count of no of records transferred to BigQuery in {string}")
+    public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException, InterruptedException {
+        int countRecords;
+        countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
+        System.out.println("records"+countRecords);
+        Assert.assertTrue(countRecords>0);
+    }
+
+    @Then("Delete the table {string}")
+    public void deleteTheTable(String arg0) throws IOException, InterruptedException {
+        GcpClient.dropBqQuery(SeleniumHelper.readParameters(arg0));
+    }
+
 }
 

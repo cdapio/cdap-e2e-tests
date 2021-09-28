@@ -1,6 +1,7 @@
 package pages.actions;
 
 import org.openqa.selenium.support.PageFactory;
+import pages.locators.CdfBigQueryPropertiesLocators;
 import utils.SeleniumDriver;
 
 
@@ -17,8 +18,8 @@ public class CdfBigQueryPropertiesActions {
         pages.locators.CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys("automation_test");
         pages.locators.CdfBigQueryPropertiesLocators.bigQueryDataSetProjectID.sendKeys("cdf-athena");
         pages.locators.CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys("test_automation");
-
         pages.locators.CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(arg0);
+        pages.locators.CdfBigQueryPropertiesLocators.updateTable.click();
         pages.locators.CdfBigQueryPropertiesLocators.truncatableSwitch.click();
         pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
         Thread.sleep(8000);
