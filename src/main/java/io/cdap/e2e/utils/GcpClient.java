@@ -1,6 +1,9 @@
-package utils;
+package io.cdap.e2e.utils;
 
-import com.google.cloud.bigquery.*;
+import com.google.cloud.bigquery.BigQuery;
+import com.google.cloud.bigquery.BigQueryOptions;
+import com.google.cloud.bigquery.QueryJobConfiguration;
+import com.google.cloud.bigquery.TableResult;
 import java.io.IOException;
 
 public class GcpClient {

@@ -1,4 +1,4 @@
-package utils;
+package io.cdap.e2e.utils;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedHashMap;

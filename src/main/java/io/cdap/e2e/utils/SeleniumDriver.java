@@ -1,4 +1,4 @@
-package utils;
+package io.cdap.e2e.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.IOException;

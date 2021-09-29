@@ -1,16 +1,16 @@
- package pages.actions;
+ package io.cdap.e2e.pages.actions;
 
  import org.junit.Assert;
  import org.openqa.selenium.support.PageFactory;
  import org.openqa.selenium.support.ui.Select;
- import pages.locators.CdfSysAdminLocators;
- import utils.SeleniumDriver;
+ import io.cdap.e2e.pages.locators.CdfSysAdminLocators;
+ import io.cdap.e2e.utils.SeleniumDriver;
 
 public class CdfSysAdminActions {
-    public static pages.locators.CdfSysAdminLocators cdfSysAdminLocators = null;
+    public static CdfSysAdminLocators cdfSysAdminLocators = null;
     static String checkParam="false";
     static {
-        cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), pages.locators.CdfSysAdminLocators.class);
+        cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfSysAdminLocators.class);
     }
 
     public static void selectMacroAPIService(String service){

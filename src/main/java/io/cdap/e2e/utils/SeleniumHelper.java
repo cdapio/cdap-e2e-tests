@@ -1,4 +1,4 @@
-package utils;
+package io.cdap.e2e.utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -6,7 +6,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.*;
 import java.util.Properties;
-import pages.locators.CdfGCSLocators;
 
 public class SeleniumHelper {
 
@@ -108,7 +107,7 @@ public class SeleniumHelper {
         try {
             SeleniumDriver.getDriver().findElement(By.xpath(locator));
             return true;
-        } catch (Throwable e) {
+        } catch (Exception e) {
             return false;
         }
     }

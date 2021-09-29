@@ -1,13 +1,13 @@
-package pages.actions;
+package io.cdap.e2e.pages.actions;
 
 import java.io.IOException;
 import org.openqa.selenium.support.PageFactory;
-import pages.locators.GoogleSignInLocator;
-import utils.SeleniumDriver;
-import utils.SeleniumHelper;
+import io.cdap.e2e.pages.locators.GoogleSignInLocator;
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 
 public class GoogleSignInActions {
-    public static pages.locators.GoogleSignInLocator GoogleSignInLocator = null;
+    public static io.cdap.e2e.pages.locators.GoogleSignInLocator GoogleSignInLocator = null;
 
     static {
 

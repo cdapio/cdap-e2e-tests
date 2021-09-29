@@ -1,15 +1,15 @@
-package pages.actions;
+package io.cdap.e2e.pages.actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumDriver;
 
 public class CdfHomeActions {
-    public static pages.locators.CdfHomeLocators CdfHomeLocators = null;
+    public static io.cdap.e2e.pages.locators.CdfHomeLocators CdfHomeLocators = null;
 
     static {
 
-        CdfHomeLocators = PageFactory.initElements(SeleniumDriver.getDriver(), pages.locators.CdfHomeLocators.class);
+        CdfHomeLocators = PageFactory.initElements(SeleniumDriver.getDriver(), io.cdap.e2e.pages.locators.CdfHomeLocators.class);
 
     }
 
@@ -17,7 +17,7 @@ public class CdfHomeActions {
     {
 
         JavascriptExecutor js = (JavascriptExecutor)SeleniumDriver.getDriver();
-        WebElement element= pages.locators.CdfHomeLocators.studio;
+        WebElement element= io.cdap.e2e.pages.locators.CdfHomeLocators.studio;
            js.executeScript("arguments[0].click();",element);
         System.out.println("FIrst case passed");
 

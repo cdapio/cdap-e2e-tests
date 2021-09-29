@@ -1,14 +1,12 @@
-package pages.actions;
+package io.cdap.e2e.pages.actions;
 
 import java.io.IOException;
 import java.util.UUID;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.PageFactory;
-import pages.locators.CdfGCSLocators;
-import pages.locators.CdfSysAdminLocators;
-import utils.SeleniumDriver;
-import utils.SeleniumHelper;
+import io.cdap.e2e.pages.locators.CdfGCSLocators;
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 
 public class CdfGcsActions {
 

@@ -1,5 +1,7 @@
 package stepsDesign;
 
+import io.cdap.e2e.pages.actions.*;
+import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,17 +13,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.actions.*;
-import pages.locators.CdfStudioLocators;
-import utils.GcpClient;
-import utils.SeleniumDriver;
-import utils.SeleniumHelper;
+import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.GcpClient;
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 
-import static utils.RemoteClass.createDriverFromSession;
+import static io.cdap.e2e.utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
-    static boolean webelement=false;
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -81,12 +81,12 @@ public class GCSBasicDemo {
 
     @Then("Overrride the BigQuery Properties")
     public void overrrideTheBigQueryProperties() throws InterruptedException {
-        pages.locators.CdfStudioLocators.bigQueryProperties.click();
+        CdfStudioLocators.bigQueryProperties.click();
         SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")).click();
         Thread.sleep(5000);
         Select drp=new Select(SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")));
         drp.selectByValue("string");
-        pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
+        CdfBigQueryPropertiesLocators.validateBttn.click();
         Thread.sleep(6000);
         CdfGcsActions.closeButton();
     }
@@ -133,7 +133,7 @@ public class GCSBasicDemo {
 
     @Then("Verify the pipeline status is {string}")
     public void verifyThePipelineStatusIs(String status) {
-        webelement=false;
+        boolean webelement=false;
         webelement =SeleniumHelper.verifyElementPresent("//*[@data-cy='"+status+"']");
         Assert.assertTrue(webelement);
     }

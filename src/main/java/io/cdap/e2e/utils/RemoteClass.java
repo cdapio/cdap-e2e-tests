@@ -1,4 +1,4 @@
-package utils;
+package io.cdap.e2e.utils;
 
 import org.openqa.selenium.remote.*;
 import java.io.IOException;

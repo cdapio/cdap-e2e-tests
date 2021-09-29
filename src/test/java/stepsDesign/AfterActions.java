@@ -7,7 +7,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-import utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumDriver;
 
 public class AfterActions {
 

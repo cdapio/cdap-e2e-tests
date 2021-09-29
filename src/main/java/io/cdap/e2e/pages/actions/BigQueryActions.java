@@ -1,17 +1,17 @@
-package pages.actions;
+package io.cdap.e2e.pages.actions;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import pages.locators.BigQueryLocators;
-import utils.SeleniumDriver;
+import io.cdap.e2e.pages.locators.BigQueryLocators;
+import io.cdap.e2e.utils.SeleniumDriver;
 
 import java.util.List;
 
 public class BigQueryActions {
 
-    public static pages.locators.BigQueryLocators bigQueryLocators = null;
+    public static BigQueryLocators bigQueryLocators = null;
     static {
-        bigQueryLocators = PageFactory.initElements(SeleniumDriver.getDriver(), pages.locators.BigQueryLocators.class);
+        bigQueryLocators = PageFactory.initElements(SeleniumDriver.getDriver(), BigQueryLocators.class);
     }
 
     public static void composeNewQuery()  {

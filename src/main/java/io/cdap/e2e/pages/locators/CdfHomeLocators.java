@@ -1,10 +1,8 @@
-package pages.locators;
+package io.cdap.e2e.pages.locators;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
-import utils.SeleniumDriver;
 
 public class CdfHomeLocators {
 
