@@ -1,18 +1,15 @@
-package pages.actions;
+package io.cdap.e2e.pages.actions;
 
+import io.cdap.e2e.pages.locators.CdfLogLocators;
 import org.openqa.selenium.support.PageFactory;
-import pages.locators.GoogleSignInLocator;
-import utils.SeleniumDriver;
-import utils.SeleniumHelper;
-
-import java.io.IOException;
+import io.cdap.e2e.utils.SeleniumDriver;
 
 public class CdfLogActions {
-    public static pages.locators.CdfLogLocators cdfLogLocators = null;
+    public static CdfLogLocators cdfLogLocators = null;
 
     static {
 
-        cdfLogLocators = PageFactory.initElements(SeleniumDriver.getDriver(), pages.locators.CdfLogLocators.class);
+        cdfLogLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfLogLocators.class);
 
     }
 

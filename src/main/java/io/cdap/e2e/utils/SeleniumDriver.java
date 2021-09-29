@@ -1,4 +1,4 @@
-package utils;
+package io.cdap.e2e.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class SeleniumDriver {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--headless");
+         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--window-size="+SeleniumHelper.readParameters("windowSize"));
         chromeOptions.addArguments("--disable-gpu");
         chromeDriver= new ChromeDriver(chromeOptions);

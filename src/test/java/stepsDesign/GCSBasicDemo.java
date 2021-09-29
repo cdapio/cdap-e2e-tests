@@ -1,5 +1,7 @@
 package stepsDesign;
 
+import io.cdap.e2e.pages.actions.*;
+import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,12 +13,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.actions.*;
-import pages.locators.CdfStudioLocators;
-import utils.SeleniumDriver;
-import utils.SeleniumHelper;
+import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.GcpClient;
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 
-import static utils.RemoteClass.createDriverFromSession;
+import static io.cdap.e2e.utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
@@ -79,12 +81,12 @@ public class GCSBasicDemo {
 
     @Then("Overrride the BigQuery Properties")
     public void overrrideTheBigQueryProperties() throws InterruptedException {
-        pages.locators.CdfStudioLocators.bigQueryProperties.click();
+        CdfStudioLocators.bigQueryProperties.click();
         SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")).click();
         Thread.sleep(5000);
         Select drp=new Select(SeleniumDriver.getDriver().findElement(By.xpath("(//*[@title=\"int\"])[2]")));
         drp.selectByValue("string");
-        pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
+        CdfBigQueryPropertiesLocators.validateBttn.click();
         Thread.sleep(6000);
         CdfGcsActions.closeButton();
     }
@@ -117,7 +119,7 @@ public class GCSBasicDemo {
     }
 
     @Then("Run the Pipeline in Runtime")
-    public void runThePipelineInRuntime() {
+    public void runThePipelineInRuntime() throws InterruptedException {
         CdfPipelineRunAction.runClick();
     }
 
@@ -125,13 +127,15 @@ public class GCSBasicDemo {
     public void waitTillPipelineIsInRunningState() throws InterruptedException {
         Boolean bool= true;
         WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 1000000);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Succeeded']")));
+        wait.until(ExpectedConditions.or(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Succeeded']")),
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Failed']"))));
     }
 
     @Then("Verify the pipeline status is {string}")
     public void verifyThePipelineStatusIs(String status) {
-
-        Assert.assertTrue( SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='"+status+"']")).isDisplayed());
+        boolean webelement=false;
+        webelement =SeleniumHelper.verifyElementPresent("//*[@data-cy='"+status+"']");
+        Assert.assertTrue(webelement);
     }
 
     @Then("Open Logs")
@@ -152,8 +156,8 @@ public class GCSBasicDemo {
 
 
     @Then("Enter the BigQuery Properties for table {string}")
-    public void enterTheBigQueryPropertiesForTable(String arg0) throws InterruptedException {
-        CdfBigQueryPropertiesActions.enterBigQueryProperties(arg0);
+    public void enterTheBigQueryPropertiesForTable(String arg0) throws InterruptedException, IOException {
+        CdfBigQueryPropertiesActions.enterBigQueryProperties(SeleniumHelper.readParameters(arg0));
     }
 
 
@@ -166,5 +170,19 @@ public class GCSBasicDemo {
     public void closeTheBigQueryProperties() {
         CdfGcsActions.closeButton();
     }
+
+    @Then("Get Count of no of records transferred to BigQuery in {string}")
+    public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException, InterruptedException {
+        int countRecords;
+        countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
+        System.out.println("records"+countRecords);
+        Assert.assertTrue(countRecords>0);
+    }
+
+    @Then("Delete the table {string}")
+    public void deleteTheTable(String arg0) throws IOException, InterruptedException {
+        GcpClient.dropBqQuery(SeleniumHelper.readParameters(arg0));
+    }
+
 }
 

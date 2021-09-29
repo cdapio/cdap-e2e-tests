@@ -3,7 +3,7 @@ package stepsDesign;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.Before;
 import java.io.IOException;
-import utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumDriver;
 
 public class BeforeActions  {
     public static Scenario scenario;
