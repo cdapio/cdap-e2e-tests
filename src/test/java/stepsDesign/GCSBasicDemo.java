@@ -2,11 +2,12 @@ package stepsDesign;
 
 import io.cdap.e2e.pages.actions.*;
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
-import io.cdap.e2e.utils.LoggerHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -25,7 +26,6 @@ import static io.cdap.e2e.utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
-    Logger log = Logger.getLogger("devpinoyLogger");
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException {
@@ -137,18 +137,19 @@ public class GCSBasicDemo {
     @Then("Verify the pipeline status is {string}")
     public void verifyThePipelineStatusIs(String status) {
         boolean webelement=false;
-         webelement=SeleniumHelper.verifyElementPresent("//*[@data-cy='" + status + "']");
+        webelement=SeleniumHelper.verifyElementPresent("//*[@data-cy='" + status + "']");
         Assert.assertTrue(webelement);
-         log.debug("********Test is Passed************");
-         BeforeActions.scenario.write("********Test is Passed************");
+        BeforeActions.scenario.write("********Test is Passed************");
 
     }
 
     @Then("Open Logs")
-    public void openLogs() throws InterruptedException {
+    public void openLogs() throws InterruptedException, FileNotFoundException {
         CdfPipelineRunAction.logsClick();
         BeforeActions.scenario.write(CdfPipelineRunAction.captureRawLogs());
-        log.info(CdfPipelineRunAction.captureRawLogs());
+        PrintWriter out = new PrintWriter(BeforeActions.myObj);
+        out.println(CdfPipelineRunAction.captureRawLogs());
+        out.close();
     }
 
     @Then("validate successMessage is displayed")
@@ -183,7 +184,7 @@ public class GCSBasicDemo {
     public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException, InterruptedException {
         int countRecords;
         countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
-        log.info("**********No of Records Transferred******************:"+countRecords);
+        BeforeActions.scenario.write("**********No of Records Transferred******************:"+countRecords);
         Assert.assertTrue(countRecords>0);
     }
 

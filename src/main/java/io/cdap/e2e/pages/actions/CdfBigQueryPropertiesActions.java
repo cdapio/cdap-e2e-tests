@@ -23,7 +23,6 @@ public class CdfBigQueryPropertiesActions {
         io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryDataSet.
                 sendKeys(SeleniumHelper.readParameters("Data-Set"));
         io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(arg0);
-
         io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.updateTable.click();
         io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.truncatableSwitch.click();
         io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
