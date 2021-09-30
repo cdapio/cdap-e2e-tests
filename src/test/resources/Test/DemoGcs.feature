@@ -16,5 +16,5 @@ Feature: Demo1
     Then Open Logs
     Then Verify the pipeline status is "Succeeded"
     Then validate successMessage is displayed
-#    Then Get Count of no of records transferred to BigQuery in "tableDemo"
-#    Then Delete the table "tableDemo"
+    Then Get Count of no of records transferred to BigQuery in "tableDemo"
+    Then Delete the table "tableDemo"
