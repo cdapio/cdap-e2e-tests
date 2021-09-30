@@ -8,9 +8,9 @@ import io.cdap.e2e.utils.SeleniumDriver;
 public class BeforeActions  {
     public static Scenario scenario;
 	@Before
-    public static void setUp() throws IOException {
+    public void setUp(Scenario scenario) throws IOException {
 		//ExtentCucumberFormatter.initiateExtentCucumberFormatter();
-    	System.out.println("Before");
+        this.scenario = scenario;
        SeleniumDriver.setUpDriver();
 
     }

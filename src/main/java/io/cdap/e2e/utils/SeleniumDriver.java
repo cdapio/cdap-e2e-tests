@@ -32,21 +32,20 @@ public class SeleniumDriver {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
-         chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--window-size="+SeleniumHelper.readParameters("windowSize"));
         chromeOptions.addArguments("--disable-gpu");
         chromeDriver= new ChromeDriver(chromeOptions);
         chromeDriver.manage().window().maximize();
-          HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
-            url = executor.getAddressOfRemoteServer();
+        HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
+        url = executor.getAddressOfRemoteServer();
         waitDriver = new WebDriverWait(chromeDriver, TIMEOUT);
         chromeDriver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
         chromeDriver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
         String window=chromeDriver.getWindowHandle();
-          SessionId session = chromeDriver.getSessionId();
-          System.out.println("Session iD:"+session);
+        SessionId session = chromeDriver.getSessionId();
+        System.out.println("Session iD:"+session);
         System.out.println("Window ->"+window);
-
     }
 
 

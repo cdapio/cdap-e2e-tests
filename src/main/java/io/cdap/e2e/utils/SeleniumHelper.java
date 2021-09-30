@@ -73,7 +73,7 @@ public class SeleniumHelper {
     }
 
     public static boolean waitElementIsVisible(WebElement element) throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 60);
+        WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 180);
         wait.until(ExpectedConditions.visibilityOf(element));
         return true;
     }
@@ -103,7 +103,6 @@ public class SeleniumHelper {
         element.sendKeys(value);
     }
     public static boolean verifyElementPresent(String locator) {
-
         try {
             SeleniumDriver.getDriver().findElement(By.xpath(locator));
             return true;
