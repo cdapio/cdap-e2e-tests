@@ -41,4 +41,10 @@ public class CdfPipelineRunLocators {
     @FindBy(xpath="//*[@class=\"run-logs-btn\"]")
     public WebElement logs;
 
+    @FindBy(xpath="(//*[@type=\"button\"])[7]")
+    public WebElement logsArrow;
+
+    @FindBy(xpath="//*[contains(text(), 'View Raw Logs') ]")
+    public WebElement viewRawLogs;
+
 }
