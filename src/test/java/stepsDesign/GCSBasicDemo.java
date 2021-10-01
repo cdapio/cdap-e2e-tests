@@ -188,6 +188,7 @@ public class GCSBasicDemo {
     @Then("Delete the table {string}")
     public void deleteTheTable(String arg0) throws IOException, InterruptedException {
         GcpClient.dropBqQuery(SeleniumHelper.readParameters(arg0));
+        BeforeActions.scenario.write("Table Deleted Successfully");
     }
 
 }
