@@ -28,8 +28,7 @@ public class BeforeActions  {
         String scenarioName=scenario.getName().replace(" ", "-").concat(".txt");
         new File("target/e2e-debug/"+featureName).mkdirs();
         myObj = new File("target/e2e-debug/"+featureName+"/"+scenarioName);
-        Path path
-                = Paths.get(String.valueOf(myObj));
+        Path path = Paths.get(String.valueOf(myObj));
         if(Files.deleteIfExists(path)) {
             myObj.createNewFile();
         }
