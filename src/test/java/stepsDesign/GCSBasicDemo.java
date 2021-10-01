@@ -5,7 +5,9 @@ import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.UUID;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -139,8 +141,12 @@ public class GCSBasicDemo {
     }
 
     @Then("Open Logs")
-    public void openLogs() {
+    public void openLogs() throws FileNotFoundException {
         CdfPipelineRunAction.logsClick();
+        BeforeActions.scenario.write(CdfPipelineRunAction.captureRawLogs());
+        PrintWriter out = new PrintWriter(BeforeActions.myObj);
+        out.println(CdfPipelineRunAction.captureRawLogs());
+        out.close();
     }
 
     @Then("validate successMessage is displayed")
@@ -175,7 +181,7 @@ public class GCSBasicDemo {
     public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException, InterruptedException {
         int countRecords;
         countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
-        System.out.println("records"+countRecords);
+        BeforeActions.scenario.write("**********No of Records Transferred******************:"+countRecords);
         Assert.assertTrue(countRecords>0);
     }
 
