@@ -1,5 +1,9 @@
 package io.cdap.e2e.pages.actions;
 
+import java.util.ArrayList;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
@@ -51,5 +55,19 @@ public class CdfPipelineRunAction {
             e.printStackTrace();
         }
         return bool;
+    }
+
+    public static String captureRawLogs() {
+        JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
+        js.executeScript("arguments[0].click()", cdfPipelineRunLocators.logsArrow);
+        cdfPipelineRunLocators.viewRawLogs.click();
+        String parent = SeleniumDriver.getDriver().getWindowHandle();
+        ArrayList<String> tabs2 = new ArrayList<String>(SeleniumDriver.getDriver().getWindowHandles());
+        SeleniumDriver.getDriver().switchTo().window(tabs2.get(1));
+        String logs = SeleniumDriver.getDriver().findElement(By.xpath("/html/body/pre")).getText();
+        Assert.assertNotNull(logs);
+        SeleniumDriver.getDriver().close();
+        SeleniumDriver.getDriver().switchTo().window(parent);
+        return logs;
     }
 }
