@@ -20,7 +20,8 @@ public class GcpClient {
                 + "."
                 + table
                 + "`";
-        BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
+        BigQuery bigquery =  BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
+                .build().getService();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
         TableResult results = bigquery.query(queryConfig);
         return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
