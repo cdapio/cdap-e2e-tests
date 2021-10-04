@@ -9,8 +9,6 @@ import java.io.IOException;
 
 public class GcpClient {
 
-    public static int noOfRecords;
-
     public  int countBqQuery(String table) throws IOException, InterruptedException {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
@@ -23,8 +21,7 @@ public class GcpClient {
                 + "."
                 + table
                 + "`";
-         createBigQueryClient(selectQuery);
-        return noOfRecords;
+        return executeQuery(selectQuery);
     }
     //Deleting the table
     public  void dropBqQuery(String table) throws IOException, InterruptedException {
@@ -38,17 +35,18 @@ public class GcpClient {
                 + "."
                 + table
                 + "`";
-        createBigQueryClient(dropQuery);
+        executeQuery(dropQuery);
     }
 
-    public  void createBigQueryClient(String query) throws InterruptedException, IOException {
+    public int executeQuery(String query) throws InterruptedException, IOException {
         BigQuery bigquery =  BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
                 .build().getService();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
        TableResult results = bigquery.query(queryConfig);
        if (results.getTotalRows()>0) {
-           noOfRecords = Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
+         return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
        }
+        return 0;
     }
 }
 
