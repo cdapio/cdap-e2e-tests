@@ -8,14 +8,14 @@ import java.io.IOException;
 
 
 public class GcpClient {
-    public static  String query;
+
     public static int noOfRecords;
 
-    public static int countBqQuery(String table) throws IOException, InterruptedException {
+    public  int countBqQuery(String table) throws IOException, InterruptedException {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
         String datasetName = SeleniumHelper.readParameters("Data-Set");
-         query = "SELECT count(*) "
+        String selectQuery = "SELECT count(*) "
                 + " FROM `"
                 + projectId
                 + "."
@@ -23,30 +23,32 @@ public class GcpClient {
                 + "."
                 + table
                 + "`";
-         createBigQueryClient();
+         createBigQueryClient(selectQuery);
         return noOfRecords;
     }
     //Deleting the table
-    public static void dropBqQuery(String table) throws IOException, InterruptedException {
+    public  void dropBqQuery(String table) throws IOException, InterruptedException {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
         String datasetName = SeleniumHelper.readParameters("Data-Set");
-        String query = "DROP TABLE `"
+        String dropQuery = "DROP TABLE `"
                 + projectId
                 + "."
                 + datasetName
                 + "."
                 + table
                 + "`";
-        createBigQueryClient();
+        createBigQueryClient(dropQuery);
     }
 
-    public static void createBigQueryClient() throws InterruptedException, IOException {
+    public  void createBigQueryClient(String query) throws InterruptedException, IOException {
         BigQuery bigquery =  BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
                 .build().getService();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
        TableResult results = bigquery.query(queryConfig);
-        noOfRecords=Integer.parseInt((String)results.getValues().iterator().next().get(0).getValue());
+       if (results.getTotalRows()>0) {
+           noOfRecords = Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
+       }
     }
 }
 
