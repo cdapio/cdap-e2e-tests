@@ -6,13 +6,14 @@ import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.TableResult;
 import java.io.IOException;
 
+
 public class GcpClient {
 
-    public static int countBqQuery(String table) throws IOException, InterruptedException {
+    public  int countBqQuery(String table) throws IOException, InterruptedException {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
         String datasetName = SeleniumHelper.readParameters("Data-Set");
-        String query = "SELECT count(*) "
+        String selectQuery = "SELECT count(*) "
                 + " FROM `"
                 + projectId
                 + "."
@@ -20,29 +21,32 @@ public class GcpClient {
                 + "."
                 + table
                 + "`";
-        BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
-        QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
-        TableResult results = bigquery.query(queryConfig);
-        return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
+        return executeQuery(selectQuery);
     }
     //Deleting the table
-    public static void dropBqQuery(String table) throws IOException, InterruptedException {
+    public  void dropBqQuery(String table) throws IOException, InterruptedException {
 
         String projectId = SeleniumHelper.readParameters("Project-ID");
         String datasetName = SeleniumHelper.readParameters("Data-Set");
-        String query = "DROP TABLE `"
+        String dropQuery = "DROP TABLE `"
                 + projectId
                 + "."
                 + datasetName
                 + "."
                 + table
                 + "`";
+        executeQuery(dropQuery);
+    }
 
-        BigQuery bigquery = BigQueryOptions.getDefaultInstance().getService();
+    private int executeQuery(String query) throws InterruptedException, IOException {
+        BigQuery bigquery =  BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
+                .build().getService();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
-        TableResult results = bigquery.query(queryConfig);
-
-
+       TableResult results = bigquery.query(queryConfig);
+       if (results.getTotalRows()>0) {
+         return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());//No of records present in table
+       }
+        return 0;
     }
 }
 

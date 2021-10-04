@@ -24,6 +24,7 @@ import static io.cdap.e2e.utils.RemoteClass.createDriverFromSession;
 
 public class GCSBasicDemo {
     static int i=0;
+    GcpClient gcpClient=new GcpClient();
 
     @Given("Open Datafusion Project to configure pipeline")
     public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -180,14 +181,15 @@ public class GCSBasicDemo {
     @Then("Get Count of no of records transferred to BigQuery in {string}")
     public void getCountOfNoOfRecordsTransferredToBigQueryIn(String arg0) throws IOException, InterruptedException {
         int countRecords;
-        countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
+        countRecords = gcpClient.countBqQuery(SeleniumHelper.readParameters(arg0));
         BeforeActions.scenario.write("**********No of Records Transferred******************:"+countRecords);
         Assert.assertTrue(countRecords>0);
     }
 
     @Then("Delete the table {string}")
     public void deleteTheTable(String arg0) throws IOException, InterruptedException {
-        GcpClient.dropBqQuery(SeleniumHelper.readParameters(arg0));
+        gcpClient.dropBqQuery(SeleniumHelper.readParameters(arg0));
+        BeforeActions.scenario.write("Table Deleted Successfully");
     }
 
 }
