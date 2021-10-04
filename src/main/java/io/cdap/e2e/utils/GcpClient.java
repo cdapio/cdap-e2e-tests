@@ -38,7 +38,7 @@ public class GcpClient {
         executeQuery(dropQuery);
     }
 
-    public int executeQuery(String query) throws InterruptedException, IOException {
+    private int executeQuery(String query) throws InterruptedException, IOException {
         BigQuery bigquery =  BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
                 .build().getService();
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
