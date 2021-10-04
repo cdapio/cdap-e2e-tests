@@ -44,7 +44,7 @@ public class GcpClient {
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
        TableResult results = bigquery.query(queryConfig);
        if (results.getTotalRows()>0) {
-         return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
+         return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());//No of records present in table
        }
         return 0;
     }
