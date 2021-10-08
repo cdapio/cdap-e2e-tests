@@ -112,24 +112,6 @@
 			<version>1.7.32</version>
 		</dependency>
 
-		<!-- Extent Reports 4 Plugin-->
-
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports-cucumber4-adapter</artifactId>
-			<version>1.0.12</version>
-			<exclusions>
-				<exclusion>
-					<groupId>io.cucumber</groupId>
-					<artifactId>cucumber-java</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>io.cucumber</groupId>
-					<artifactId>cucumber-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-core</artifactId>
