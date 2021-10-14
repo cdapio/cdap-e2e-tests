@@ -72,7 +72,7 @@ print("ls:", os.listdir())
 # Run e2e tests
 print("Preparing e2e framework")
 os.chdir("e2e")
-run_shell_command("mvn clean install")
+run_shell_command("mvn clean install -Drat.skip -Dcheckstyle.skip")
 print("Running e2e integration tests")
 os.chdir("../plugin")
 run_shell_command("mvn clean install -P e2e-tests")
