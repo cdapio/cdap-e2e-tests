@@ -70,6 +70,9 @@ print("cwd:", os.getcwd())
 print("ls:", os.listdir())
 
 # Run e2e tests
-print("Running e2e integration tests")
+print("Preparing e2e framework")
 os.chdir("e2e")
-run_shell_command("mvn clean verify")
+run_shell_command("mvn clean install")
+print("Running e2e integration tests")
+os.chdir("../plugin")
+run_shell_command("mvn clean install -P e2e-tests")
