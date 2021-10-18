@@ -2,9 +2,11 @@
  * Copyright 2021 Google LLC
  */
 
-package stepsDesign;
+package stepsdesign;
 
-
+/**
+ * Represents MyStepDefs
+ */
 public class MyStepdefs {
 
 }

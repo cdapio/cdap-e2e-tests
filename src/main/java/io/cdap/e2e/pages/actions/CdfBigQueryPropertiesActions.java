@@ -5,16 +5,20 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
-import org.openqa.selenium.support.PageFactory;
 import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.support.PageFactory;
 
-
+/**
+ * Represents CdfBigQueryPropertiesActions
+ */
 public class CdfBigQueryPropertiesActions {
-    public static io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators CdfBigQueryPropertiesLocators = null;
-    static int run =0;
+    public static io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators cdfBigQueryPropertiesLocators = null;
+    static int run = 0;
     static {
 
-        CdfBigQueryPropertiesLocators = PageFactory.initElements(SeleniumDriver.getDriver(), io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.class);
+        cdfBigQueryPropertiesLocators =
+          PageFactory.initElements(SeleniumDriver.getDriver(),
+                                   io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.class);
     }
 
     public static void enterBigQueryProperties(String arg0) throws InterruptedException {
