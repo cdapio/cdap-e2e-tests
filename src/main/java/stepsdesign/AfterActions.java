@@ -29,13 +29,13 @@ import org.openqa.selenium.WebDriver;
  */
 public class AfterActions {
 
-    @AfterStep
-    public static void tearDown(Scenario scenario) {
-        WebDriver driver = SeleniumDriver.getDriver();
-        byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-        scenario.embed(screenshotBytes, "image/png");
+  @AfterStep
+  public static void tearDown(Scenario scenario) {
+    WebDriver driver = SeleniumDriver.getDriver();
+    byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    scenario.embed(screenshotBytes, "image/png");
 
-    }
+  }
 
 
 }

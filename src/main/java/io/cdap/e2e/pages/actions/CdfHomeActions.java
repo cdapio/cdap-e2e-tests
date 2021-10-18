@@ -25,23 +25,23 @@ import org.openqa.selenium.support.PageFactory;
  * Represents CdfHomeActions
  */
 public class CdfHomeActions {
-    public static io.cdap.e2e.pages.locators.CdfHomeLocators cdfHomeLocators = null;
+  public static io.cdap.e2e.pages.locators.CdfHomeLocators cdfHomeLocators = null;
 
-    static {
+  static {
 
-        cdfHomeLocators =
-          PageFactory.initElements(SeleniumDriver.getDriver(), io.cdap.e2e.pages.locators.CdfHomeLocators.class);
+    cdfHomeLocators =
+      PageFactory.initElements(SeleniumDriver.getDriver(), io.cdap.e2e.pages.locators.CdfHomeLocators.class);
 
-    }
+  }
 
-    public static void clickStudio() {
+  public static void clickStudio() {
 
-        JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-        WebElement element = io.cdap.e2e.pages.locators.CdfHomeLocators.studio;
-        js.executeScript("arguments[0].click();", element);
-        System.out.println("FIrst case passed");
+    JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
+    WebElement element = io.cdap.e2e.pages.locators.CdfHomeLocators.studio;
+    js.executeScript("arguments[0].click();", element);
+    System.out.println("FIrst case passed");
 
-    }
+  }
 
 
 }

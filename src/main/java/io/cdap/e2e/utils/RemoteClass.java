@@ -36,41 +36,41 @@ import java.util.Collections;
  */
 public class RemoteClass {
 
-    public static RemoteWebDriver createDriverFromSession(final SessionId sessionId, URL commandExecutor) {
-        CommandExecutor executor = new HttpCommandExecutor(commandExecutor) {
+  public static RemoteWebDriver createDriverFromSession(final SessionId sessionId, URL commandExecutor) {
+    CommandExecutor executor = new HttpCommandExecutor(commandExecutor) {
 
-            @Override
-            public Response execute(Command command) throws IOException {
-                Response response = null;
-                if (command.getName() == "newSession") {
-                    response = new Response();
-                    response.setSessionId(sessionId.toString());
-                    response.setStatus(0);
-                    response.setValue(Collections.<String, String>emptyMap());
+      @Override
+      public Response execute(Command command) throws IOException {
+        Response response = null;
+        if (command.getName() == "newSession") {
+          response = new Response();
+          response.setSessionId(sessionId.toString());
+          response.setStatus(0);
+          response.setValue(Collections.<String, String>emptyMap());
 
-                    try {
-                        Field commandCodec = null;
-                        commandCodec = this.getClass().getSuperclass().getDeclaredField("commandCodec");
-                        commandCodec.setAccessible(true);
-                        commandCodec.set(this, new W3CHttpCommandCodec());
+          try {
+            Field commandCodec = null;
+            commandCodec = this.getClass().getSuperclass().getDeclaredField("commandCodec");
+            commandCodec.setAccessible(true);
+            commandCodec.set(this, new W3CHttpCommandCodec());
 
-                        Field responseCodec = null;
-                        responseCodec = this.getClass().getSuperclass().getDeclaredField("responseCodec");
-                        responseCodec.setAccessible(true);
-                        responseCodec.set(this, new W3CHttpResponseCodec());
-                    } catch (NoSuchFieldException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
+            Field responseCodec = null;
+            responseCodec = this.getClass().getSuperclass().getDeclaredField("responseCodec");
+            responseCodec.setAccessible(true);
+            responseCodec.set(this, new W3CHttpResponseCodec());
+          } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+          } catch (IllegalAccessException e) {
+            e.printStackTrace();
+          }
 
-                } else {
-                    response = super.execute(command);
-                }
-                return response;
-            }
-        };
+        } else {
+          response = super.execute(command);
+        }
+        return response;
+      }
+    };
 
-        return new RemoteWebDriver(executor, new DesiredCapabilities());
-    }
+    return new RemoteWebDriver(executor, new DesiredCapabilities());
+  }
 }

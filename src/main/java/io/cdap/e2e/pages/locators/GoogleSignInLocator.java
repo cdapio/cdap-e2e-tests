@@ -26,24 +26,24 @@ import java.util.List;
  */
 public class GoogleSignInLocator {
 
-    @FindBy(tagName = "input")
-    public List<WebElement> username;
+  @FindBy(tagName = "input")
+  public List<WebElement> username;
 
-    @FindBy(className = "VfPpkd-vQzf8d")
-    public WebElement nextButton;
+  @FindBy(className = "VfPpkd-vQzf8d")
+  public WebElement nextButton;
 
-    @FindBy(name = "password")
-    public WebElement passwordField;
+  @FindBy(name = "password")
+  public WebElement passwordField;
 
 
-    @FindBy(name = "u")
-    public WebElement corpUsername;
+  @FindBy(name = "u")
+  public WebElement corpUsername;
 
-    @FindBy(name = "pw")
-    public WebElement corpPassword;
+  @FindBy(name = "pw")
+  public WebElement corpPassword;
 
-    @FindBy(name = "signInButton")
-    public WebElement corpSignnButton;
+  @FindBy(name = "signInButton")
+  public WebElement corpSignnButton;
 
 
 }

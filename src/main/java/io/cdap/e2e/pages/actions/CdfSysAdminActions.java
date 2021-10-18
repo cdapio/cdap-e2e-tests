@@ -26,47 +26,47 @@
   * Represents CdfSysAdminActions
   */
  public class CdfSysAdminActions {
-     public static CdfSysAdminLocators cdfSysAdminLocators = null;
-     static String checkParam = "false";
+   public static CdfSysAdminLocators cdfSysAdminLocators = null;
+   static String checkParam = "false";
 
-     static {
-         cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfSysAdminLocators.class);
+   static {
+     cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfSysAdminLocators.class);
+   }
+
+   public static void selectMacroAPIService(String service) {
+     Select drpAPIRequest = new Select(CdfSysAdminLocators.apiCallType);
+     drpAPIRequest.selectByVisibleText(service);
+   }
+
+   public static void enterURI(String service) {
+     CdfSysAdminLocators.apiInputURI.sendKeys(service);
+
+   }
+
+   public static void enterRequestBody(String requestBody) {
+     CdfSysAdminLocators.requestBody.sendKeys(requestBody);
+   }
+
+   public static void clearRequest() {
+     CdfSysAdminLocators.clearButton.click();
+   }
+
+   public static void clearAllRequest() {
+     CdfSysAdminLocators.clearAll.click();
+   }
+
+   public static void sendRequest() {
+     CdfSysAdminLocators.sendButton.click();
+   }
+
+   public static void verifySuccess() {
+     String verify = CdfSysAdminLocators.success200.getText();
+     if (verify.contains("200")) {
+       checkParam = "true";
+       System.out.println("Succeess");
      }
 
-     public static void selectMacroAPIService(String service) {
-         Select drpAPIRequest = new Select(CdfSysAdminLocators.apiCallType);
-         drpAPIRequest.selectByVisibleText(service);
-     }
-
-     public static void enterURI(String service) {
-         CdfSysAdminLocators.apiInputURI.sendKeys(service);
-
-     }
-
-     public static void enterRequestBody(String requestBody) {
-         CdfSysAdminLocators.requestBody.sendKeys(requestBody);
-     }
-
-     public static void clearRequest() {
-         CdfSysAdminLocators.clearButton.click();
-     }
-
-     public static void clearAllRequest() {
-         CdfSysAdminLocators.clearAll.click();
-     }
-
-     public static void sendRequest() {
-         CdfSysAdminLocators.sendButton.click();
-     }
-
-     public static void verifySuccess() {
-         String verify = CdfSysAdminLocators.success200.getText();
-         if (verify.contains("200")) {
-             checkParam = "true";
-             System.out.println("Succeess");
-         }
-
-         Assert.assertTrue(checkParam, true);
-     }
+     Assert.assertTrue(checkParam, true);
+   }
 
  }
