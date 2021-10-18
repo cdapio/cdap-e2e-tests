@@ -1,4 +1,8 @@
- package io.cdap.e2e.pages.actions;
+ /*
+ * Copyright 2021 Google LLC
+ */
+
+package io.cdap.e2e.pages.actions;
 
  import org.junit.Assert;
  import org.openqa.selenium.support.PageFactory;
