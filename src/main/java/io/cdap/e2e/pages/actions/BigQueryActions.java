@@ -47,12 +47,12 @@ public class BigQueryActions {
     run.get(0).click();
     Thread.sleep(4000);
 
-    }
+  }
 
-    public static void countTable() throws InterruptedException {
+  public static void countTable() throws InterruptedException {
 
 
-      System.out.println("Count" + BigQueryLocators.countTable.getText());
+    System.out.println("Count" + BigQueryLocators.countTable.getText());
 
-    }
+  }
 }
