@@ -4,13 +4,22 @@
 
 package io.cdap.e2e.utils;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.io.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Represents SeleniumHelper
+ */
 public class SeleniumHelper {
 
     static String path;
@@ -40,7 +49,7 @@ public class SeleniumHelper {
         Thread.sleep(2000);
         File file = new File(path + "schema.json");
         if (file.renameTo
-                (new File(path + "/" + name + "/" + input))) {
+          (new File(path + "/" + name + "/" + input))) {
             // if file copied successfully then delete the original file
             file.delete();
             System.out.println("File moved successfully");
@@ -99,13 +108,13 @@ public class SeleniumHelper {
      * Replacing the value of the text box when clear is not working
      * https://github.com/SeleniumHQ/selenium/issues/6741
      */
-    public static void replaceElementValue(WebElement element, String value)
-    {
-        for (int i = 0; i <=100; i++) {
+    public static void replaceElementValue(WebElement element, String value) {
+        for (int i = 0; i <= 100; i++) {
             element.sendKeys(Keys.BACK_SPACE);
         }
         element.sendKeys(value);
     }
+
     public static boolean verifyElementPresent(String locator) {
 
         try {

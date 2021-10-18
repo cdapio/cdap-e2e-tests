@@ -4,18 +4,22 @@
 
 package io.cdap.e2e.pages.actions;
 
-import java.util.ArrayList;
+import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.PageFactory;
-import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
-import io.cdap.e2e.utils.SeleniumDriver;
-import io.cdap.e2e.utils.SeleniumHelper;
 
+import java.util.ArrayList;
+
+/**
+ * Represents CdfPipelineRunAction
+ */
 public class CdfPipelineRunAction {
-    public static CdfPipelineRunLocators cdfPipelineRunLocators=null;
+    public static CdfPipelineRunLocators cdfPipelineRunLocators = null;
 
     static {
         cdfPipelineRunLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfPipelineRunLocators.class);
@@ -26,36 +30,34 @@ public class CdfPipelineRunAction {
         cdfPipelineRunLocators.run.click();
     }
 
-    public static String runPipelineStatus(){
+    public static String runPipelineStatus() {
         return cdfPipelineRunLocators.runPipelineStatus.getAttribute("color");
     }
 
-    public static Boolean isRunning(){
-        boolean bool=false;
+    public static Boolean isRunning() {
+        boolean bool = false;
         try {
 
-            bool=cdfPipelineRunLocators.runningStatus.isDisplayed();
-        }catch (NoSuchElementException e){
+            bool = cdfPipelineRunLocators.runningStatus.isDisplayed();
+        } catch (NoSuchElementException e) {
             System.out.println("");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bool;
     }
 
-    public static void logsClick(){
+    public static void logsClick() {
         cdfPipelineRunLocators.logs.click();
     }
 
-    public static Boolean isProvisioning(){
-        boolean bool=false;
+    public static Boolean isProvisioning() {
+        boolean bool = false;
         try {
-            bool=cdfPipelineRunLocators.provisioningStatus.isDisplayed();
-        }catch (NoSuchElementException e){
+            bool = cdfPipelineRunLocators.provisioningStatus.isDisplayed();
+        } catch (NoSuchElementException e) {
             System.out.println("");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bool;

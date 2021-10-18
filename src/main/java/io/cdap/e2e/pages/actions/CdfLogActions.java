@@ -5,9 +5,12 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
-import org.openqa.selenium.support.PageFactory;
 import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.support.PageFactory;
 
+/**
+ * Represents CdfLogActions
+ */
 public class CdfLogActions {
     public static CdfLogLocators cdfLogLocators = null;
 
@@ -29,7 +32,7 @@ public class CdfLogActions {
     }
 
 
-    public static void dismissPopup()  {
+    public static void dismissPopup() {
         cdfLogLocators.dismissable.click();
     }
 
@@ -40,6 +43,7 @@ public class CdfLogActions {
     public static void validateFailed() {
         cdfLogLocators.validateFailed.isDisplayed();
     }
+
     public static void validateCategoryError() {
         cdfLogLocators.validateCategoryError.isDisplayed();
     }
@@ -47,6 +51,7 @@ public class CdfLogActions {
     public static void validateLogError() {
         cdfLogLocators.validateCategoryError.isDisplayed();
     }
+
     public static void goToAdvanceLogs() {
         cdfLogLocators.getGoToAdvanceLogs.click();
     }

@@ -10,18 +10,21 @@ import org.openqa.selenium.support.How;
 
 import java.util.List;
 
+/**
+ * Represents BigQueryLocators
+ */
 public class BigQueryLocators {
 
-    @FindBy(how= How.XPATH,using="//*[@aria-label='Compose a new query']")
+    @FindBy(how = How.XPATH, using = "//*[@aria-label='Compose a new query']")
     public static WebElement composeNewQuery;
 
-    @FindBy(how= How.XPATH,using="//*[@class='inputarea']")
+    @FindBy(how = How.XPATH, using = "//*[@class='inputarea']")
     public static List<WebElement> writeQueryBox;
 
-    @FindBy(how= How.XPATH,using="//*[contains(text(),' Run ')]")
+    @FindBy(how = How.XPATH, using = "//*[contains(text(),' Run ')]")
     public static List<WebElement> runQuery;
 
 
-    @FindBy(how= How.XPATH,using="//*[@class='p6n-bq-number-cell']")
+    @FindBy(how = How.XPATH, using = "//*[@class='p6n-bq-number-cell']")
     public static WebElement countTable;
 }
