@@ -1,3 +1,7 @@
+/*
+ * Copyright 2021 Google LLC
+ */
+
 package io.cdap.e2e.utils;
 
 import java.util.AbstractMap.SimpleEntry;

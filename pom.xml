@@ -73,6 +73,29 @@
               <goal>check</goal>
             </goals>
             <configuration>
+              <licenses>
+                <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                  <licenseFamilyCategory>
+                    GLLC
+                  </licenseFamilyCategory>
+                  <licenseFamilyName>
+                    Google LLC 2021
+                  </licenseFamilyName>
+                  <notes></notes>
+                  <patterns>
+                    <pattern>
+                      Copyright 2021 Google LLC
+                    </pattern>
+                  </patterns>
+                </license>
+              </licenses>
+              <licenseFamilies>
+                <licenseFamily implementation="org.apache.rat.license.SimpleLicenseFamily">
+                  <familyName>
+                    Google LLC 2021
+                  </familyName>
+                </licenseFamily>
+              </licenseFamilies>
               <excludes>
                 <exclude>LICENSE*.txt</exclude>
                 <!-- This file should be not be there, but I am excluding it for now -->
@@ -195,4 +218,3 @@
   </dependencies>
 
 </project>
-
