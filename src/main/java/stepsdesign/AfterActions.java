@@ -14,21 +14,25 @@
  * the License.
  */
 
-package io.cdap.e2e.pages.locators;
+package stepsdesign;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
+
+import io.cdap.e2e.utils.SeleniumDriver;
+import io.cucumber.core.api.Scenario;
+import io.cucumber.java.AfterStep;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
 /**
- * Represents CdfHomeLocators
+ * Represents after action
  */
-public class CdfHomeLocators {
+public class AfterActions {
 
-  @FindBy(how = How.XPATH, using = "//a[@href='/cdap/ns/default/wrangler']")
-  public static WebElement wrangler;
-
-  @FindBy(how = How.XPATH, using = "//a[@href='/pipelines/ns/default/studio']")
-  public static WebElement studio;
-
+  @AfterStep
+  public static void tearDown(Scenario scenario) {
+    WebDriver driver = SeleniumDriver.getDriver();
+    byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    scenario.embed(screenshotBytes, "image/png");
+  }
 }
