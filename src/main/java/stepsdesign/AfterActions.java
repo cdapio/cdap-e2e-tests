@@ -34,8 +34,5 @@ public class AfterActions {
     WebDriver driver = SeleniumDriver.getDriver();
     byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     scenario.embed(screenshotBytes, "image/png");
-
   }
-
-
 }

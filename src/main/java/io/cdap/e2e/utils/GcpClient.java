@@ -29,7 +29,6 @@ import java.io.IOException;
 public class GcpClient {
 
   public int countBqQuery(String table) throws IOException, InterruptedException {
-
     String projectId = SeleniumHelper.readParameters("Project-ID");
     String datasetName = SeleniumHelper.readParameters("Data-Set");
     String selectQuery = "SELECT count(*) "
@@ -45,7 +44,6 @@ public class GcpClient {
 
   //Deleting the table
   public void dropBqQuery(String table) throws IOException, InterruptedException {
-
     String projectId = SeleniumHelper.readParameters("Project-ID");
     String datasetName = SeleniumHelper.readParameters("Data-Set");
     String dropQuery = "DROP TABLE `"

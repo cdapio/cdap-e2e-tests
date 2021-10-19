@@ -45,7 +45,6 @@ public class SeleniumHelper {
   }
 
   public static void folderName(String name) {
-
     File f1 = new File("src/test/resources/" + name);
     //Creating a folder using mkdir() method
     boolean bool = f1.mkdir();
@@ -68,7 +67,6 @@ public class SeleniumHelper {
     } else {
       System.out.println("Failed to move the file");
     }
-
   }
 
   public static boolean isElementPresent(WebElement webElement) {
@@ -78,13 +76,11 @@ public class SeleniumHelper {
     } catch (NoSuchElementException e) {
       return false;
     }
-
   }
 
 
   public static void dragAndDrop(WebElement from, WebElement to) {
     Actions act = new Actions(SeleniumDriver.getDriver());
-
     //Dragged and dropped.
     act.dragAndDrop(from, to).build().perform();
   }
@@ -128,7 +124,6 @@ public class SeleniumHelper {
   }
 
   public static boolean verifyElementPresent(String locator) {
-
     try {
       SeleniumDriver.getDriver().findElement(By.xpath(locator));
       return true;
@@ -136,5 +131,4 @@ public class SeleniumHelper {
       return false;
     }
   }
-
 }
