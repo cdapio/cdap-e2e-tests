@@ -35,7 +35,6 @@ public class BeforeActions {
 
   @Before
   public void setUp(Scenario scenario) throws IOException {
-    //ExtentCucumberFormatter.initiateExtentCucumberFormatter();
     this.scenario = scenario;
     SeleniumDriver.setUpDriver();
     String[] tab = scenario.getId().split("/");
@@ -50,6 +49,5 @@ public class BeforeActions {
       myObj.createNewFile();
     }
     myObj.createNewFile();
-
   }
 }

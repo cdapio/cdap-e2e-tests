@@ -30,9 +30,7 @@ public class GoogleSignInActions {
   public static io.cdap.e2e.pages.locators.GoogleSignInLocator googleSignInLocator = null;
 
   static {
-
     googleSignInLocator = PageFactory.initElements(SeleniumDriver.getDriver(), GoogleSignInLocator.class);
-
   }
 
   public static void login() throws InterruptedException, IOException {

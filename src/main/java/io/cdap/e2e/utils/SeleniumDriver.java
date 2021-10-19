@@ -36,10 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class SeleniumDriver {
 
   public static final int TIMEOUT = 50;
-
-  //initialize webdriver
   public static final int PAGE_LOAD_TIMEOUT = 50;
-  //initialize timeouts
   public static WebDriverWait waitDriver;
   public static URL url;
   private static SeleniumDriver seleniumDriver;
@@ -63,21 +60,17 @@ public class SeleniumDriver {
     SessionId session = chromeDriver.getSessionId();
     System.out.println("Session iD:" + session);
     System.out.println("Window ->" + window);
-
   }
 
 
   public static SessionId session() {
-
     SessionId session = chromeDriver.getSessionId();
-    // System.out.println("Check thos one------"+session);
     return session;
   }
 
   public static void getWaitDriver() {
     new WebDriverWait(chromeDriver, 40000).
       until(ExpectedConditions.invisibilityOf(chromeDriver.findElement(By.className("loading-bar"))));
-
   }
 
 
@@ -95,7 +88,6 @@ public class SeleniumDriver {
     if (seleniumDriver == null) {
       seleniumDriver = new SeleniumDriver();
     }
-
   }
 
   public static void tearDown() {
@@ -114,6 +106,4 @@ public class SeleniumDriver {
       e.printStackTrace();
     }
   }
-
 }
-
