@@ -18,7 +18,10 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import static io.cdap.e2e.utils.SeleniumHelper.waitElementIsVisible;
 
 /**
  * Represents CdfLogActions
@@ -27,20 +30,19 @@ public class CdfLogActions {
   public static CdfLogLocators cdfLogLocators = null;
 
   static {
-
     cdfLogLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfLogLocators.class);
-
   }
 
   public static void validateErrorPopupLog() throws InterruptedException {
-    Thread.sleep(4000);
-    cdfLogLocators.errorMessagePopup.click();
+    WebElement element = cdfLogLocators.errorMessagePopup;
+    waitElementIsVisible(element, 1);
+    element.click();
   }
 
   public static void validateErrorPopupLog(String error) throws InterruptedException {
-    Thread.sleep(4000);
-
-    cdfLogLocators.errorMessagePopup.click();
+    WebElement element = cdfLogLocators.errorMessagePopup;
+    waitElementIsVisible(element, 1);
+    element.click();
   }
 
 
