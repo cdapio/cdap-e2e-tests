@@ -93,7 +93,7 @@ public class SeleniumHelper {
     element.sendKeys(keys);
   }
 
-  public static boolean waitElementIsVisible(WebElement element) throws InterruptedException {
+  public static boolean waitElementIsVisible(WebElement element, long timeoutInSec) throws InterruptedException {
     WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 60);
     wait.until(ExpectedConditions.visibilityOf(element));
     return true;

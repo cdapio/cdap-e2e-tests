@@ -33,7 +33,7 @@ public class CdfBigQueryPropertiesLocators {
   public static WebElement bigQueryDataSet;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
-  public static WebElement bigQueryDataSetProjectID;
+  public static WebElement projectID;
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Table to write to']")
   public static WebElement bigQueryTable;
@@ -55,4 +55,7 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@role='option' and contains(text(),'Export')]")
   public static WebElement exportButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
+  public static WebElement textSuccess;
 }
