@@ -93,10 +93,18 @@ public class SeleniumHelper {
     element.sendKeys(keys);
   }
 
-  public static boolean waitElementIsVisible(WebElement element, long timeoutInSec) throws InterruptedException {
-    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 60);
+  public static void waitElementIsVisible(WebElement element, long timeoutInSec) throws InterruptedException {
+    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), timeoutInSec);
     wait.until(ExpectedConditions.visibilityOf(element));
-    return true;
+  }
+
+  /*
+  Waits for visibility and clicks, with default value 1 unless provided.
+  timeOutInSec is an optional parameter
+   */
+  public static void waitAndClick(WebElement element, long ...timeOutInSec) throws InterruptedException {
+    waitElementIsVisible(element, timeOutInSec.length == 0 ? 1 : timeOutInSec[0]);
+    element.click();
   }
 
   public static String readParameters(String property) throws IOException {

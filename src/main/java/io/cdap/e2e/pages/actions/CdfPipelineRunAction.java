@@ -27,7 +27,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 
-import static io.cdap.e2e.utils.SeleniumHelper.waitElementIsVisible;
+import static io.cdap.e2e.utils.SeleniumHelper.waitAndClick;
 
 /**
  * Represents CdfPipelineRunAction
@@ -41,8 +41,7 @@ public class CdfPipelineRunAction {
 
   public static void runClick() throws InterruptedException {
     WebElement element = cdfPipelineRunLocators.run;
-    waitElementIsVisible(element, 60);
-    element.click();
+    waitAndClick(element, 60);
   }
 
   public static String runPipelineStatus() {
