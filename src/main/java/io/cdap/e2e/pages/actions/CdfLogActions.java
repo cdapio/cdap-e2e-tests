@@ -21,7 +21,7 @@ import io.cdap.e2e.utils.SeleniumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-import static io.cdap.e2e.utils.SeleniumHelper.waitElementIsVisible;
+import static io.cdap.e2e.utils.SeleniumHelper.waitAndClick;
 
 /**
  * Represents CdfLogActions
@@ -35,14 +35,12 @@ public class CdfLogActions {
 
   public static void validateErrorPopupLog() throws InterruptedException {
     WebElement element = cdfLogLocators.errorMessagePopup;
-    waitElementIsVisible(element, 1);
-    element.click();
+    waitAndClick(element);
   }
 
   public static void validateErrorPopupLog(String error) throws InterruptedException {
     WebElement element = cdfLogLocators.errorMessagePopup;
-    waitElementIsVisible(element, 1);
-    element.click();
+    waitAndClick(element);
   }
 
 
