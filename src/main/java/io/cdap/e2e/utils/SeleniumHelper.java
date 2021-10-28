@@ -36,6 +36,8 @@ public class SeleniumHelper {
 
   static String path;
 
+  private static long DEFAULT_TIMEOUT = 1;
+
   static {
     try {
       path = SeleniumHelper.readParameters("DownloadPath");
@@ -98,13 +100,13 @@ public class SeleniumHelper {
     wait.until(ExpectedConditions.visibilityOf(element));
   }
 
-  /*
-  Waits for visibility and clicks, with default value 1 unless provided.
-  timeOutInSec is an optional parameter
-   */
-  public static void waitAndClick(WebElement element, long ...timeOutInSec) throws InterruptedException {
-    waitElementIsVisible(element, timeOutInSec.length == 0 ? 1 : timeOutInSec[0]);
+  public static void waitAndClick(WebElement element, long timeOutInSec) throws InterruptedException {
+    waitElementIsVisible(element, timeOutInSec);
     element.click();
+  }
+
+  public static void waitAndClick(WebElement element) throws InterruptedException {
+    waitAndClick(element, DEFAULT_TIMEOUT);
   }
 
   public static String readParameters(String property) throws IOException {
