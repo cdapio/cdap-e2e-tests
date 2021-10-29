@@ -19,12 +19,12 @@ package io.cdap.e2e.pages.actions;
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
 import static io.cdap.e2e.utils.SeleniumHelper.readParameters;
-import static io.cdap.e2e.utils.SeleniumHelper.waitElementIsVisible;
 
 /**
  * Represents CdfBigQueryPropertiesActions
@@ -51,6 +51,6 @@ public class CdfBigQueryPropertiesActions {
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.updateTable.click();
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.truncatableSwitch.click();
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
-    waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, 1);
+    SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, 1);
   }
 }

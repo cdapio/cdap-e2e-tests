@@ -18,6 +18,7 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,8 +27,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
-
-import static io.cdap.e2e.utils.SeleniumHelper.waitAndClick;
 
 /**
  * Represents CdfPipelineRunAction
@@ -41,7 +40,7 @@ public class CdfPipelineRunAction {
 
   public static void runClick() throws InterruptedException {
     WebElement element = cdfPipelineRunLocators.run;
-    waitAndClick(element, 60);
+    SeleniumHelper.waitAndClick(element, 60);
   }
 
   public static String runPipelineStatus() {

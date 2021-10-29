@@ -18,10 +18,9 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
-import static io.cdap.e2e.utils.SeleniumHelper.waitAndClick;
 /**
  * Represents CdfStudioActions
  */
@@ -35,7 +34,7 @@ public class CdfStudioActions {
 
   public static void selectGCS() throws InterruptedException {
     WebElement element = CdfStudioLocators.gcsBucket;
-    waitAndClick(element);
+    SeleniumHelper.waitAndClick(element);
   }
 
 
