@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class CdfPipelineRunAction {
   }
 
   public static void runClick() throws InterruptedException {
-    SeleniumHelper.waitElementIsVisible(cdfPipelineRunLocators.run);
-    cdfPipelineRunLocators.run.click();
+    WebElement element = cdfPipelineRunLocators.run;
+    SeleniumHelper.waitAndClick(element, 60);
   }
 
   public static String runPipelineStatus() {

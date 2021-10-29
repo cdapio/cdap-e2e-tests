@@ -36,6 +36,8 @@ public class SeleniumHelper {
 
   static String path;
 
+  private static final long DEFAULT_TIMEOUT = 1;
+
   static {
     try {
       path = SeleniumHelper.readParameters("DownloadPath");
@@ -93,10 +95,18 @@ public class SeleniumHelper {
     element.sendKeys(keys);
   }
 
-  public static boolean waitElementIsVisible(WebElement element) throws InterruptedException {
-    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 60);
+  public static void waitElementIsVisible(WebElement element, long timeoutInSec) throws InterruptedException {
+    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), timeoutInSec);
     wait.until(ExpectedConditions.visibilityOf(element));
-    return true;
+  }
+
+  public static void waitAndClick(WebElement element, long timeOutInSec) throws InterruptedException {
+    waitElementIsVisible(element, timeOutInSec);
+    element.click();
+  }
+
+  public static void waitAndClick(WebElement element) throws InterruptedException {
+    waitAndClick(element, DEFAULT_TIMEOUT);
   }
 
   public static String readParameters(String property) throws IOException {
