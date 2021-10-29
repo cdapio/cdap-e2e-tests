@@ -24,7 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
-import static io.cdap.e2e.utils.SeleniumHelper.readParameters;
+import io.cdap.e2e.utils.SeleniumHelper;
 
 /**
  * Represents CdfBigQueryPropertiesActions
@@ -44,9 +44,9 @@ public class CdfBigQueryPropertiesActions {
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.
       bigQueryReferenceName.sendKeys("automation_test");
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.
-      projectID.sendKeys(readParameters("Project-ID"));
+      projectID.sendKeys(SeleniumHelper.readParameters("Project-ID"));
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(
-      readParameters("Data-Set"));
+      SeleniumHelper.readParameters("Data-Set"));
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(arg0);
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.updateTable.click();
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.truncatableSwitch.click();
