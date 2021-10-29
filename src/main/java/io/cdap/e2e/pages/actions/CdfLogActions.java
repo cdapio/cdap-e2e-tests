@@ -18,10 +18,9 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
-import static io.cdap.e2e.utils.SeleniumHelper.waitAndClick;
 
 /**
  * Represents CdfLogActions
@@ -35,12 +34,12 @@ public class CdfLogActions {
 
   public static void validateErrorPopupLog() throws InterruptedException {
     WebElement element = cdfLogLocators.errorMessagePopup;
-    waitAndClick(element);
+    SeleniumHelper.waitAndClick(element);
   }
 
   public static void validateErrorPopupLog(String error) throws InterruptedException {
     WebElement element = cdfLogLocators.errorMessagePopup;
-    waitAndClick(element);
+    SeleniumHelper.waitAndClick(element);
   }
 
 

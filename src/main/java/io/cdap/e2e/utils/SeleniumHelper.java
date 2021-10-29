@@ -36,7 +36,7 @@ public class SeleniumHelper {
 
   static String path;
 
-  private static long DEFAULT_TIMEOUT = 1;
+  private static final long DEFAULT_TIMEOUT = 1;
 
   static {
     try {
