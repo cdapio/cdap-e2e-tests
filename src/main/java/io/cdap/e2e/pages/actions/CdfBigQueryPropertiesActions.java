@@ -24,8 +24,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
-import io.cdap.e2e.utils.SeleniumHelper;
-
 /**
  * Represents CdfBigQueryPropertiesActions
  */
