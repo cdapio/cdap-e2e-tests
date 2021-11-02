@@ -19,6 +19,8 @@ package io.cdap.e2e.utils;
 import com.google.cloud.bigquery.BigQuery;
 import com.google.cloud.bigquery.BigQueryOptions;
 import com.google.cloud.bigquery.QueryJobConfiguration;
+import com.google.cloud.bigquery.Table;
+import com.google.cloud.bigquery.TableId;
 import com.google.cloud.bigquery.TableResult;
 
 import java.io.IOException;
@@ -66,6 +68,15 @@ public class GcpClient {
       return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
     }
     return 0;
+  }
+
+  public boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
+    BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
+      .build().getService();
+    Table table = bigquery.getTable(TableId.of(SeleniumHelper.readParameters("Project-ID"),
+                                               SeleniumHelper.readParameters("Data-Set"),
+                                               tableName));
+    return cmekKey.equals(table.getEncryptionConfiguration().getKmsKeyName());
   }
 }
 
