@@ -58,4 +58,7 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
   public static WebElement textSuccess;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"cmekKey\" and @class='MuiInputBase-input']")
+  public static WebElement cmekKey;
 }
