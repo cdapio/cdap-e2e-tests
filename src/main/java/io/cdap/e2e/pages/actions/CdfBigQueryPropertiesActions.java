@@ -51,4 +51,9 @@ public class CdfBigQueryPropertiesActions {
     io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
     SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, 1);
   }
+
+  public static void enterCmekProperty(String arg0) throws InterruptedException, IOException {
+    CdfStudioLocators.bigQueryProperties.click();
+    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(arg0));
+  }
 }
