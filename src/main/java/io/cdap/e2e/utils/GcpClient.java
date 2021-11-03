@@ -30,39 +30,32 @@ import java.io.IOException;
  */
 public class GcpClient {
 
-  public int countBqQuery(String table) throws IOException, InterruptedException {
-    String projectId = SeleniumHelper.readParameters("Project-ID");
-    String datasetName = SeleniumHelper.readParameters("Data-Set");
-    String selectQuery = "SELECT count(*) "
-      + " FROM `"
-      + projectId
-      + "."
-      + datasetName
-      + "."
-      + table
-      + "`";
+  private static BigQuery bigQueryService = null;
+
+  private static BigQuery getBigQueryService() throws IOException {
+    return (null == bigQueryService) ?
+      BigQueryOptions.newBuilder().setProjectId(
+        SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID)).build().getService() : bigQueryService;
+  }
+
+  public static int countBqQuery(String table) throws IOException, InterruptedException {
+    String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
+    String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
+    String selectQuery = "SELECT count(*) " + " FROM `" + projectId + "." + datasetName + "." + table + "`";
     return executeQuery(selectQuery);
   }
 
   //Deleting the table
-  public void dropBqQuery(String table) throws IOException, InterruptedException {
-    String projectId = SeleniumHelper.readParameters("Project-ID");
-    String datasetName = SeleniumHelper.readParameters("Data-Set");
-    String dropQuery = "DROP TABLE `"
-      + projectId
-      + "."
-      + datasetName
-      + "."
-      + table
-      + "`";
+  public static void dropBqQuery(String table) throws IOException, InterruptedException {
+    String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
+    String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
+    String dropQuery = "DROP TABLE `" + projectId + "." + datasetName + "." + table + "`";
     executeQuery(dropQuery);
   }
 
-  private int executeQuery(String query) throws InterruptedException, IOException {
-    BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
-      .build().getService();
+  private static int executeQuery(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
-    TableResult results = bigquery.query(queryConfig);
+    TableResult results = getBigQueryService().query(queryConfig);
     if (results.getTotalRows() > 0) {
       //No of records present in table
       return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
@@ -70,13 +63,10 @@ public class GcpClient {
     return 0;
   }
 
-  public boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
-    BigQuery bigquery = BigQueryOptions.newBuilder().setProjectId(SeleniumHelper.readParameters("Project-ID"))
-      .build().getService();
-    Table table = bigquery.getTable(TableId.of(SeleniumHelper.readParameters("Project-ID"),
-                                               SeleniumHelper.readParameters("Data-Set"),
-                                               tableName));
+  public static boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
+    Table table = getBigQueryService().getTable(
+      TableId.of(SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID),
+                 SeleniumHelper.readParameters(ConstantsUtil.DATASET), tableName));
     return cmekKey.equals(table.getEncryptionConfiguration().getKmsKeyName());
   }
 }
-

@@ -19,45 +19,40 @@ package io.cdap.e2e.pages.actions;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
+
+import static io.cdap.e2e.utils.ConstantsUtil.COLOR;
+import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
+import static io.cdap.e2e.utils.ConstantsUtil.ONE;
+import static io.cdap.e2e.utils.ConstantsUtil.WAIT_TIME;
 
 /**
  * Represents CdfPipelineRunAction
  */
 public class CdfPipelineRunAction {
-  public static CdfPipelineRunLocators cdfPipelineRunLocators = null;
+  private static final Logger logger = Logger.getLogger(CdfPipelineRunAction.class);
+  public static CdfPipelineRunLocators cdfPipelineRunLocators;
 
   static {
-    cdfPipelineRunLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfPipelineRunLocators.class);
+    cdfPipelineRunLocators = SeleniumHelper.getPropertiesLocators(CdfPipelineRunLocators.class);
   }
 
   public static void runClick() throws InterruptedException {
-    WebElement element = cdfPipelineRunLocators.run;
-    SeleniumHelper.waitAndClick(element, 60);
+    SeleniumHelper.waitAndClick(cdfPipelineRunLocators.run, WAIT_TIME);
   }
 
   public static String runPipelineStatus() {
-    return cdfPipelineRunLocators.runPipelineStatus.getAttribute("color");
+    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(COLOR);
   }
 
   public static Boolean isRunning() {
-    boolean bool = false;
-    try {
-
-      bool = cdfPipelineRunLocators.runningStatus.isDisplayed();
-    } catch (NoSuchElementException e) {
-      System.out.println("");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return bool;
+    return provideState(cdfPipelineRunLocators.runningStatus);
   }
 
   public static void logsClick() {
@@ -65,28 +60,34 @@ public class CdfPipelineRunAction {
   }
 
   public static Boolean isProvisioning() {
+    return provideState(cdfPipelineRunLocators.provisioningStatus);
+  }
+
+  private static boolean provideState(WebElement element) {
     boolean bool = false;
     try {
-      bool = cdfPipelineRunLocators.provisioningStatus.isDisplayed();
+      bool = element.isDisplayed();
     } catch (NoSuchElementException e) {
-      System.out.println("");
-    } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("Element not found" + e);
     }
     return bool;
   }
 
   public static String captureRawLogs() {
     JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-    js.executeScript("arguments[0].click()", cdfPipelineRunLocators.logsArrow);
+    js.executeScript(JS_CLICK, cdfPipelineRunLocators.logsArrow);
     cdfPipelineRunLocators.viewRawLogs.click();
     String parent = SeleniumDriver.getDriver().getWindowHandle();
-    ArrayList<String> tabs2 = new ArrayList<String>(SeleniumDriver.getDriver().getWindowHandles());
-    SeleniumDriver.getDriver().switchTo().window(tabs2.get(1));
-    String logs = SeleniumDriver.getDriver().findElement(By.xpath("/html/body/pre")).getText();
+    ArrayList<String> tabs2 = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
+    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ONE));
+    String logs = CdfPipelineRunLocators.logsTextbox.getText();
     Assert.assertNotNull(logs);
     SeleniumDriver.getDriver().close();
     SeleniumDriver.getDriver().switchTo().window(parent);
     return logs;
+  }
+
+  public static void schemaStatusValidation() {
+    Assert.assertTrue(CdfPipelineRunLocators.getSchemaSuccessStatus.isDisplayed());
   }
 }

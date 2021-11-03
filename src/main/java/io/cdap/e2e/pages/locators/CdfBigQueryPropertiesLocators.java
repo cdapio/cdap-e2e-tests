@@ -1,7 +1,9 @@
 /*
  * Copyright © 2021 Cask Data, Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * Licensed under the Apache License, Version 2.0 (
+ *
+ * the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
  *
@@ -24,7 +26,6 @@ import org.openqa.selenium.support.How;
  * Represents CdfBigQueryPropertiesLocators
  */
 public class CdfBigQueryPropertiesLocators {
-
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName' and @class='MuiInputBase-input']")
   public static WebElement bigQueryReferenceName;
