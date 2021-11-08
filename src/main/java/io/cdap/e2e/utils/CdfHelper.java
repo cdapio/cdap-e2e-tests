@@ -29,8 +29,6 @@ import static io.cdap.e2e.utils.RemoteClass.createDriverFromSession;
 public interface CdfHelper {
 
   default void openCdf() throws IOException, InterruptedException {
-    SeleniumDriver seleniumDriver = new SeleniumDriver();
-    RemoteWebDriver driver = createDriverFromSession(seleniumDriver.session(), seleniumDriver.url);
     SeleniumDriver.openPage(SeleniumHelper.readParameters("CDFURL"));
     try {
       SeleniumDriver.getDriver().switchTo().alert().accept();
