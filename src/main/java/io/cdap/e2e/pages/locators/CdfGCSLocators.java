@@ -20,6 +20,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import java.util.List;
+
 /**
  * Represents CdfGCSLocators
  */
@@ -27,6 +29,9 @@ public class CdfGCSLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Name used to identify this source for lineage']")
   public static WebElement referenceName;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='serviceFilePath' and @class='MuiInputBase-input']")
+  public static WebElement filePath;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='project' and @class='MuiInputBase-input']")
   public static WebElement projectID;
@@ -52,5 +57,15 @@ public class CdfGCSLocators {
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'Get Schema')]")
   public static WebElement getSchemaButton;
 
+  @FindBy(how = How.XPATH, using = "//*[@data-cy`='delimiter' and @class='MuiInputBase-input']")
+  public static WebElement delimiter;
 
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-properties-validate-btn']")
+  public static WebElement validateBtn;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-properties-validate-btn']")
+  public static WebElement successMessage;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Field name']")
+  public static List<WebElement> schemaSection;
 }

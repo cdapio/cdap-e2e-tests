@@ -74,8 +74,4 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement configRun;
-
 }
-
-
-

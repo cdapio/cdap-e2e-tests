@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * Represents BigQueryLocators
  */
+@Deprecated
 public class BigQueryLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@aria-label='Compose a new query']")
@@ -35,7 +36,6 @@ public class BigQueryLocators {
 
   @FindBy(how = How.XPATH, using = "//*[contains(text(),' Run ')]")
   public static List<WebElement> runQuery;
-
 
   @FindBy(how = How.XPATH, using = "//*[@class='p6n-bq-number-cell']")
   public static WebElement countTable;

@@ -39,17 +39,12 @@ public class CdfLogLocators {
   @FindBy(xpath = "//*[contains(text(),'Pipeline') and contains(text(),'failed')]/parent::*//child::div[2]")
   public WebElement validateCategoryError;
 
-
   @FindBy(xpath = "//*[@class=\"MuiButton-label\"  and contains(text(),'View')]")
   public WebElement getGoToAdvanceLogs;
 
   @FindBy(xpath = "//*[contains(text(),'Pipeline') and contains(text(),'succeeded')]")
   public WebElement validateSucceeded;
 
-//    @FindBy(xpath="//*[@class='icon-svg icon-close']")
-//    public WebElement closeLogs;
-
   @FindBy(xpath = "//*[contains(@class, 'close')]")
   public WebElement closeLogs;
 }
-
