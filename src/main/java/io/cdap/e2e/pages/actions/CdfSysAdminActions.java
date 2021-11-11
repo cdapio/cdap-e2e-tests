@@ -17,20 +17,21 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfSysAdminLocators;
-import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 /**
  * Represents CdfSysAdminActions
  */
 public class CdfSysAdminActions {
-  public static CdfSysAdminLocators cdfSysAdminLocators = null;
+  private static final Logger logger = Logger.getLogger(CdfSysAdminActions.class);
+  public static CdfSysAdminLocators cdfSysAdminLocators;
   static String checkParam = "false";
 
   static {
-    cdfSysAdminLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfSysAdminLocators.class);
+    cdfSysAdminLocators = SeleniumHelper.getPropertiesLocators(CdfSysAdminLocators.class);
   }
 
   public static void selectMacroAPIService(String service) {
@@ -62,10 +63,8 @@ public class CdfSysAdminActions {
     String verify = CdfSysAdminLocators.success200.getText();
     if (verify.contains("200")) {
       checkParam = "true";
-      System.out.println("Succeess");
+      logger.info("Success");
     }
-
-    Assert.assertTrue(checkParam, true);
+    Assert.assertTrue(true);
   }
-
 }

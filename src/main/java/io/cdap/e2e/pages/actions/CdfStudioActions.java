@@ -19,17 +19,19 @@ package io.cdap.e2e.pages.actions;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+
+import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
+
 /**
  * Represents CdfStudioActions
  */
 public class CdfStudioActions {
-  public static CdfStudioLocators cdfStudioLocators = null;
+  public static CdfStudioLocators cdfStudioLocators;
 
   static {
-    cdfStudioLocators =
-      PageFactory.initElements(SeleniumDriver.getDriver(), CdfStudioLocators.class);
+    cdfStudioLocators = SeleniumHelper.getPropertiesLocators(CdfStudioLocators.class);
   }
 
   public static void selectGCS() throws InterruptedException {
@@ -37,19 +39,16 @@ public class CdfStudioActions {
     SeleniumHelper.waitAndClick(element);
   }
 
-
   public static void clickSource() {
     CdfStudioLocators.source.click();
   }
-
 
   public static void sinkBigQuery() {
     CdfStudioLocators.sink.click();
     CdfStudioLocators.bigQueryObject.click();
   }
 
-
-  public static void runAndPreviewData() throws InterruptedException {
+  public static void runAndPreviewData() {
     CdfStudioLocators.previewButton.click();
     CdfStudioLocators.runButton.click();
   }
@@ -71,12 +70,15 @@ public class CdfStudioActions {
   }
 
   public static void pipelineDeploy() {
-    CdfStudioLocators.pipelineDeploy.click();
+    JavascriptExecutor jse = (JavascriptExecutor) SeleniumDriver.getDriver();
+    jse.executeScript(JS_CLICK, CdfStudioLocators.pipelineDeploy);
   }
 
-  public static String bannerErrorMessage() throws InterruptedException {
+  public static String bannerErrorMessage() {
     return CdfStudioLocators.bannerMssge.getText();
-
   }
 
+  public static void clickSink() {
+    CdfStudioLocators.sink.click();
+  }
 }
