@@ -11,7 +11,7 @@ Other keys (like @TC-Demo-1_GCS, Data-Set, etc) can be modified as needed. <br>
 
 **Configuration Details required for Setup:**
 
-1. Create a maven profile in the main project for which e2e tests are required, with a dependency of the framework artifact, along with your Runner file inside the failsafe plugin.
+1. Create a maven profile in the main project for which e2e tests are required, with a dependency of e2e test  framework artifact, along with your Runner file inside the failsafe plugin.
 
 NOTE: All the properties/ actions/ locators which are common to plugins, need to be or will be present in the framework code. Plugin specific properties/ actions/ locators should reside in the main project module (for eg: google-cloud).
 
