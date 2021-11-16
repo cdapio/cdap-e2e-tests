@@ -7,20 +7,7 @@
 Provide the local CDAP sandbox URL in [connectionParameters.properties](src/main/resources/connectionParameters.properties) file.
 >cdfurl=http://localhost:11011/pipelines/ns/default/studio
 
-Other keys (like @TC-Demo-1_GCS, Data-Set, etc) can be modified as needed. <br>
-
-**Configuration Details required for Setup:**
-
-1. Create a maven profile in the main project for which e2e tests are required, with a dependency of e2e test  framework artifact, along with your Runner file inside the failsafe plugin.
-
-NOTE: All the properties/ actions/ locators which are common to plugins, need to be or will be present in the framework code. Plugin specific properties/ actions/ locators should reside in the main project module (for eg: google-cloud).
-
-2. TestRunners and its step definition should also resides in the main project module. 
-
-
-3. The service account file has permission to access and connect to the GCP client, which is used for creation and validation.
-   Environment variable for 'Service account of cloud service': 
->GOOGLE_APPLICATION_CREDENTIALS=*`Path of JSON service key`*
+Other keys (like @TC-Demo-1_GCS, Data-Set, Project-ID etc.) can be modified as needed. <br>
 
 ### b) Remote CDAP instance:
 
