@@ -28,7 +28,6 @@ public class CdfSysAdminLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='request-method-selector']")
   public static WebElement apiCallType;
 
-
   @FindBy(how = How.XPATH, using = "//*[@data-cy='request-path-input']")
   public static WebElement apiInputURI;
 
@@ -46,6 +45,4 @@ public class CdfSysAdminLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='Clear All']")
   public static WebElement clearAll;
-
-
 }

@@ -17,31 +17,25 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
-import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 
 /**
  * Represents CdfLogActions
  */
 public class CdfLogActions {
-  public static CdfLogLocators cdfLogLocators = null;
+  public static CdfLogLocators cdfLogLocators;
 
   static {
-    cdfLogLocators = PageFactory.initElements(SeleniumDriver.getDriver(), CdfLogLocators.class);
+    cdfLogLocators = SeleniumHelper.getPropertiesLocators(CdfLogLocators.class);
   }
 
   public static void validateErrorPopupLog() throws InterruptedException {
-    WebElement element = cdfLogLocators.errorMessagePopup;
-    SeleniumHelper.waitAndClick(element);
+    SeleniumHelper.waitAndClick(cdfLogLocators.errorMessagePopup);
   }
 
   public static void validateErrorPopupLog(String error) throws InterruptedException {
-    WebElement element = cdfLogLocators.errorMessagePopup;
-    SeleniumHelper.waitAndClick(element);
+    SeleniumHelper.waitAndClick(cdfLogLocators.errorMessagePopup);
   }
-
 
   public static void dismissPopup() {
     cdfLogLocators.dismissable.click();
@@ -74,5 +68,4 @@ public class CdfLogActions {
   public static void closeLogs() {
     cdfLogLocators.closeLogs.click();
   }
-
 }

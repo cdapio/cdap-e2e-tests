@@ -17,6 +17,7 @@
 package io.cdap.e2e.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -35,6 +36,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SeleniumDriver {
 
+  private static final Logger logger = Logger.getLogger(SeleniumDriver.class);
   public static final int TIMEOUT = 50;
   public static final int PAGE_LOAD_TIMEOUT = 50;
   public static WebDriverWait waitDriver;
@@ -58,10 +60,9 @@ public class SeleniumDriver {
     chromeDriver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
     String window = chromeDriver.getWindowHandle();
     SessionId session = chromeDriver.getSessionId();
-    System.out.println("Session iD:" + session);
-    System.out.println("Window ->" + window);
+    logger.info("Session iD:" + session);
+    logger.info("Window ->" + window);
   }
-
 
   public static SessionId session() {
     SessionId session = chromeDriver.getSessionId();
@@ -73,10 +74,9 @@ public class SeleniumDriver {
       until(ExpectedConditions.invisibilityOf(chromeDriver.findElement(By.className("loading-bar"))));
   }
 
-
   public static void openPage(String url) {
-    System.out.println(url);
-    System.out.println(chromeDriver);
+    logger.info(url);
+    logger.info(chromeDriver);
     chromeDriver.get(url);
   }
 
@@ -102,8 +102,7 @@ public class SeleniumDriver {
     try {
       Thread.sleep(3000);
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      logger.error("page load interrupted" + e);
     }
   }
 }

@@ -18,42 +18,39 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
-import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
-import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
+
+import static io.cdap.e2e.utils.ConstantsUtil.AUTOMATION_TEST;
+import static io.cdap.e2e.utils.ConstantsUtil.DATASET;
+import static io.cdap.e2e.utils.ConstantsUtil.ONE;
+import static io.cdap.e2e.utils.ConstantsUtil.PROJECT_ID;
 
 /**
  * Represents CdfBigQueryPropertiesActions
  */
 public class CdfBigQueryPropertiesActions {
-  public static io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators cdfBigQueryPropertiesLocators = null;
-  static int run = 0;
+  public static CdfBigQueryPropertiesLocators cdfBigQueryPropertiesLocators;
 
   static {
-    cdfBigQueryPropertiesLocators =
-      PageFactory.initElements(SeleniumDriver.getDriver(),
-                               io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.class);
+    cdfBigQueryPropertiesLocators = SeleniumHelper.getPropertiesLocators(CdfBigQueryPropertiesLocators.class);
   }
 
-  public static void enterBigQueryProperties(String arg0) throws InterruptedException, IOException {
+  public static void enterBigQueryProperties(String tableProp) throws InterruptedException, IOException {
     CdfStudioLocators.bigQueryProperties.click();
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.
-      bigQueryReferenceName.sendKeys("automation_test");
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.
-      projectID.sendKeys(SeleniumHelper.readParameters("Project-ID"));
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(
-      SeleniumHelper.readParameters("Data-Set"));
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(arg0);
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.updateTable.click();
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.truncatableSwitch.click();
-    io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators.validateBttn.click();
-    SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, 1);
+    CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
+    CdfBigQueryPropertiesLocators.projectID.sendKeys(SeleniumHelper.readParameters(PROJECT_ID));
+    CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(SeleniumHelper.readParameters(DATASET));
+    CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(tableProp);
+    CdfBigQueryPropertiesLocators.updateTable.click();
+    CdfBigQueryPropertiesLocators.truncatableSwitch.click();
+    CdfBigQueryPropertiesLocators.validateBttn.click();
+    SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, ONE);
   }
 
-  public static void enterCmekProperty(String arg0) throws InterruptedException, IOException {
+  public static void enterCmekProperty(String prop) throws IOException {
     CdfStudioLocators.bigQueryProperties.click();
-    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(arg0));
+    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(prop));
   }
 }

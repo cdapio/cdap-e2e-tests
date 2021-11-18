@@ -17,6 +17,7 @@ package io.cdap.e2e.pages.locators;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 
 /**
  * Represents CdfPipelineRunLocators
@@ -64,4 +65,18 @@ public class CdfPipelineRunLocators {
   @FindBy(xpath = "//*[contains(text(), 'View Raw Logs') ]")
   public WebElement viewRawLogs;
 
+  @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[1]/following-sibling::span")
+  public static WebElement recordsInCount;
+
+  @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[2]/following-sibling::span")
+  public static WebElement recordsOutCount;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
+  public static WebElement getSchemaSuccessStatus;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
+  public static WebElement savedSuccessMessage;
+
+  @FindBy(how = How.XPATH, using = "/html/body/pre")
+  public static WebElement logsTextbox;
 }

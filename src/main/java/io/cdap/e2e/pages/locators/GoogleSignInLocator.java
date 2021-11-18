@@ -35,7 +35,6 @@ public class GoogleSignInLocator {
   @FindBy(name = "password")
   public WebElement passwordField;
 
-
   @FindBy(name = "u")
   public WebElement corpUsername;
 
@@ -44,7 +43,4 @@ public class GoogleSignInLocator {
 
   @FindBy(name = "signInButton")
   public WebElement corpSignnButton;
-
-
 }
-
