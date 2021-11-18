@@ -16,32 +16,31 @@
 
 package io.cdap.e2e.pages.actions;
 
+import io.cdap.e2e.pages.locators.CdfHomeLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
+
+import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
+import static io.cdap.e2e.utils.ConstantsUtil.PASS_CASE;
 
 /**
  * Represents CdfHomeActions
  */
 public class CdfHomeActions {
-  public static io.cdap.e2e.pages.locators.CdfHomeLocators cdfHomeLocators = null;
+  private static final Logger logger = Logger.getLogger(CdfHomeActions.class);
+  public static CdfHomeLocators cdfHomeLocators;
 
   static {
-
-    cdfHomeLocators =
-      PageFactory.initElements(SeleniumDriver.getDriver(), io.cdap.e2e.pages.locators.CdfHomeLocators.class);
-
+    cdfHomeLocators = SeleniumHelper.getPropertiesLocators(CdfHomeLocators.class);
   }
 
   public static void clickStudio() {
-
     JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-    WebElement element = io.cdap.e2e.pages.locators.CdfHomeLocators.studio;
-    js.executeScript("arguments[0].click();", element);
-    System.out.println("FIrst case passed");
-
+    WebElement element = CdfHomeLocators.studio;
+    js.executeScript(JS_CLICK, element);
+    logger.info(PASS_CASE);
   }
-
-
 }
