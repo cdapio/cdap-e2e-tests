@@ -25,7 +25,6 @@ import org.openqa.selenium.support.How;
  */
 public class CdfBigQueryPropertiesLocators {
 
-
   @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName' and @class='MuiInputBase-input']")
   public static WebElement bigQueryReferenceName;
 

@@ -30,5 +30,4 @@ public class CdfHomeLocators {
 
   @FindBy(how = How.XPATH, using = "//a[@href='/pipelines/ns/default/studio']")
   public static WebElement studio;
-
 }
