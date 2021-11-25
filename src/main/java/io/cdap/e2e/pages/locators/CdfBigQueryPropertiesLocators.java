@@ -60,4 +60,13 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"cmekKey\" and @class='MuiInputBase-input']")
   public static WebElement cmekKey;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  public static WebElement bigQueryDataSetProjectID;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='project' and @class='MuiInputBase-input']")
+  public static WebElement projectId;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  public static WebElement datasetProjectid;
 }
