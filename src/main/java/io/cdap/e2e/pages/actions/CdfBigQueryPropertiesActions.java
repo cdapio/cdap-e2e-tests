@@ -40,7 +40,9 @@ public class CdfBigQueryPropertiesActions {
   public static void enterBigQueryProperties(String tableProp) throws InterruptedException, IOException {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
-    CdfBigQueryPropertiesLocators.projectID.sendKeys(SeleniumHelper.readParameters(PROJECT_ID));
+    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID,
+                                       SeleniumHelper.readParameters(PROJECT_ID));
+    CdfBigQueryPropertiesLocators.datasetProjectID.sendKeys(SeleniumHelper.readParameters(PROJECT_ID));
     CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(SeleniumHelper.readParameters(DATASET));
     CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(tableProp);
     CdfBigQueryPropertiesLocators.updateTable.click();
@@ -52,5 +54,9 @@ public class CdfBigQueryPropertiesActions {
   public static void enterCmekProperty(String prop) throws IOException {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(prop));
+  }
+
+  public static void enterFilePath(String path) throws InterruptedException, IOException {
+    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.serviceFilePath, path);
   }
 }
