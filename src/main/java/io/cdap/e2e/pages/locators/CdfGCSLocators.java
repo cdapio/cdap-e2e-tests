@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class CdfGCSLocators {
 
-  @FindBy(how = How.XPATH, using = "//*[@placeholder='Name used to identify this source for lineage']")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName' and @class='MuiInputBase-input']")
   public static WebElement referenceName;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='serviceFilePath' and @class='MuiInputBase-input']")
@@ -68,4 +68,38 @@ public class CdfGCSLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Field name']")
   public static List<WebElement> schemaSection;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='minSplitSize'and @class='MuiInputBase-input']")
+  public static WebElement minSplitSize;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='maxSplitSize'and @class='MuiInputBase-input']")
+  public static WebElement maxSplitSize;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='fileRegex'and @class='MuiInputBase-input']")
+  public static WebElement regexPath;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='pathField'and @class='MuiInputBase-input']")
+  public static WebElement pathField;
+
+  @FindBy(how = How.XPATH, using = "//*[@class=\"MuiInputBase-root MuiInputBase-fullWidth\" " +
+    "and @data-cy=\"select-fileEncoding\"]")
+  public static WebElement fileEncoding;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='property-row-error' and contains(text(),'referenceName')]")
+  public static WebElement referenceError;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='property-row-error' and contains(text(),'path')]")
+  public static WebElement pathError;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder=\"Field Name\"]")
+  public static WebElement override;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"value\"]")
+  public static WebElement overrideDataType;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Field name' and @value='offset']")
+  public static WebElement schemaTable;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='get-schema-btn']//span[text()='Get Schema']")
+  public static WebElement getSchemaLoadComplete;
 }

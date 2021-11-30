@@ -74,4 +74,25 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement configRun;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
+  public static WebElement pipelineSaveSuccessBanner;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsource']")
+  public static WebElement sourceBigQuery;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-GCS-batchsink']")
+  public static WebElement gcs;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(@class,'plugin-endpoint_BigQuery')]")
+  public static WebElement fromBigQuery;
+
+  @FindBy(how = How.XPATH, using = "//*[@title='GCS']")
+  public static WebElement toGCS;
+
+  @FindBy(how = How.XPATH, using = "//*[@title=\"GCS\"]//following-sibling::div")
+  public static WebElement gcsProperties;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
+  public static WebElement previewSuccessBanner;
 }

@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.openqa.selenium.JavascriptExecutor;
@@ -80,5 +81,23 @@ public class CdfStudioActions {
 
   public static void clickSink() {
     CdfStudioLocators.sink.click();
+  }
+
+  public static void selectBQ() throws InterruptedException {
+    SeleniumHelper.waitAndClick(CdfStudioLocators.sourceBigQuery);
+  }
+
+  public static void sinkGcs() {
+    CdfStudioLocators.sink.click();
+    CdfStudioLocators.gcs.click();
+  }
+
+  public static void runAndPreviewForData() throws InterruptedException {
+    CdfStudioLocators.runButton.click();
+    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.previewSuccessBanner, ConstantsUtil.WAIT_TIME);
+  }
+
+  public static void clickBigQueryProperties() {
+    CdfStudioLocators.bigQueryProperties.click();
   }
 }

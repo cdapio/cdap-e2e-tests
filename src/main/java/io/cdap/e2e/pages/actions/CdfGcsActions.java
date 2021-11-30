@@ -22,10 +22,10 @@ import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.io.IOException;
 import java.util.UUID;
 
+import static io.cdap.e2e.utils.ConstantsUtil.COLOR;
 import static io.cdap.e2e.utils.ConstantsUtil.DELIMITER;
 import static io.cdap.e2e.utils.ConstantsUtil.OFFSET;
 import static io.cdap.e2e.utils.ConstantsUtil.PROJECT_ID;
@@ -112,4 +112,48 @@ public class CdfGcsActions {
   public static void validateSuccessMessage() {
     Assert.assertTrue(CdfGCSLocators.successMessage.isDisplayed());
   }
+
+  public static void selectFileEncoding(int utf) {
+    CdfGCSLocators.fileEncoding.click();
+    SeleniumDriver.getDriver().findElement(By.xpath("//li[text()='UTF-" + utf + "']")).click();
+  }
+
+  public static void enterMaxSplitSize(String maxSplitSize) {
+    CdfGCSLocators.maxSplitSize.sendKeys(maxSplitSize);
+  }
+
+  public static void enterMinSplitSize(String minSplitSize) {
+    CdfGCSLocators.minSplitSize.sendKeys(minSplitSize);
+  }
+
+  public static void enterRegexPath(String regexPath) {
+    CdfGCSLocators.regexPath.sendKeys(regexPath);
+  }
+
+  public static void enterPathField(String pathField) {
+    CdfGCSLocators.pathField.sendKeys(pathField);
+  }
+
+  public static void enterOverride(String override) {
+    CdfGCSLocators.override.sendKeys(override);
+  }
+
+  public static void clickOverrideDataType(String dataType) {
+    CdfGCSLocators.overrideDataType.click();
+    SeleniumHelper.waitAndClick(SeleniumDriver.getDriver()
+                                  .findElement(By.xpath("//*[@data-value='" + dataType + "']")));
+  }
+
+  public static String getReferenceErrorColor() {
+    return CdfGCSLocators.referenceError.getCssValue(COLOR);
+  }
+
+  public static String getPathError() {
+    return CdfGCSLocators.pathError.getText();
+  }
+
+  public static String getPathErrorColor() {
+    return CdfGCSLocators.pathError.getCssValue(COLOR);
+  }
+
 }

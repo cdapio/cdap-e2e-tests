@@ -32,6 +32,9 @@ public class CdfBigQueryPropertiesLocators {
   public static WebElement bigQueryDataSet;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  public static WebElement datasetProjectId;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"project\" and @class='MuiInputBase-input']")
   public static WebElement projectID;
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Table to write to']")
@@ -60,4 +63,60 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"cmekKey\" and @class='MuiInputBase-input']")
   public static WebElement cmekKey;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Table to read from']")
+  public static WebElement bigQuerySourceTable;
+
+  @FindBy(how = How.XPATH, using = "//*[@need to ask]")
+  public static WebElement label;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Name used to identify this source for lineage']")
+  public static WebElement referenceName;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='dataset' and @class='MuiInputBase-input']")
+  public static WebElement dataset;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='table' and @class='MuiInputBase-input']")
+  public static WebElement table;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Partition start date in format yyyy-MM-dd']")
+  public static WebElement partitionStartDate;
+
+  @FindBy(how = How.XPATH, using = "//*[@placeholder='Partition end date in format yyyy-MM-dd']")
+  public static WebElement partitionEndDate;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='filter' and @class='MuiInputBase-input']")
+  public static WebElement filter;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='bucket' and @class='MuiInputBase-input']")
+  public static WebElement temporaryBucketName;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-enableQueryingViews']")
+  public static WebElement enableQueryingViews;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationProject' and @class='MuiInputBase-input']")
+  public static WebElement viewMaterializationProject;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationDataset' and @class='MuiInputBase-input']")
+  public static WebElement viewMaterializationDataset;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Get Schema')]")
+  public static WebElement getSchemaButton;
+
+  @FindBy(how = How.XPATH,
+    using = "//*[@data-cy='BigQueryTable-preview-data-btn' and @class='node-preview-data-btn ng-scope']")
+  public static WebElement previewData;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName']" +
+    "/following-sibling::div[@data-cy='property-row-error']")
+  public static WebElement bigQueryReferenceNameError;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='dataset']" +
+    "/following-sibling::div[@data-cy='property-row-error']")
+  public static WebElement bigQueryDatasetError;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='table']" +
+    "/following-sibling::div[@data-cy='property-row-error']")
+  public static WebElement bigQueryTableError;
+
 }
