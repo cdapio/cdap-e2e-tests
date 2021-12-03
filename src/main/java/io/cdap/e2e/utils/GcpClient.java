@@ -53,7 +53,7 @@ public class GcpClient {
     executeQuery(dropQuery);
   }
 
-  private static int executeQuery(String query) throws InterruptedException, IOException {
+   public static int executeQuery(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
     TableResult results = getBigQueryService().query(queryConfig);
     if (results.getTotalRows() > 0) {
@@ -61,6 +61,16 @@ public class GcpClient {
       return Integer.parseInt((String) results.getValues().iterator().next().get(0).getValue());
     }
     return 0;
+  }
+
+  public static String executeSelectQuery(String query) throws InterruptedException, IOException {
+    QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
+    TableResult results = getBigQueryService().query(queryConfig);
+    if (results.getTotalRows() > 0) {
+      //Output record
+      return (String) results.getValues().iterator().next().get(0).getValue();
+    }
+    return "";
   }
 
   public static boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {

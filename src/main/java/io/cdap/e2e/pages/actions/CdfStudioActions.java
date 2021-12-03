@@ -94,7 +94,7 @@ public class CdfStudioActions {
 
   public static void runAndPreviewForData() throws InterruptedException {
     CdfStudioLocators.runButton.click();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.previewSuccessBanner, ConstantsUtil.WAIT_TIME);
+    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.previewSuccessBanner, 180);
   }
 
   public static void clickBigQueryProperties() {

@@ -95,4 +95,13 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
   public static WebElement previewSuccessBanner;
+
+  @FindBy(how = How.XPATH, using = "//*[@title='BigQuery2']")
+  public static WebElement toBigQuery2;
+
+  @FindBy(how = How.XPATH, using = "//*[@title='BigQuery2']//following-sibling::div")
+  public static WebElement bigQueryProperties2;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']//span")
+  public static WebElement pipelineFail;
 }
