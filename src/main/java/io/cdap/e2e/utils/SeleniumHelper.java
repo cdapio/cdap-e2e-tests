@@ -124,7 +124,7 @@ public class SeleniumHelper {
    * https://github.com/SeleniumHQ/selenium/issues/6741
    */
   public static void replaceElementValue(WebElement element, String value) {
-    for (int i = 0; i <= 100; i++) {
+    while (!element.getAttribute("value").equals("")) {
       element.sendKeys(Keys.BACK_SPACE);
     }
     element.sendKeys(value);

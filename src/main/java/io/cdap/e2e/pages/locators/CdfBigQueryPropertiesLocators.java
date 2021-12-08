@@ -31,7 +31,7 @@ public class CdfBigQueryPropertiesLocators {
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Dataset the table belongs to']")
   public static WebElement bigQueryDataSet;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"project\" and @class='MuiInputBase-input']")
   public static WebElement projectID;
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Table to write to']")
@@ -60,4 +60,13 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"cmekKey\" and @class='MuiInputBase-input']")
   public static WebElement cmekKey;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  public static WebElement datasetProjectID;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"dataset\" and @type='text']")
+  public static WebElement dataset;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"serviceFilePath\" and @type='text']")
+  public static WebElement serviceFilePath;
 }

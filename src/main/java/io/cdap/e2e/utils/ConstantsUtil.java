@@ -31,7 +31,6 @@ public class ConstantsUtil {
   public static final String GUSERNAME = "gLoginUsername";
   public static final String GPAZWRD = "gPassword";
   public static final String CDFURL = "cdfurl";
-
   public static final int ONE = 1;
   public static final int WAIT_TIME = 60;
   public static final String PASS_CASE = "First case passed";

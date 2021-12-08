@@ -28,7 +28,6 @@ import org.openqa.selenium.support.ui.Select;
 public class CdfSysAdminActions {
   private static final Logger logger = Logger.getLogger(CdfSysAdminActions.class);
   public static CdfSysAdminLocators cdfSysAdminLocators;
-  static String checkParam = "false";
 
   static {
     cdfSysAdminLocators = SeleniumHelper.getPropertiesLocators(CdfSysAdminLocators.class);
@@ -60,11 +59,12 @@ public class CdfSysAdminActions {
   }
 
   public static void verifySuccess() {
+    boolean checkParam = false;
     String verify = CdfSysAdminLocators.success200.getText();
     if (verify.contains("200")) {
-      checkParam = "true";
+      checkParam = true;
       logger.info("Success");
     }
-    Assert.assertTrue(true);
+    Assert.assertTrue(checkParam);
   }
 }

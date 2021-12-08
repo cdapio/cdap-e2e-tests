@@ -100,12 +100,12 @@ public interface CdfHelper {
 
   default int recordIn() {
     String incount = CdfPipelineRunLocators.recordsInCount.getText();
-    return Integer.parseInt(incount);
+    return Integer.parseInt(incount.replaceAll(",", ""));
   }
 
   default int recordOut() {
     String outcount = CdfPipelineRunLocators.recordsOutCount.getText();
-    return Integer.parseInt(outcount);
+    return Integer.parseInt(outcount.replaceAll(",", ""));
   }
 
   default void deleteBigQueryTable(String table) throws IOException, InterruptedException {
