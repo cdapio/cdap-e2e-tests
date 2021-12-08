@@ -28,13 +28,13 @@ public class CdfBigQueryPropertiesLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName' and @class='MuiInputBase-input']")
   public static WebElement bigQueryReferenceName;
 
-  @FindBy(how = How.XPATH, using = "//*[@placeholder='Dataset the table belongs to']")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='dataset' and @class='MuiInputBase-input']")
   public static WebElement bigQueryDataSet;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"project\" and @class='MuiInputBase-input']")
   public static WebElement projectID;
 
-  @FindBy(how = How.XPATH, using = "//*[@placeholder='Table to write to']")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='table' and @class='MuiInputBase-input']")
   public static WebElement bigQueryTable;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-truncateTable']")
@@ -69,4 +69,32 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"serviceFilePath\" and @type='text']")
   public static WebElement serviceFilePath;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='partitionFrom' and @class='MuiInputBase-input']")
+  public static WebElement partitionStartDate;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='partitionTo' and @class='MuiInputBase-input']")
+  public static WebElement partitionEndDate;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='filter' and @class='MuiInputBase-input']")
+  public static WebElement filter;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='bucket' and @class='MuiInputBase-input']")
+  public static WebElement temporaryBucketName;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-enableQueryingViews']")
+  public static WebElement enableQueryingViews;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationProject' and @class='MuiInputBase-input']")
+  public static WebElement viewMaterializationProject;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationDataset' and @class='MuiInputBase-input']")
+  public static WebElement viewMaterializationDataset;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Get Schema')]")
+  public static WebElement getSchemaButton;
+
+  @FindBy(how = How.XPATH,
+    using = "//*[@data-cy='BigQueryTable-preview-data-btn' and @class='node-preview-data-btn ng-scope']")
+  public static WebElement previewData;
 }
