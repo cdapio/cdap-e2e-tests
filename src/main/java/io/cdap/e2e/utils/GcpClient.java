@@ -25,6 +25,7 @@ import com.google.cloud.bigquery.TableResult;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Represents GcpClient
@@ -43,7 +44,7 @@ public class GcpClient {
     String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
     String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
     String selectQuery = "SELECT count(*) " + " FROM `" + projectId + "." + datasetName + "." + table + "`";
-    return executeQuery(selectQuery);
+    return executeSelectQuery(selectQuery).map(Integer::parseInt).orElse(0);
   }
 
   //Deleting the table
@@ -51,9 +52,10 @@ public class GcpClient {
     String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
     String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
     String dropQuery = "DROP TABLE `" + projectId + "." + datasetName + "." + table + "`";
-    executeQuery(dropQuery);
+    executeSelectQuery(dropQuery);
   }
 
+  @Deprecated
   public static int executeQuery(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
     TableResult results = getBigQueryService().query(queryConfig);
@@ -64,14 +66,14 @@ public class GcpClient {
     return 0;
   }
 
-  public static String executeSelectQuery(String query) throws InterruptedException, IOException {
+  public static Optional<String> executeSelectQuery(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
     TableResult results = getBigQueryService().query(queryConfig);
     String outputRowValue = StringUtils.EMPTY;
     if (results.getTotalRows() > 0) {
       outputRowValue =  (String) results.getValues().iterator().next().get(0).getValue();
     }
-    return outputRowValue;
+    return Optional.ofNullable(outputRowValue);
   }
 
   public static boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
