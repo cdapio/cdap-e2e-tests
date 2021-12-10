@@ -44,7 +44,7 @@ public class GcpClient {
     String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
     String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
     String selectQuery = "SELECT count(*) " + " FROM `" + projectId + "." + datasetName + "." + table + "`";
-    return executeSelectQuery(selectQuery).map(Integer::parseInt).orElse(0);
+    return executeQueryOnBQ(selectQuery).map(Integer::parseInt).orElse(0);
   }
 
   //Deleting the table
@@ -52,9 +52,13 @@ public class GcpClient {
     String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
     String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
     String dropQuery = "DROP TABLE `" + projectId + "." + datasetName + "." + table + "`";
-    executeSelectQuery(dropQuery);
+    executeQueryOnBQ(dropQuery);
   }
 
+  /**
+   * @deprecated
+   * Use {@link GcpClient#executeQueryOnBQ(String)} instead and parsing needs to be done by caller.
+   */
   @Deprecated
   public static int executeQuery(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
@@ -66,10 +70,10 @@ public class GcpClient {
     return 0;
   }
 
-  public static Optional<String> executeSelectQuery(String query) throws InterruptedException, IOException {
+  public static Optional<String> executeQueryOnBQ(String query) throws InterruptedException, IOException {
     QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
     TableResult results = getBigQueryService().query(queryConfig);
-    String outputRowValue = StringUtils.EMPTY;
+    String outputRowValue = null;
     if (results.getTotalRows() > 0) {
       outputRowValue =  (String) results.getValues().iterator().next().get(0).getValue();
     }
