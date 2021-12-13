@@ -22,7 +22,6 @@ import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.Table;
 import com.google.cloud.bigquery.TableId;
 import com.google.cloud.bigquery.TableResult;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Optional;
