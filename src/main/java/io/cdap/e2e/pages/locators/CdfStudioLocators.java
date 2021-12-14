@@ -74,4 +74,37 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement configRun;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
+  public static WebElement statusBanner;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']//span")
+  public static WebElement statusBannerText;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='plugin-properties-validate-btn']/span[text()='Validate']")
+  public static WebElement validateButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsource']")
+  public static WebElement sourceBigQuery;
+
+  @FindBy(how = How.XPATH, using = "//*[@class='fa fa-remove']")
+  public static WebElement closeButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
+  public static WebElement pluginValidationSuccessMsg;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-error-msg']")
+  public static WebElement pluginValidationErrorMsg;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-GCS-batchsink']")
+  public static WebElement gcs;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(@class,'plugin-endpoint_BigQuery')]")
+  public static WebElement fromBigQuery;
+
+  @FindBy(how = How.XPATH, using = "//*[@title='GCS']")
+  public static WebElement toGCS;
+
+  @FindBy(how = How.XPATH, using = "//*[@title=\"GCS\"]//following-sibling::div")
+  public static WebElement gcsProperties;
 }

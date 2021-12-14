@@ -22,7 +22,6 @@ import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import java.io.IOException;
 import java.util.UUID;
 
@@ -93,7 +92,7 @@ public class CdfGcsActions {
   public static void selectFormat(String formatType) throws InterruptedException {
     CdfGCSLocators.format.click();
     SeleniumHelper.waitAndClick(SeleniumDriver.getDriver().findElement(By.xpath(
-      "//*[contains(text(),'" + formatType + "')]")));
+      "//li[@data-value='" + formatType + "']")));
   }
 
   public static void validateSchema() {
@@ -111,5 +110,47 @@ public class CdfGcsActions {
 
   public static void validateSuccessMessage() {
     Assert.assertTrue(CdfGCSLocators.successMessage.isDisplayed());
+  }
+
+  public static void selectFileEncoding(String encoding) {
+    CdfGCSLocators.fileEncoding.click();
+    SeleniumDriver.getDriver().findElement(By.xpath("//li[text()='" + encoding + "']")).click();
+  }
+
+  public static void enterMaxSplitSize(String maxSplitSize) {
+    CdfGCSLocators.maxSplitSize.sendKeys(maxSplitSize);
+  }
+
+  public static void enterMinSplitSize(String minSplitSize) {
+    CdfGCSLocators.minSplitSize.sendKeys(minSplitSize);
+  }
+
+  public static void enterRegexPath(String regexPath) {
+    CdfGCSLocators.regexPath.sendKeys(regexPath);
+  }
+
+  public static void enterPathField(String pathField) {
+    CdfGCSLocators.pathField.sendKeys(pathField);
+  }
+
+  public static void enterOverride(String override) {
+    CdfGCSLocators.override.sendKeys(override);
+  }
+
+  public static void clickOverrideDataType(String dataType) {
+    CdfGCSLocators.overrideDataType.click();
+    SeleniumHelper.waitAndClick(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-value='" + dataType + "']")));
+  }
+
+  public static void enterDelimiterField(String delimiter) {
+    CdfGCSLocators.delimiterField.sendKeys(delimiter);
+  }
+
+  public static void clickPreviewData() {
+    SeleniumHelper.waitAndClick(CdfGCSLocators.gcsPreviewData);
+  }
+  public static void enterSampleSize(String sampleSize) {
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.samplesize, sampleSize);
   }
 }

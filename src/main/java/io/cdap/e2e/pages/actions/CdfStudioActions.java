@@ -17,8 +17,10 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
@@ -80,5 +82,35 @@ public class CdfStudioActions {
 
   public static void clickSink() {
     CdfStudioLocators.sink.click();
+  }
+
+  public static void clickValidateButton() {
+    CdfStudioLocators.validateButton.click();
+  }
+
+  public static void clickProperties(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@title,'" + plugin + "')]//following-sibling::div")).click();
+  }
+
+  public static void  connectSourceAndSink(String source, String sink) {
+    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@title,'" + sink + "')]")));
+    SeleniumHelper.dragAndDrop(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@class,'plugin-endpoint_" + source + "')]")),
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@title,'" + sink + "')]")));
+  }
+
+  public static void selectBQ() throws InterruptedException {
+    SeleniumHelper.waitAndClick(CdfStudioLocators.sourceBigQuery);
+  }
+
+  public static void clickCloseButton() {
+    SeleniumHelper.waitAndClick(CdfStudioLocators.closeButton);
+  }
+
+  public static void sinkGcs() {
+    CdfStudioLocators.sink.click();
+    CdfStudioLocators.gcs.click();
   }
 }
