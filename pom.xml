@@ -190,7 +190,7 @@ the License.-->
     <dependency>
       <groupId>io.github.bonigarcia</groupId>
       <artifactId>webdrivermanager</artifactId>
-      <version>5.0.1</version>
+      <version>5.0.3</version>
     </dependency>
 
     <dependency>
