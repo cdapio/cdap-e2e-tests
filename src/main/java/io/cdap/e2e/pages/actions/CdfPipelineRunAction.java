@@ -19,11 +19,12 @@ package io.cdap.e2e.pages.actions;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
-import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ import static io.cdap.e2e.utils.ConstantsUtil.WAIT_TIME;
  * Represents CdfPipelineRunAction
  */
 public class CdfPipelineRunAction {
-  private static final Logger logger = Logger.getLogger(CdfPipelineRunAction.class);
+  private static final Logger logger = LoggerFactory.getLogger(CdfPipelineRunAction.class);
   public static CdfPipelineRunLocators cdfPipelineRunLocators;
 
   static {

@@ -17,7 +17,6 @@
 package io.cdap.e2e.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,6 +25,8 @@ import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SeleniumDriver {
 
-  private static final Logger logger = Logger.getLogger(SeleniumDriver.class);
+  private static final Logger logger = LoggerFactory.getLogger(SeleniumDriver.class);
   public static final int TIMEOUT = 50;
   public static final int PAGE_LOAD_TIMEOUT = 50;
   public static WebDriverWait waitDriver;
@@ -76,7 +77,7 @@ public class SeleniumDriver {
 
   public static void openPage(String url) {
     logger.info(url);
-    logger.info(chromeDriver);
+    logger.info(String.valueOf(chromeDriver));
     chromeDriver.get(url);
   }
 

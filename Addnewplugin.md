@@ -2,7 +2,8 @@
 
 ## Add New Tests
 
-1. All the automation code should strictly be under the src/e2e-test/.
+1. All the automation code should strictly be under the src/e2e-test/ of main project repo for which automation needs to be done.
+2. For logging: Place logback-test.xml under src/e2e-test/resources folder and give this location in resources tag under build section of pom profile, and also add logback-classic dependency.
 
 **Configuration Details required for Setup:**
 
