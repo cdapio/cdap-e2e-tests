@@ -19,9 +19,10 @@ package io.cdap.e2e.pages.actions;
 import io.cdap.e2e.pages.locators.CdfHomeLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
 import static io.cdap.e2e.utils.ConstantsUtil.PASS_CASE;
@@ -30,7 +31,7 @@ import static io.cdap.e2e.utils.ConstantsUtil.PASS_CASE;
  * Represents CdfHomeActions
  */
 public class CdfHomeActions {
-  private static final Logger logger = Logger.getLogger(CdfHomeActions.class);
+  private static final Logger logger = LoggerFactory.getLogger(CdfHomeActions.class);
   public static CdfHomeLocators cdfHomeLocators;
 
   static {
