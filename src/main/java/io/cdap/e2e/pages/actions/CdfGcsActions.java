@@ -65,6 +65,11 @@ public class CdfGcsActions {
     SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(text(),'csv')]")).click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfGcsActions#enterSampleSize(String)}
+   */
+  @Deprecated
   public static void enterSamplesize() {
     CdfGCSLocators.samplesize.sendKeys(SAMPLE_SIZE);
   }
@@ -73,6 +78,11 @@ public class CdfGcsActions {
     CdfGCSLocators.closeButton.click();
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
+   */
   public static void gcsProperties() {
     CdfGCSLocators.gcsProperties.click();
   }
@@ -85,6 +95,11 @@ public class CdfGcsActions {
     CdfGCSLocators.getSchemaButton.click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfGcsActions#enterDelimiterField(String)}
+   */
+  @Deprecated
   public static void delimiter() throws IOException {
     CdfGCSLocators.delimiter.sendKeys(SeleniumHelper.readParameters(DELIMITER));
   }
@@ -147,6 +162,11 @@ public class CdfGcsActions {
     CdfGCSLocators.delimiterField.sendKeys(delimiter);
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
+   */
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfGCSLocators.gcsPreviewData);
   }

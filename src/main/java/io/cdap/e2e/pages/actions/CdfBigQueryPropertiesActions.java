@@ -120,6 +120,11 @@ public class CdfBigQueryPropertiesActions {
     SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.temporaryBucketName, bucket);
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
+   */
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfBigQueryPropertiesLocators.previewData);
   }

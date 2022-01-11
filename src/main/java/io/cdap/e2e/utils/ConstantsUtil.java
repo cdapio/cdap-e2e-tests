@@ -34,4 +34,8 @@ public class ConstantsUtil {
   public static final int ONE = 1;
   public static final int WAIT_TIME = 60;
   public static final String PASS_CASE = "First case passed";
+  public static final String ERROR_MSG_COLOR = "#a40403";
+  public static final String ERROR_MSG_MANDATORY = "Required property 'PROPERTY' has no value.";
+  public static final String DEFAULT_PLUGIN_PROPERTIES_FILE = "pluginParameters.properties";
+  public static final String DEFAULT_ERROR_PROPERTIES_FILE = "errorMessage.properties";
 }

@@ -113,6 +113,10 @@ public interface CdfHelper {
     BeforeActions.scenario.write("BigQuery Table Deleted Successfully");
   }
 
+  default void selectSourcePlugin(String pluginName) {
+    SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsource']")).click();
+  }
+
   default void selectSinkPlugin(String pluginName) {
     SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsink']")).click();
   }
@@ -126,5 +130,43 @@ public interface CdfHelper {
   default WebElement linkSinkPlugin(String pluginName) {
     String a = "//*[contains(@data-cy,'plugin-node-" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@data-cy,'plugin-node-" + pluginName + "')]"));
+  }
+
+  default void connectSourceAndSink(String source, String sink) {
+    By sinkNode = By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') and @data-type='batchsink']");
+    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
+    SeleniumHelper.dragAndDrop(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@class,'plugin-endpoint_" + source + "')]")),
+      SeleniumDriver.getDriver().findElement(sinkNode));
+  }
+
+  default void openSourcePluginProperties(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
+                 "@data-type='batchsource']//div[@class='node-metadata']/div[2]")).click();
+  }
+
+  default void openSinkPluginProperties(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
+                 "@data-type='batchsink']//div[@class='node-metadata']/div[2]")).click();
+  }
+
+  default void openSourcePluginPreviewData(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsource']//*[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+  }
+
+  default void openSinkPluginPreviewData(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsink']//*[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+  }
+
+  default boolean compareTransferredRecords() {
+    int inCount = recordIn();
+    int outCount = recordOut();
+    return outCount != 0 && inCount == outCount;
   }
 }

@@ -36,15 +36,30 @@ public class CdfStudioActions {
     cdfStudioLocators = SeleniumHelper.getPropertiesLocators(CdfStudioLocators.class);
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   */
+  @Deprecated
   public static void selectGCS() throws InterruptedException {
     WebElement element = CdfStudioLocators.gcsBucket;
     SeleniumHelper.waitAndClick(element);
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   */
+  @Deprecated
   public static void clickSource() {
     CdfStudioLocators.source.click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfStudioActions#clickSink()} and {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
+   */
+  @Deprecated
   public static void sinkBigQuery() {
     CdfStudioLocators.sink.click();
     CdfStudioLocators.bigQueryObject.click();
@@ -88,11 +103,22 @@ public class CdfStudioActions {
     CdfStudioLocators.validateButton.click();
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
+   */
+  @Deprecated
   public static void clickProperties(String plugin) {
     SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@title,'" + plugin + "')]//following-sibling::div")).click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#connectSourceAndSink(String, String)}
+   */
+  @Deprecated
   public static void  connectSourceAndSink(String source, String sink) {
     SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@title,'" + sink + "')]")));
@@ -101,6 +127,11 @@ public class CdfStudioActions {
       SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@title,'" + sink + "')]")));
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   */
+  @Deprecated
   public static void selectBQ() throws InterruptedException {
     SeleniumHelper.waitAndClick(CdfStudioLocators.sourceBigQuery);
   }
@@ -109,6 +140,11 @@ public class CdfStudioActions {
     SeleniumHelper.waitAndClick(CdfStudioLocators.closeButton);
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfStudioActions#clickSink()} and {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
+   */
+  @Deprecated
   public static void sinkGcs() {
     CdfStudioLocators.sink.click();
     CdfStudioLocators.gcs.click();
