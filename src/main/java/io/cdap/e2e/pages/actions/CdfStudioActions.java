@@ -92,7 +92,7 @@ public class CdfStudioActions {
   }
 
   public static String bannerErrorMessage() {
-    return CdfStudioLocators.bannerMssge.getText();
+    return CdfStudioLocators.statusBannerText.getText();
   }
 
   public static void clickSink() {

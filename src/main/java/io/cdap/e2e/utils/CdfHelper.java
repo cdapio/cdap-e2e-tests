@@ -22,6 +22,7 @@ import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import io.cdap.e2e.pages.actions.CdfStudioActions;
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.pages.locators.CdfSchemaLocators;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -31,12 +32,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import stepsdesign.BeforeActions;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
  * Represents CdfHelper
  */
 public interface CdfHelper {
+
+  CdfSchemaLocators SCHEMA_LOCATORS = SeleniumHelper.getPropertiesLocators(CdfSchemaLocators.class);
 
   default void openCdf() throws IOException, InterruptedException {
     SeleniumDriver.openPage(SeleniumHelper.readParameters(ConstantsUtil.CDFURL));
@@ -168,5 +173,17 @@ public interface CdfHelper {
     int inCount = recordIn();
     int outCount = recordOut();
     return outCount != 0 && inCount == outCount;
+  }
+
+  default void validateSchema(Map<String, String> expectedOutputSchema) {
+    Map<String, String> actualOutputSchema = new HashMap<>();
+    int index = 0;
+    for (WebElement element : SCHEMA_LOCATORS.outputSchemaColumnNames) {
+      actualOutputSchema.put(element.getAttribute("value"),
+                             SCHEMA_LOCATORS.outputSchemaDataTypes.get(index).getAttribute("title"));
+      index++;
+    }
+    Assert.assertTrue("Schema displayed on UI should match with expected Schema",
+                      actualOutputSchema.equals(expectedOutputSchema));
   }
 }

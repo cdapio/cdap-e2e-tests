@@ -57,9 +57,6 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'Preview')]")
   public static WebElement preview;
 
-  @FindBy(how = How.XPATH, using = "//*[@class='ng-binding ng-scope']")
-  public static WebElement bannerMssge;
-
   @FindBy(how = How.XPATH, using = "//*[@class=\"pipeline-name ng-binding ng-scope placeholder\"]")
   public static WebElement pipelineName;
 

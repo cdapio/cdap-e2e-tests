@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import static io.cdap.e2e.utils.ConstantsUtil.DELIMITER;
@@ -110,6 +111,10 @@ public class CdfGcsActions {
       "//li[@data-value='" + formatType + "']")));
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#validateSchema(Map)}
+   */
   public static void validateSchema() {
     for (WebElement schema : CdfGCSLocators.schemaSection) {
       String actualStr = schema.getAttribute(VALUE);

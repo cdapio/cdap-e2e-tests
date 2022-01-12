@@ -71,9 +71,6 @@ public class CdfPipelineRunLocators {
   @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[2]/following-sibling::span")
   public static WebElement recordsOutCount;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
-  public static WebElement getSchemaSuccessStatus;
-
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
   public static WebElement savedSuccessMessage;
 
