@@ -125,6 +125,7 @@ public class CdfBigQueryPropertiesActions {
    * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
    */
+  @Deprecated
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfBigQueryPropertiesLocators.previewData);
   }

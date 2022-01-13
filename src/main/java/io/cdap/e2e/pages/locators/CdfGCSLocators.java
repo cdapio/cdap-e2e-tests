@@ -64,7 +64,7 @@ public class CdfGCSLocators {
   public static WebElement validateBtn;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
-  public static WebElement successMessage;
+  public static WebElement validationSuccessMessage;
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Field name']")
   public static List<WebElement> schemaSection;

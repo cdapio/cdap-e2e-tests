@@ -24,20 +24,20 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * CommonUtils contains the e2e test helper functions.
+ * PluginPropertyUtils contains the e2e test helper functions.
  */
-public class CommonUtils {
+public class PluginPropertyUtils {
 
   private static final Properties pluginProperties = new Properties();
   private static final Properties errorProperties = new Properties();
-  private static final Logger logger = LoggerFactory.getLogger(CommonUtils.class);
+  private static final Logger logger = LoggerFactory.getLogger(PluginPropertyUtils.class);
   private static final String defaultPluginPropFile = ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE;
   private static final String defaultErrorPropFile = ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE;
 
   public static void initProperties(String pluginPropertiesFileName, String errorPropertiesFileName) {
     try {
-      pluginProperties.load(CommonUtils.class.getResourceAsStream("/" + pluginPropertiesFileName));
-      errorProperties.load(CommonUtils.class.getResourceAsStream("/" + errorPropertiesFileName));
+      pluginProperties.load(PluginPropertyUtils.class.getResourceAsStream("/" + pluginPropertiesFileName));
+      errorProperties.load(PluginPropertyUtils.class.getResourceAsStream("/" + errorPropertiesFileName));
     } catch (Exception e) {
       logger.error("Error while reading properties file" + e);
     }
@@ -61,7 +61,7 @@ public class CommonUtils {
     String expectedErrorMessage = ConstantsUtil.ERROR_MSG_MANDATORY.replaceAll("PROPERTY", property);
     String actualErrorMessage = findPropertyErrorElement(property).getText();
     Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
-    String actualColor = CommonUtils.getErrorColor(CommonUtils.findPropertyErrorElement(property));
+    String actualColor = PluginPropertyUtils.getErrorColor(PluginPropertyUtils.findPropertyErrorElement(property));
     String expectedColor = ConstantsUtil.ERROR_MSG_COLOR;
     Assert.assertEquals(expectedColor, actualColor);
   }

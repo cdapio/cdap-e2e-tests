@@ -84,6 +84,7 @@ public class CdfGcsActions {
    * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
    */
+  @Deprecated
   public static void gcsProperties() {
     CdfGCSLocators.gcsProperties.click();
   }
@@ -115,6 +116,7 @@ public class CdfGcsActions {
    * @deprecated
    * Use {@link io.cdap.e2e.utils.CdfHelper#validateSchema(Map)}
    */
+  @Deprecated
   public static void validateSchema() {
     for (WebElement schema : CdfGCSLocators.schemaSection) {
       String actualStr = schema.getAttribute(VALUE);
@@ -129,7 +131,7 @@ public class CdfGcsActions {
   }
 
   public static void validateSuccessMessage() {
-    Assert.assertTrue(CdfGCSLocators.successMessage.isDisplayed());
+    Assert.assertTrue(CdfGCSLocators.validationSuccessMessage.isDisplayed());
   }
 
   public static void selectFileEncoding(String encoding) {
@@ -172,6 +174,7 @@ public class CdfGcsActions {
    * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
    */
+  @Deprecated
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfGCSLocators.gcsPreviewData);
   }
