@@ -40,15 +40,6 @@ public class CdfSchemaLocators {
   @FindBy(how = How.XPATH, using = "//div[@data-cy='Input Schema']//div[@data-cy='schema-fields-list']//select")
   public static List<WebElement> inputSchemaDataTypes;
 
-  @FindBy(how = How.XPATH, using = "(//h2[text()='Input Records']/parent::div/div/div/div/div)[1]//div[text()!='']")
-  public static List<WebElement> previewInputRecordColumnNames;
-
-  @FindBy(how = How.XPATH, using = "(//h2[text()='Output Records']/parent::div/div/div/div/div)[1]//div[text()!='']")
-  public static List<WebElement> previewOutputRecordColumnNames;
-
-  @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
-  public static WebElement previewPropertiesTab;
-
   @FindBy(how = How.XPATH, using = "//*[@data-cy='get-schema-btn']//span[text()='Get Schema']")
   public static WebElement getSchemaLoadComplete;
 }

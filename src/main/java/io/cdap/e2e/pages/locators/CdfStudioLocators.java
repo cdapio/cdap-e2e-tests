@@ -20,6 +20,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import java.util.List;
+
 /**
  * Represents CdfStudioLocators
  */
@@ -104,4 +106,15 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@title=\"GCS\"]//following-sibling::div")
   public static WebElement gcsProperties;
+
+  @FindBy(how = How.XPATH,
+    using = "(//h2[text()='Input Records']/parent::div//div[not(@data-cy='preview-data-row')]/div[text()!=''])")
+  public static List<WebElement> previewInputRecordColumnNames;
+
+  @FindBy(how = How.XPATH,
+    using = "(//h2[text()='Output Records']/parent::div//div[not(@data-cy='preview-data-row')]/div[text()!=''])")
+  public static List<WebElement> previewOutputRecordColumnNames;
+
+  @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
+  public static WebElement previewPropertiesTab;
 }
