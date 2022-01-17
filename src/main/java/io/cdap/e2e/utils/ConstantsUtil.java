@@ -34,5 +34,4 @@ public class ConstantsUtil {
   public static final int ONE = 1;
   public static final int WAIT_TIME = 60;
   public static final String PASS_CASE = "First case passed";
-  public static final String CMEK_KEY = "cmek";
 }

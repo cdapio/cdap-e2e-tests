@@ -18,7 +18,6 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
-import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 import java.io.IOException;
@@ -38,6 +37,11 @@ public class CdfBigQueryPropertiesActions {
     cdfBigQueryPropertiesLocators = SeleniumHelper.getPropertiesLocators(CdfBigQueryPropertiesLocators.class);
   }
 
+  /**
+   * @deprecated
+   * Call individual actions as per test scenario in step design file.
+   */
+  @Deprecated
   public static void enterBigQueryProperties(String tableProp) throws InterruptedException, IOException {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
@@ -48,10 +52,6 @@ public class CdfBigQueryPropertiesActions {
     CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(tableProp);
     CdfBigQueryPropertiesLocators.updateTable.click();
     CdfBigQueryPropertiesLocators.truncatableSwitch.click();
-    String cmek = SeleniumHelper.readParameters(ConstantsUtil.CMEK_KEY);
-    if (cmek != null) {
-      CdfBigQueryPropertiesActions.enterCmekProperty(cmek);
-    }
     CdfBigQueryPropertiesLocators.validateBttn.click();
     SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, ONE);
   }
