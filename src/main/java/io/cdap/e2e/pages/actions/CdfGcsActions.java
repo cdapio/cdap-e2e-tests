@@ -153,4 +153,34 @@ public class CdfGcsActions {
   public static void enterSampleSize(String sampleSize) {
     SeleniumHelper.replaceElementValue(CdfGCSLocators.samplesize, sampleSize);
   }
+
+  public static void enterPathSuffix(String pathSuffix) {
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.pathSuffix, pathSuffix);
+  }
+
+  public static void toggleWriteHeader() {
+    CdfGCSLocators.writeHeaderSwitch.click();
+  }
+
+  public static void enterLocation(String location) {
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.location, location);
+  }
+
+  public static void selectContentType(String contentType) {
+    CdfGCSLocators.contentType.click();
+    SeleniumHelper.waitAndClick(SeleniumDriver.getDriver().findElement(By.xpath(
+      "//li[@data-value='" + contentType + "']")));
+  }
+
+  public static void enterEncryptionKeyName(String cmek) {
+    CdfGCSLocators.cmekKey.sendKeys(cmek);
+  }
+
+  public static void enterOutputFilePrefix(String filePrefix) {
+    CdfGCSLocators.outputFilePrefix.sendKeys(filePrefix);
+  }
+
+  public static void enterFileSystemProperties(String fileSystemProperties) {
+    CdfGCSLocators.fileSystemProperties.sendKeys(fileSystemProperties);
+  }
 }

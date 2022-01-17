@@ -18,6 +18,7 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 import java.io.IOException;
@@ -47,13 +48,16 @@ public class CdfBigQueryPropertiesActions {
     CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(tableProp);
     CdfBigQueryPropertiesLocators.updateTable.click();
     CdfBigQueryPropertiesLocators.truncatableSwitch.click();
+    String cmek = SeleniumHelper.readParameters(ConstantsUtil.CMEK_KEY);
+    if (cmek != null) {
+      CdfBigQueryPropertiesActions.enterCmekProperty(cmek);
+    }
     CdfBigQueryPropertiesLocators.validateBttn.click();
     SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, ONE);
   }
 
-  public static void enterCmekProperty(String prop) throws IOException {
-    CdfStudioLocators.bigQueryProperties.click();
-    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(prop));
+  public static void enterCmekProperty(String cmek) throws IOException {
+    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(cmek);
   }
 
   public static void enterFilePath(String path) throws InterruptedException, IOException {
