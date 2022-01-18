@@ -37,6 +37,11 @@ public class CdfBigQueryPropertiesActions {
     cdfBigQueryPropertiesLocators = SeleniumHelper.getPropertiesLocators(CdfBigQueryPropertiesLocators.class);
   }
 
+  /**
+   * @deprecated
+   * Call individual actions as per test scenario in step design file.
+   */
+  @Deprecated
   public static void enterBigQueryProperties(String tableProp) throws InterruptedException, IOException {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
@@ -51,9 +56,8 @@ public class CdfBigQueryPropertiesActions {
     SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, ONE);
   }
 
-  public static void enterCmekProperty(String prop) throws IOException {
-    CdfStudioLocators.bigQueryProperties.click();
-    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(SeleniumHelper.readParameters(prop));
+  public static void enterCmekProperty(String cmek) throws IOException {
+    CdfBigQueryPropertiesLocators.cmekKey.sendKeys(cmek);
   }
 
   public static void enterFilePath(String path) throws InterruptedException, IOException {

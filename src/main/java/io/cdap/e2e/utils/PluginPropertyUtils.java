@@ -28,32 +28,26 @@ import java.util.Properties;
  */
 public class PluginPropertyUtils {
 
-  private static final Properties pluginProperties = new Properties();
+  protected static Properties pluginProperties = new Properties();
   private static final Properties errorProperties = new Properties();
   private static final Logger logger = LoggerFactory.getLogger(PluginPropertyUtils.class);
-  private static final String defaultPluginPropFile = ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE;
-  private static final String defaultErrorPropFile = ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE;
 
-  public static void initProperties(String pluginPropertiesFileName, String errorPropertiesFileName) {
+  static {
     try {
-      pluginProperties.load(PluginPropertyUtils.class.getResourceAsStream("/" + pluginPropertiesFileName));
-      errorProperties.load(PluginPropertyUtils.class.getResourceAsStream("/" + errorPropertiesFileName));
+      pluginProperties.load(PluginPropertyUtils.class
+                              .getResourceAsStream("/" + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE));
+      errorProperties.load(PluginPropertyUtils.class
+                             .getResourceAsStream("/" + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE));
     } catch (Exception e) {
       logger.error("Error while reading properties file" + e);
     }
   }
 
   public static String pluginProp(String property) {
-    if (pluginProperties.isEmpty()) {
-      initProperties(defaultPluginPropFile, defaultErrorPropFile);
-    }
     return pluginProperties.getProperty(property);
   }
 
   public static String errorProp(String property) {
-    if (errorProperties.isEmpty()) {
-      initProperties(defaultPluginPropFile, defaultErrorPropFile);
-    }
     return errorProperties.getProperty(property);
   }
 
