@@ -48,7 +48,6 @@ public class SeleniumDriver {
     WebDriverManager.chromedriver().setup();
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--no-sandbox");
-    chromeOptions.addArguments("--disable-setuid-sandbox");
     chromeOptions.addArguments("--headless");
     chromeOptions.addArguments("--window-size=" + SeleniumHelper.readParameters("windowSize"));
     chromeOptions.addArguments("--disable-gpu");
