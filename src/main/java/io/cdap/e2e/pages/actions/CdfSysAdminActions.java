@@ -18,16 +18,15 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfSysAdminLocators;
 import io.cdap.e2e.utils.SeleniumHelper;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.Select;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents CdfSysAdminActions
  */
 public class CdfSysAdminActions {
-  private static final Logger logger = LoggerFactory.getLogger(CdfSysAdminActions.class);
+  private static final Logger logger = Logger.getLogger(CdfSysAdminActions.class);
   public static CdfSysAdminLocators cdfSysAdminLocators;
 
   static {

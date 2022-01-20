@@ -31,7 +31,7 @@ import java.nio.file.Paths;
  */
 public class BeforeActions {
   public static Scenario scenario;
-  public static File file;
+  public static File myObj;
 
   @Before
   public void setUp(Scenario scenario) throws IOException {
@@ -43,11 +43,11 @@ public class BeforeActions {
     featureName = featureName.replace(".", "-");
     String scenarioName = scenario.getName().replace(" ", "-").concat(".txt");
     new File("target/e2e-debug/" + featureName).mkdirs();
-    file = new File("target/e2e-debug/" + featureName + "/" + scenarioName);
-    Path path = Paths.get(String.valueOf(file));
+    myObj = new File("target/e2e-debug/" + featureName + "/" + scenarioName);
+    Path path = Paths.get(String.valueOf(myObj));
     if (Files.deleteIfExists(path)) {
-      file.createNewFile();
+      myObj.createNewFile();
     }
-    file.createNewFile();
+    myObj.createNewFile();
   }
 }

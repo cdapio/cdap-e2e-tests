@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.utils;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -24,8 +25,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +36,7 @@ import java.util.Properties;
 public class SeleniumHelper {
 
   static String path;
-  private static final Logger logger = LoggerFactory.getLogger(SeleniumHelper.class);
+  private static final Logger logger = Logger.getLogger(SeleniumHelper.class);
   private static final long DEFAULT_TIMEOUT = 1;
   private static Properties connectProperties = new Properties();
 
