@@ -18,9 +18,8 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.BigQueryLocators;
 import io.cdap.e2e.utils.SeleniumHelper;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import java.util.List;
  */
 @Deprecated
 public class BigQueryActions {
-  private static final Logger logger = LoggerFactory.getLogger(BigQueryActions.class);
+  private static final Logger logger = Logger.getLogger(BigQueryActions.class);
   public static BigQueryLocators bigQueryLocators;
 
   static {
