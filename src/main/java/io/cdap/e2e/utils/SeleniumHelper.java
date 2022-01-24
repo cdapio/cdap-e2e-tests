@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -124,7 +125,14 @@ public class SeleniumHelper {
    * https://github.com/SeleniumHQ/selenium/issues/6741
    */
   public static void replaceElementValue(WebElement element, String value) {
-    while (!element.getAttribute("value").equals("")) {
+    replaceElementValue(element, value, 1024);
+  }
+
+  public static void replaceElementValue(WebElement element, String value, int limit) {
+    for (int i = 0; i < limit; i++) {
+      if (element.getAttribute("value").equals(StringUtils.EMPTY)) {
+        break;
+      }
       element.sendKeys(Keys.BACK_SPACE);
     }
     element.sendKeys(value);
