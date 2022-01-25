@@ -18,12 +18,18 @@ package io.cdap.e2e.utils;
 
 import com.google.api.gax.paging.Page;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Represents Google Cloud Storage client.
@@ -75,4 +81,16 @@ public class StorageClient {
   public static String getObjectCmekKey(String bucketName, String blobName) throws IOException {
     return getObjectMetadata(bucketName, blobName).getKmsKeyName();
   }
+
+  public static Bucket createBucket(String bucketName) throws IOException {
+    return getStorageService().create(BucketInfo.of(bucketName));
+  }
+
+  public static Blob uploadObject(String bucketName, String objectName, String filePath)
+    throws IOException, URISyntaxException {
+    return getStorageService().create(
+      BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build(),
+      Files.readAllBytes(Paths.get(StorageClient.class.getResource("/" + filePath).toURI())));
+  }
+
 }
