@@ -18,6 +18,7 @@ package io.cdap.e2e.utils;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -124,9 +125,9 @@ public class SeleniumHelper {
    * https://github.com/SeleniumHQ/selenium/issues/6741
    */
   public static void replaceElementValue(WebElement element, String value) {
-    while (!element.getAttribute("value").equals("")) {
-      element.sendKeys(Keys.BACK_SPACE);
-    }
+    element.click();
+    JavascriptExecutor javascriptExecutor = (JavascriptExecutor) SeleniumDriver.getDriver();
+    javascriptExecutor.executeScript("arguments[0].value='';", element);
     element.sendKeys(value);
   }
 
