@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import static io.cdap.e2e.utils.ConstantsUtil.DELIMITER;
@@ -65,6 +66,11 @@ public class CdfGcsActions {
     SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(text(),'csv')]")).click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfGcsActions#enterSampleSize(String)}
+   */
+  @Deprecated
   public static void enterSamplesize() {
     CdfGCSLocators.samplesize.sendKeys(SAMPLE_SIZE);
   }
@@ -73,6 +79,12 @@ public class CdfGcsActions {
     CdfGCSLocators.closeButton.click();
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
+   */
+  @Deprecated
   public static void gcsProperties() {
     CdfGCSLocators.gcsProperties.click();
   }
@@ -85,6 +97,11 @@ public class CdfGcsActions {
     CdfGCSLocators.getSchemaButton.click();
   }
 
+  /**
+   * @deprecated
+   * Use {@link CdfGcsActions#enterDelimiterField(String)}
+   */
+  @Deprecated
   public static void delimiter() throws IOException {
     CdfGCSLocators.delimiter.sendKeys(SeleniumHelper.readParameters(DELIMITER));
   }
@@ -95,6 +112,11 @@ public class CdfGcsActions {
       "//li[@data-value='" + formatType + "']")));
   }
 
+  /**
+   * @deprecated
+   * Use {@link io.cdap.e2e.utils.CdfHelper#validateSchema(Map)}
+   */
+  @Deprecated
   public static void validateSchema() {
     for (WebElement schema : CdfGCSLocators.schemaSection) {
       String actualStr = schema.getAttribute(VALUE);
@@ -109,7 +131,7 @@ public class CdfGcsActions {
   }
 
   public static void validateSuccessMessage() {
-    Assert.assertTrue(CdfGCSLocators.successMessage.isDisplayed());
+    Assert.assertTrue(CdfGCSLocators.validationSuccessMessage.isDisplayed());
   }
 
   public static void selectFileEncoding(String encoding) {
@@ -147,10 +169,46 @@ public class CdfGcsActions {
     CdfGCSLocators.delimiterField.sendKeys(delimiter);
   }
 
+  /**
+   * @deprecated
+   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
+   * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
+   */
+  @Deprecated
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfGCSLocators.gcsPreviewData);
   }
   public static void enterSampleSize(String sampleSize) {
     SeleniumHelper.replaceElementValue(CdfGCSLocators.samplesize, sampleSize);
+  }
+
+  public static void enterPathSuffix(String pathSuffix) {
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.pathSuffix, pathSuffix);
+  }
+
+  public static void toggleWriteHeader() {
+    CdfGCSLocators.writeHeaderSwitch.click();
+  }
+
+  public static void enterLocation(String location) {
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.location, location);
+  }
+
+  public static void selectContentType(String contentType) {
+    CdfGCSLocators.contentType.click();
+    SeleniumHelper.waitAndClick(SeleniumDriver.getDriver().findElement(By.xpath(
+      "//li[@data-value='" + contentType + "']")));
+  }
+
+  public static void enterEncryptionKeyName(String cmek) {
+    CdfGCSLocators.cmekKey.sendKeys(cmek);
+  }
+
+  public static void enterOutputFilePrefix(String filePrefix) {
+    CdfGCSLocators.outputFilePrefix.sendKeys(filePrefix);
+  }
+
+  public static void enterFileSystemProperties(String fileSystemProperties) {
+    CdfGCSLocators.fileSystemProperties.sendKeys(fileSystemProperties);
   }
 }

@@ -88,7 +88,4 @@ public class CdfPipelineRunAction {
     return logs;
   }
 
-  public static void schemaStatusValidation() {
-    Assert.assertTrue(CdfPipelineRunLocators.getSchemaSuccessStatus.isDisplayed());
-  }
 }

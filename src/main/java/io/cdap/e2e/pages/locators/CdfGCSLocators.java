@@ -63,8 +63,8 @@ public class CdfGCSLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-properties-validate-btn']")
   public static WebElement validateBtn;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-properties-validate-btn']")
-  public static WebElement successMessage;
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
+  public static WebElement validationSuccessMessage;
 
   @FindBy(how = How.XPATH, using = "//*[@placeholder='Field name']")
   public static List<WebElement> schemaSection;
@@ -103,4 +103,25 @@ public class CdfGCSLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"delimiter\" and @class=\"MuiInputBase-input\"]")
   public static WebElement delimiterField;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='suffix']")
+  public static WebElement pathSuffix;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-writeHeader']")
+  public static WebElement writeHeaderSwitch;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='location']")
+  public static WebElement location;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='select-contentType']")
+  public static WebElement contentType;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='cmekKey']")
+  public static WebElement cmekKey;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='outputFileNameBase']")
+  public static WebElement outputFilePrefix;
+
+  @FindBy(how = How.XPATH, using = "//textarea[@data-cy='fileSystemProperties']")
+  public static WebElement fileSystemProperties;
 }

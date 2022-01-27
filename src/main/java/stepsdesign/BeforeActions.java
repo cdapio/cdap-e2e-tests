@@ -33,7 +33,7 @@ public class BeforeActions {
   public static Scenario scenario;
   public static File myObj;
 
-  @Before
+  @Before(order = 0)
   public void setUp(Scenario scenario) throws IOException {
     this.scenario = scenario;
     SeleniumDriver.setUpDriver();

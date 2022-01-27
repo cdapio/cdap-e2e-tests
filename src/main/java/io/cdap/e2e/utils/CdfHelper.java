@@ -22,6 +22,7 @@ import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import io.cdap.e2e.pages.actions.CdfStudioActions;
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.pages.locators.CdfSchemaLocators;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -31,12 +32,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import stepsdesign.BeforeActions;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
  * Represents CdfHelper
  */
 public interface CdfHelper {
+
+  CdfSchemaLocators SCHEMA_LOCATORS = SeleniumHelper.getPropertiesLocators(CdfSchemaLocators.class);
 
   default void openCdf() throws IOException, InterruptedException {
     SeleniumDriver.openPage(SeleniumHelper.readParameters(ConstantsUtil.CDFURL));
@@ -50,7 +55,7 @@ public interface CdfHelper {
 
   default int countOfNoOfRecordsTransferredToBigQueryIn(String tableName) throws IOException, InterruptedException {
     int countRecords;
-    countRecords = GcpClient.countBqQuery(SeleniumHelper.readParameters(tableName));
+    countRecords = BigQueryClient.countBqQuery(SeleniumHelper.readParameters(tableName));
     BeforeActions.scenario.write("**********No of Records Transferred in table" +
                                    SeleniumHelper.readParameters(tableName) + "*:" + countRecords);
     Assert.assertTrue(countRecords > 0);
@@ -109,8 +114,12 @@ public interface CdfHelper {
   }
 
   default void deleteBigQueryTable(String table) throws IOException, InterruptedException {
-    GcpClient.dropBqQuery(SeleniumHelper.readParameters(table));
+    BigQueryClient.dropBqQuery(SeleniumHelper.readParameters(table));
     BeforeActions.scenario.write("BigQuery Table Deleted Successfully");
+  }
+
+  default void selectSourcePlugin(String pluginName) {
+    SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsource']")).click();
   }
 
   default void selectSinkPlugin(String pluginName) {
@@ -126,5 +135,55 @@ public interface CdfHelper {
   default WebElement linkSinkPlugin(String pluginName) {
     String a = "//*[contains(@data-cy,'plugin-node-" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@data-cy,'plugin-node-" + pluginName + "')]"));
+  }
+
+  default void connectSourceAndSink(String source, String sink) {
+    By sinkNode = By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') and @data-type='batchsink']");
+    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
+    SeleniumHelper.dragAndDrop(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@class,'plugin-endpoint_" + source + "')]")),
+      SeleniumDriver.getDriver().findElement(sinkNode));
+  }
+
+  default void openSourcePluginProperties(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
+                 "@data-type='batchsource']//div[@class='node-metadata']/div[2]")).click();
+  }
+
+  default void openSinkPluginProperties(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
+                 "@data-type='batchsink']//div[@class='node-metadata']/div[2]")).click();
+  }
+
+  default void openSourcePluginPreviewData(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsource']//*[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+  }
+
+  default void openSinkPluginPreviewData(String plugin) {
+    SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsink']//*[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+  }
+
+  default boolean compareTransferredRecords() {
+    int inCount = recordIn();
+    int outCount = recordOut();
+    return outCount != 0 && inCount == outCount;
+  }
+
+  default void validateSchema(Map<String, String> expectedOutputSchema) {
+    Map<String, String> actualOutputSchema = new HashMap<>();
+    int index = 0;
+    for (WebElement element : SCHEMA_LOCATORS.outputSchemaColumnNames) {
+      actualOutputSchema.put(element.getAttribute("value"),
+                             SCHEMA_LOCATORS.outputSchemaDataTypes.get(index).getAttribute("title"));
+      index++;
+    }
+    Assert.assertTrue("Schema displayed on UI should match with expected Schema",
+                      actualOutputSchema.equals(expectedOutputSchema));
   }
 }

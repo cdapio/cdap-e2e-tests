@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 /**
- * Represents GcpClient
+ * Represents BigQuery Client
  */
-public class GcpClient {
+public class BigQueryClient {
 
   private static BigQuery bigQueryService = null;
 
@@ -56,7 +56,7 @@ public class GcpClient {
 
   /**
    * @deprecated
-   * Use {@link GcpClient#getSoleQueryResult(String)} instead and parsing needs to be done by caller.
+   * Use {@link BigQueryClient#getSoleQueryResult(String)} instead and parsing needs to be done by caller.
    */
   @Deprecated
   public static int executeQuery(String query) throws InterruptedException, IOException {
