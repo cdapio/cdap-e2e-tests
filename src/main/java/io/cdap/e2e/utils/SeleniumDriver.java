@@ -94,7 +94,6 @@ public class SeleniumDriver {
 
   public static void tearDown() {
     if (chromeDriver != null) {
-      chromeDriver.close();
       chromeDriver.quit();
     }
     seleniumDriver = null;
