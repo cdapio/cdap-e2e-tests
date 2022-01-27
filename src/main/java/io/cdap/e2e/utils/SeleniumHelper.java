@@ -40,7 +40,7 @@ public class SeleniumHelper {
 
   static String path;
   private static final Logger logger = LoggerFactory.getLogger(SeleniumHelper.class);
-  private static final long DEFAULT_TIMEOUT = 1;
+  private static final long DEFAULT_TIMEOUT = 30;
   private static Properties connectProperties = new Properties();
 
   static {
