@@ -30,9 +30,13 @@ import org.openqa.selenium.WebDriver;
 public class AfterActions {
 
   @AfterStep
-  public static void tearDown(Scenario scenario) {
-    WebDriver driver = SeleniumDriver.getDriver();
-    byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    scenario.embed(screenshotBytes, "image/png");
+  public static void takeScreenshot(Scenario scenario) {
+    try {
+      WebDriver driver = SeleniumDriver.getDriver();
+      byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+      scenario.embed(screenshotBytes, "image/png");
+    } catch (Exception e) {
+      scenario.write("Exception in capturing screenshot : " + e.getMessage() + " : " + e);
+    }
   }
 }

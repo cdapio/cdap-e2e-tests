@@ -32,11 +32,16 @@ import java.nio.file.Paths;
 public class BeforeActions {
   public static Scenario scenario;
   public static File myObj;
+  public static boolean beforeAllFlag = true;
 
   @Before(order = 0)
   public void setUp(Scenario scenario) throws IOException {
+    if (beforeAllFlag) {
+      Runtime.getRuntime().addShutdownHook(new Thread(SeleniumDriver::tearDown));
+      beforeAllFlag = false;
+      SeleniumDriver.setUpDriver();
+    }
     this.scenario = scenario;
-    SeleniumDriver.setUpDriver();
     String[] tab = scenario.getId().split("/");
     int rawFeatureNameLength = tab.length;
     String featureName = tab[rawFeatureNameLength - 1].split(":")[0];
