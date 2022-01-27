@@ -17,6 +17,7 @@
 package io.cdap.e2e.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -130,11 +131,17 @@ public class SeleniumHelper {
   }
 
   public static void replaceElementValue(WebElement element, String value, int limit) {
+    boolean flag = false;
     for (int i = 0; i < limit; i++) {
       if (element.getAttribute("value").equals(StringUtils.EMPTY)) {
+        flag = true;
         break;
       }
       element.sendKeys(Keys.BACK_SPACE);
+    }
+    if (!flag) {
+      Assert.fail("Element's current value is not cleared - " + element + " - "
+                    + "Current value :" + element.getAttribute("value"));
     }
     element.sendKeys(value);
   }
