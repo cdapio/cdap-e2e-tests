@@ -53,6 +53,8 @@ public class SeleniumDriver {
     chromeOptions.addArguments("--headless");
     chromeOptions.addArguments("--window-size=" + SeleniumHelper.readParameters("windowSize"));
     chromeOptions.addArguments("--disable-gpu");
+    chromeOptions.addArguments("--disable-dev-shm-usage");
+    chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
     chromeDriver = new ChromeDriver(chromeOptions);
     chromeDriver.manage().window().maximize();
     HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();

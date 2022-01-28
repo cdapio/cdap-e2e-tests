@@ -19,6 +19,8 @@ package stepsdesign;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,13 +35,18 @@ public class BeforeActions {
   public static Scenario scenario;
   public static File myObj;
   public static boolean beforeAllFlag = true;
+  private static final Logger logger = LoggerFactory.getLogger(BeforeActions.class);
 
   @Before(order = 0)
   public void setUp(Scenario scenario) throws IOException {
     if (beforeAllFlag) {
-      Runtime.getRuntime().addShutdownHook(new Thread(SeleniumDriver::tearDown));
+      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        SeleniumDriver.tearDown();
+        logger.info("-----------------Selenium session closed------------------");
+      }));
       beforeAllFlag = false;
       SeleniumDriver.setUpDriver();
+      logger.info("-----------------Selenium session created------------------");
     }
     this.scenario = scenario;
     String[] tab = scenario.getId().split("/");
