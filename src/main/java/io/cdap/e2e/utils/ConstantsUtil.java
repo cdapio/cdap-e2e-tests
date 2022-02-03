@@ -38,4 +38,6 @@ public class ConstantsUtil {
   public static final String ERROR_MSG_MANDATORY = "Required property 'PROPERTY' has no value.";
   public static final String DEFAULT_PLUGIN_PROPERTIES_FILE = "pluginParameters.properties";
   public static final String DEFAULT_ERROR_PROPERTIES_FILE = "errorMessage.properties";
+  public static final String VALIDATION_SUCCESS_MESSAGE = "validationSuccessMessage";
+  public static final String VALIDATION_ERROR_MESSAGE = "validationErrorMessage";
 }
