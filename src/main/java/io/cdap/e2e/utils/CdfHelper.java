@@ -55,9 +55,9 @@ public interface CdfHelper {
 
   default int countOfNoOfRecordsTransferredToBigQueryIn(String tableName) throws IOException, InterruptedException {
     int countRecords;
-    countRecords = BigQueryClient.countBqQuery(SeleniumHelper.readParameters(tableName));
+    countRecords = BigQueryClient.countBqQuery(PluginPropertyUtils.pluginProp(tableName));
     BeforeActions.scenario.write("**********No of Records Transferred in table" +
-                                   SeleniumHelper.readParameters(tableName) + "*:" + countRecords);
+                                   PluginPropertyUtils.pluginProp(tableName) + "*:" + countRecords);
     Assert.assertTrue(countRecords > 0);
     return countRecords;
   }
@@ -114,7 +114,7 @@ public interface CdfHelper {
   }
 
   default void deleteBigQueryTable(String table) throws IOException, InterruptedException {
-    BigQueryClient.dropBqQuery(SeleniumHelper.readParameters(table));
+    BigQueryClient.dropBqQuery(PluginPropertyUtils.pluginProp(table));
     BeforeActions.scenario.write("BigQuery Table Deleted Successfully");
   }
 
