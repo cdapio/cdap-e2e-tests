@@ -18,6 +18,7 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 import java.io.IOException;
@@ -46,9 +47,9 @@ public class CdfBigQueryPropertiesActions {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
     SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID,
-                                       SeleniumHelper.readParameters(PROJECT_ID));
-    CdfBigQueryPropertiesLocators.datasetProjectID.sendKeys(SeleniumHelper.readParameters(PROJECT_ID));
-    CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(SeleniumHelper.readParameters(DATASET));
+                                       PluginPropertyUtils.pluginProp(PROJECT_ID));
+    CdfBigQueryPropertiesLocators.datasetProjectID.sendKeys(PluginPropertyUtils.pluginProp(PROJECT_ID));
+    CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(PluginPropertyUtils.pluginProp(DATASET));
     CdfBigQueryPropertiesLocators.bigQueryTable.sendKeys(tableProp);
     CdfBigQueryPropertiesLocators.updateTable.click();
     CdfBigQueryPropertiesLocators.truncatableSwitch.click();

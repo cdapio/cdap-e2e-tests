@@ -40,7 +40,7 @@ public class StorageClient {
 
   private static Storage getStorageService() throws IOException {
     return (null == storageService) ? StorageOptions.newBuilder().setProjectId(
-      SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID)).build().getService() : storageService;
+      PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID)).build().getService() : storageService;
   }
 
   public static Page<Bucket> listBuckets() throws IOException {

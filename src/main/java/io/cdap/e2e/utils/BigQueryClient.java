@@ -36,20 +36,20 @@ public class BigQueryClient {
   private static BigQuery getBigQueryService() throws IOException {
     return (null == bigQueryService) ?
       BigQueryOptions.newBuilder().setProjectId(
-        SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID)).build().getService() : bigQueryService;
+        PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID)).build().getService() : bigQueryService;
   }
 
   public static int countBqQuery(String table) throws IOException, InterruptedException {
-    String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
-    String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
+    String projectId = PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID);
+    String datasetName = PluginPropertyUtils.pluginProp(ConstantsUtil.DATASET);
     String selectQuery = "SELECT count(*) " + " FROM `" + projectId + "." + datasetName + "." + table + "`";
     return getSoleQueryResult(selectQuery).map(Integer::parseInt).orElse(0);
   }
 
   //Deleting the table
   public static void dropBqQuery(String table) throws IOException, InterruptedException {
-    String projectId = SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID);
-    String datasetName = SeleniumHelper.readParameters(ConstantsUtil.DATASET);
+    String projectId = PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID);
+    String datasetName = PluginPropertyUtils.pluginProp(ConstantsUtil.DATASET);
     String dropQuery = "DROP TABLE `" + projectId + "." + datasetName + "." + table + "`";
     getSoleQueryResult(dropQuery);
   }
@@ -81,8 +81,8 @@ public class BigQueryClient {
 
   public static boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
     Table table = getBigQueryService().getTable(
-      TableId.of(SeleniumHelper.readParameters(ConstantsUtil.PROJECT_ID),
-                 SeleniumHelper.readParameters(ConstantsUtil.DATASET), tableName));
+      TableId.of(PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID),
+                 PluginPropertyUtils.pluginProp(ConstantsUtil.DATASET), tableName));
     return cmekKey.equals(table.getEncryptionConfiguration().getKmsKeyName());
   }
 }

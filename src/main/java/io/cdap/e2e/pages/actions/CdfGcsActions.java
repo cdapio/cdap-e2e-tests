@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
+import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
@@ -48,7 +49,7 @@ public class CdfGcsActions {
   }
 
   public static void enterProjectId() throws IOException {
-    SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID, SeleniumHelper.readParameters(PROJECT_ID));
+    SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID, PluginPropertyUtils.pluginProp(PROJECT_ID));
   }
 
   public static void getGcsBucket(String bucket) {
