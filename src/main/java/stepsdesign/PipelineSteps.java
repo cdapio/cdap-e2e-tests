@@ -216,4 +216,9 @@ public class PipelineSteps implements CdfHelper {
     }
   }
 
+  @Then("Validate OUT record count is equal to IN record count")
+  public void validateOUTRecordCountIsEqualToINRecordCount() {
+    Assert.assertEquals(recordOut(), recordIn());
+  }
+
 }
