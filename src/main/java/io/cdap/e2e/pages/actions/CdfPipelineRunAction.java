@@ -17,6 +17,8 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
@@ -27,11 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-
-import static io.cdap.e2e.utils.ConstantsUtil.COLOR;
-import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
-import static io.cdap.e2e.utils.ConstantsUtil.ONE;
-import static io.cdap.e2e.utils.ConstantsUtil.WAIT_TIME;
 
 /**
  * Represents CdfPipelineRunAction
@@ -45,11 +42,11 @@ public class CdfPipelineRunAction {
   }
 
   public static void runClick() throws InterruptedException {
-    SeleniumHelper.waitAndClick(cdfPipelineRunLocators.run, WAIT_TIME);
+    ElementHelper.clickOnElement(cdfPipelineRunLocators.run);
   }
 
   public static String runPipelineStatus() {
-    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(COLOR);
+    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(ConstantsUtil.COLOR);
   }
 
   public static Boolean isRunning() {
@@ -76,11 +73,11 @@ public class CdfPipelineRunAction {
 
   public static String captureRawLogs() {
     JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-    js.executeScript(JS_CLICK, cdfPipelineRunLocators.logsArrow);
+    js.executeScript(ConstantsUtil.JS_CLICK, cdfPipelineRunLocators.logsArrow);
     cdfPipelineRunLocators.viewRawLogs.click();
     String parent = SeleniumDriver.getDriver().getWindowHandle();
     ArrayList<String> tabs2 = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
-    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ONE));
+    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ConstantsUtil.ONE));
     String logs = CdfPipelineRunLocators.logsTextbox.getText();
     Assert.assertNotNull(logs);
     SeleniumDriver.getDriver().close();
@@ -88,4 +85,7 @@ public class CdfPipelineRunAction {
     return logs;
   }
 
+  public static void clickDeployedConfigRunButton() {
+    CdfPipelineRunLocators.deployedConfigRunButton.click();
+  }
 }

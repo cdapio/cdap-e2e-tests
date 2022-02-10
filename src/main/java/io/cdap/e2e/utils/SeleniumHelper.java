@@ -38,10 +38,9 @@ import java.util.Properties;
  */
 public class SeleniumHelper {
 
-  static String path;
   private static final Logger logger = LoggerFactory.getLogger(SeleniumHelper.class);
-  private static final long DEFAULT_TIMEOUT = 30;
-  private static Properties connectProperties = new Properties();
+  static String path;
+  private static final Properties connectProperties = new Properties();
 
   static {
     try {
@@ -77,6 +76,18 @@ public class SeleniumHelper {
     }
   }
 
+  public static String readParameters(String property) throws IOException {
+    return connectProperties.getProperty(property);
+  }
+
+  public static <T> T getPropertiesLocators(Class<T> className) {
+    return PageFactory.initElements(SeleniumDriver.getDriver(), className);
+  }
+
+  /**
+   * @deprecated Use {@link ElementHelper#isElementDisplayed(WebElement)}
+   */
+  @Deprecated
   public static boolean isElementPresent(WebElement webElement) {
     try {
       boolean isPresent = webElement.isDisplayed();
@@ -86,50 +97,81 @@ public class SeleniumHelper {
     }
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#dragAndDrop(WebElement, WebElement)}
+   */
+  @Deprecated
   public static void dragAndDrop(WebElement from, WebElement to) {
     Actions act = new Actions(SeleniumDriver.getDriver());
     //Dragged and dropped.
     act.dragAndDrop(from, to).build().perform();
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement)}
+   */
+  @Deprecated
   public static void clickObject(WebElement element) {
     element.click();
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#sendKeys(WebElement, String)}
+   */
+  @Deprecated
   public static void sendKeys(WebElement element, String keys) {
     element.sendKeys(keys);
   }
 
+  /**
+   * @deprecated Use {@link WaitHelper#waitForElementToBeDisplayed(WebElement, long)}
+   */
+  @Deprecated
   public static void waitElementIsVisible(WebElement element, long timeoutInSec) {
     WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), timeoutInSec);
     wait.until(ExpectedConditions.visibilityOf(element));
   }
 
+  /**
+   * @deprecated Use {@link WaitHelper#waitForElementToBeDisplayed(WebElement)}
+   */
+  @Deprecated
   public static void waitElementIsVisible(WebElement element) {
-    waitElementIsVisible(element, DEFAULT_TIMEOUT);
+    waitElementIsVisible(element, ConstantsUtil.DEFAULT_TIMEOUT);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement, long)}
+   */
+  @Deprecated
   public static void waitAndClick(WebElement element, long timeOutInSec) {
     waitElementIsVisible(element, timeOutInSec);
     element.click();
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement)}
+   */
+  @Deprecated
   public static void waitAndClick(WebElement element) {
-    waitAndClick(element, DEFAULT_TIMEOUT);
-  }
-
-  public static String readParameters(String property) throws IOException {
-    return connectProperties.getProperty(property);
+    waitAndClick(element, ConstantsUtil.DEFAULT_TIMEOUT);
   }
 
   /**
    * Replacing the value of the text box when clear is not working
    * https://github.com/SeleniumHQ/selenium/issues/6741
+   *
+   * @deprecated Use {@link ElementHelper#replaceElementValue(WebElement, String)}
    */
+  @Deprecated
   public static void replaceElementValue(WebElement element, String value) {
     replaceElementValue(element, value, 1024);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#replaceElementValue(WebElement, String, int)}
+   */
+  @Deprecated
   public static void replaceElementValue(WebElement element, String value, int limit) {
     boolean flag = false;
     for (int i = 0; i < limit; i++) {
@@ -141,11 +183,15 @@ public class SeleniumHelper {
     }
     if (!flag) {
       Assert.fail("Element's current value is not cleared - " + element + " - "
-                    + "Current value :" + element.getAttribute("value"));
+        + "Current value :" + element.getAttribute("value"));
     }
     element.sendKeys(value);
   }
 
+  /**
+   * @deprecated Use {@link AssertionHelper#verifyElementDisplayed(WebElement)}
+   */
+  @Deprecated
   public static boolean verifyElementPresent(String locator) {
     try {
       SeleniumDriver.getDriver().findElement(By.xpath(locator));
@@ -153,10 +199,5 @@ public class SeleniumHelper {
     } catch (Exception e) {
       return false;
     }
-  }
-
-  public static <T> T getPropertiesLocators(Class<T> className) {
-    return PageFactory.initElements(
-      SeleniumDriver.getDriver(), className);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021 Cask Data, Inc.
+ * Copyright © 2022 Cask Data, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,26 +14,24 @@
  * the License.
  */
 
-package io.cdap.e2e.pages.actions;
+package io.cdap.e2e.utils;
 
-import io.cdap.e2e.pages.locators.CdfHomeLocators;
-import io.cdap.e2e.utils.ElementHelper;
-import io.cdap.e2e.utils.SeleniumHelper;
+import org.openqa.selenium.NoAlertPresentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents CdfHomeActions
+ * Page helper
  */
-public class CdfHomeActions {
-  private static final Logger logger = LoggerFactory.getLogger(CdfHomeActions.class);
-  public static CdfHomeLocators cdfHomeLocators;
+public class PageHelper {
+  private static final Logger logger = LoggerFactory.getLogger(PageHelper.class);
 
-  static {
-    cdfHomeLocators = SeleniumHelper.getPropertiesLocators(CdfHomeLocators.class);
-  }
-
-  public static void clickStudio() {
-    ElementHelper.clickOnElement(CdfHomeLocators.studio);
+  public static void acceptAlertIfPresent() {
+    try {
+      logger.info("Accepting alert if present");
+      SeleniumDriver.getDriver().switchTo().alert().accept();
+    } catch (NoAlertPresentException exception) {
+      logger.info("No alert present");
+    }
   }
 }

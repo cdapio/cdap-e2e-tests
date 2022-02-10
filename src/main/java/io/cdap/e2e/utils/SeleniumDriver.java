@@ -17,29 +17,25 @@
 package io.cdap.e2e.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.SessionId;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Represents SeleniumDriver
  */
 public class SeleniumDriver {
-
   private static final Logger logger = LoggerFactory.getLogger(SeleniumDriver.class);
-  public static final int TIMEOUT = 50;
-  public static final int PAGE_LOAD_TIMEOUT = 50;
   public static WebDriverWait waitDriver;
   public static URL url;
   private static SeleniumDriver seleniumDriver;
@@ -50,7 +46,7 @@ public class SeleniumDriver {
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--disable-setuid-sandbox");
-    chromeOptions.addArguments("--headless");
+    //chromeOptions.addArguments("--headless");
     chromeOptions.addArguments("--window-size=" + SeleniumHelper.readParameters("windowSize"));
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--disable-dev-shm-usage");
@@ -59,9 +55,9 @@ public class SeleniumDriver {
     chromeDriver.manage().window().maximize();
     HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
     url = executor.getAddressOfRemoteServer();
-    waitDriver = new WebDriverWait(chromeDriver, TIMEOUT);
-    chromeDriver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
-    chromeDriver.manage().timeouts().pageLoadTimeout(PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
+    waitDriver = new WebDriverWait(chromeDriver, ConstantsUtil.DEFAULT_TIMEOUT);
+    chromeDriver.manage().timeouts().implicitlyWait(Duration.of(ConstantsUtil.IMPLICIT_TIMEOUT, ChronoUnit.SECONDS));
+    chromeDriver.manage().timeouts().pageLoadTimeout(Duration.of(ConstantsUtil.PAGE_LOAD_TIMEOUT, ChronoUnit.SECONDS));
     String window = chromeDriver.getWindowHandle();
     SessionId session = chromeDriver.getSessionId();
     logger.info("Session iD:" + session);
@@ -73,19 +69,22 @@ public class SeleniumDriver {
     return session;
   }
 
-  public static void getWaitDriver() {
-    new WebDriverWait(chromeDriver, 40000).
-      until(ExpectedConditions.invisibilityOf(chromeDriver.findElement(By.className("loading-bar"))));
-  }
-
   public static void openPage(String url) {
-    logger.info(url);
+    logger.info("Navigate to url: " + url);
     logger.info(String.valueOf(chromeDriver));
     chromeDriver.get(url);
   }
 
   public static WebDriver getDriver() {
     return chromeDriver;
+  }
+
+  public static WebDriverWait getWaitDriver() {
+    return waitDriver;
+  }
+
+  public static WebDriverWait getWaitDriver(long timeoutInSeconds) {
+    return new WebDriverWait(chromeDriver, timeoutInSeconds);
   }
 
   public static void setUpDriver() throws IOException {
@@ -101,6 +100,10 @@ public class SeleniumDriver {
     seleniumDriver = null;
   }
 
+  /**
+   * @deprecated Use {@link WaitHelper#waitForPageToLoad()}
+   */
+  @Deprecated
   public static void waitForPageToLoad() {
     try {
       Thread.sleep(3000);

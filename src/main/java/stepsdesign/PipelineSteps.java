@@ -19,14 +19,18 @@ import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import io.cdap.e2e.pages.actions.CdfStudioActions;
 import io.cdap.e2e.pages.locators.CdfSchemaLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.CdfHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.JsonUtils;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -58,6 +62,26 @@ public class PipelineSteps implements CdfHelper {
     openCdf();
   }
 
+  @When("Select data pipeline type as 'Data Pipeline - Batch'")
+  public void selectDataPipelineTypeAsBatch() {
+    CdfStudioActions.selectDataPipelineTypeAsBatch();
+  }
+
+  @When("Select data pipeline type as 'Data Pipeline - Realtime'")
+  public void selectDataPipelineTypeAsRealtime() {
+    CdfStudioActions.selectDataPipelineTypeAsRealtime();
+  }
+
+  @When("Select plugin: {string} from the plugins list")
+  public void selectPlugin(String pluginName) {
+    CdfStudioActions.selectPluginFromList(pluginName);
+  }
+
+  @When("Navigate to the properties page of plugin: {string}")
+  public void navigateToPluginPropertiesPage(String pluginName) {
+    CdfStudioActions.navigateToPluginPropertiesPage(pluginName);
+  }
+
   @Then("Connect source as {string} and sink as {string} to establish connection")
   public void connectSourceAndSinkToEstablishConnection(String source, String sink) {
     connectSourceAndSink(source, sink);
@@ -66,7 +90,7 @@ public class PipelineSteps implements CdfHelper {
   @Then("Validate {string} plugin properties")
   public void validatePluginProperties(String plugin) {
     CdfStudioActions.clickValidateButton();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.pluginValidationSuccessMsg, 20L);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.pluginValidationSuccessMsg);
     String expectedMessage = PluginPropertyUtils.errorProp(ConstantsUtil.VALIDATION_SUCCESS_MESSAGE);
     String actualMessage = CdfStudioLocators.pluginValidationSuccessMsg.getText();
     Assert.assertEquals(plugin + " plugin properties validation success message should be displayed"
@@ -76,20 +100,20 @@ public class PipelineSteps implements CdfHelper {
   @Then("Validate mandatory property error for {string}")
   public void validateMandatoryPropertyErrorFor(String property) {
     CdfStudioActions.clickValidateButton();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.validateButton, 10L);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.validateButton);
     PluginPropertyUtils.validateMandatoryPropertyError(property);
   }
 
   @Then("Verify plugin properties validation fails with {int} error")
   public void verifyPluginPropertiesValidationFailsWithError(int errorCount) {
     CdfStudioActions.clickValidateButton();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.validateButton, 5L);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.validateButton);
     String errorText = "error";
     if (errorCount > 1) {
       errorText = "errors";
     }
     String expectedErrorMessage = PluginPropertyUtils.errorProp(ConstantsUtil.VALIDATION_ERROR_MESSAGE)
-      .replace("COUNT", String.valueOf(errorCount)).replace("ERROR", errorText);;
+      .replace("COUNT", String.valueOf(errorCount)).replace("ERROR", errorText);
     String actualErrorMessage = CdfStudioLocators.pluginValidationErrorMsg.getText();
     Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
   }
@@ -97,8 +121,8 @@ public class PipelineSteps implements CdfHelper {
   @Then("Validate output schema with expectedSchema {string}")
   public void validateOutputSchemaWithExpectedSchema(String schemaJsonArray) {
     CdfSchemaLocators.getSchemaLoadComplete.click();
-    SeleniumHelper.waitElementIsVisible(CdfSchemaLocators.getSchemaLoadComplete, 20L);
-    SeleniumHelper.waitElementIsVisible(CdfSchemaLocators.outputSchemaColumnNames.get(0), 2L);
+    WaitHelper.waitForElementToBeDisplayed(CdfSchemaLocators.getSchemaLoadComplete);
+    WaitHelper.waitForElementToBeDisplayed(CdfSchemaLocators.outputSchemaColumnNames.get(0));
     Map<String, String> expectedOutputSchema =
       JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
     validateSchema(expectedOutputSchema);
@@ -106,7 +130,7 @@ public class PipelineSteps implements CdfHelper {
     for (WebElement element : CdfSchemaLocators.outputSchemaColumnNames) {
       propertiesSchemaColumnList.add(element.getAttribute("value"));
       sourcePropertiesOutputSchema.put(element.getAttribute("value"),
-                                       CdfSchemaLocators.outputSchemaDataTypes.get(index).getAttribute("title"));
+        CdfSchemaLocators.outputSchemaDataTypes.get(index).getAttribute("title"));
       index++;
     }
   }
@@ -116,14 +140,14 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.pipelineName();
     CdfStudioActions.pipelineNameIp("TestPipeline" + UUID.randomUUID());
     CdfStudioActions.pipelineSave();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.statusBanner, 5);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBanner);
     WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 5);
     wait.until(ExpectedConditions.invisibilityOf(CdfStudioLocators.statusBanner));
   }
 
   @Then("Preview and run the pipeline")
   public void previewAndRunThePipeline() {
-    SeleniumHelper.waitAndClick(CdfStudioLocators.preview, 5L);
+    ElementHelper.clickOnElement(CdfStudioLocators.preview);
     CdfStudioLocators.runButton.click();
   }
 
@@ -132,7 +156,7 @@ public class PipelineSteps implements CdfHelper {
     WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 180);
     wait.until(ExpectedConditions.visibilityOf(CdfStudioLocators.statusBanner));
     Assert.assertTrue("Preview of pipeline should " + previewStatus,
-                      CdfStudioLocators.statusBannerText.getText().contains(previewStatus));
+      CdfStudioLocators.statusBannerText.getText().contains(previewStatus));
     if (!previewStatus.equalsIgnoreCase("failed")) {
       wait.until(ExpectedConditions.invisibilityOf(CdfStudioLocators.statusBanner));
     }
@@ -145,13 +169,13 @@ public class PipelineSteps implements CdfHelper {
       previewSchemaColumnList.add(element.getAttribute("title"));
     }
     Assert.assertTrue("Schema column list should be equal to preview column list",
-                      previewSchemaColumnList.equals(propertiesSchemaColumnList));
+      previewSchemaColumnList.equals(propertiesSchemaColumnList));
     CdfStudioLocators.previewPropertiesTab.click();
     Map<String, String> previewSinkInputSchema = new HashMap<>();
     int index = 0;
     for (WebElement element : CdfSchemaLocators.inputSchemaColumnNames) {
       previewSinkInputSchema.put(element.getAttribute("value"),
-                                 CdfSchemaLocators.inputSchemaDataTypes.get(index).getAttribute("title"));
+        CdfSchemaLocators.inputSchemaDataTypes.get(index).getAttribute("title"));
       index++;
     }
     Assert.assertTrue("Schema should match", previewSinkInputSchema.equals(sourcePropertiesOutputSchema));
@@ -170,7 +194,7 @@ public class PipelineSteps implements CdfHelper {
 
   @Then("Deploy the pipeline")
   public void deployThePipeline() {
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.pipelineDeploy, 2);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.pipelineDeploy);
     CdfStudioActions.pipelineDeploy();
   }
 
@@ -179,9 +203,8 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.pipelineName();
     CdfStudioActions.pipelineNameIp("TestPipeline" + UUID.randomUUID());
     CdfStudioActions.pipelineSave();
-    SeleniumHelper.waitElementIsVisible(CdfStudioLocators.statusBanner);
-    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 5);
-    wait.until(ExpectedConditions.invisibilityOf(CdfStudioLocators.statusBanner));
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBanner);
+    WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
     CdfStudioActions.pipelineDeploy();
   }
 
@@ -200,8 +223,8 @@ public class PipelineSteps implements CdfHelper {
 
   @Then("Verify the pipeline status is {string}")
   public void verifyThePipelineStatusIs(String status) {
-    Assert.assertTrue("Pipeline status should be " + status,
-                      SeleniumHelper.verifyElementPresent("//*[@data-cy='" + status + "']"));
+    WebElement pipelineStatus = SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='" + status + "']"));
+    AssertionHelper.verifyElementDisplayed(pipelineStatus, "Pipeline status should be " + status);
   }
 
   @Then("Open and capture logs")
@@ -220,5 +243,4 @@ public class PipelineSteps implements CdfHelper {
   public void validateOUTRecordCountIsEqualToINRecordCount() {
     Assert.assertEquals(recordOut(), recordIn());
   }
-
 }

@@ -16,6 +16,8 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -23,9 +25,12 @@ import org.openqa.selenium.support.How;
 import java.util.List;
 
 /**
- * Represents CdfStudioLocators
+ * Represents Cdf Studio page locators
  */
 public class CdfStudioLocators {
+  @FindBy(how = How.XPATH, using = "//div[contains(@class, 'left-top-section')]//select")
+  public static WebElement dataPipelineTypeDropdown;
+
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"plugin-GCSFile-batchsource\"]")
   public static WebElement source;
 
@@ -117,4 +122,29 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
   public static WebElement previewPropertiesTab;
+
+  public static WebElement getDataPipelineTypeDropdownOption(String option) {
+    String xpath = "//div[contains(@class, 'left-top-section')]//select//option[contains(@label, '" + option + "')]";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement getPluginNameInList(String pluginName) {
+    String xpath = "//div[contains(@class, 'plugin-name')][normalize-space(text()) = '" + pluginName + "']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement getPluginNameInDiagramContainer(String pluginName) {
+    String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement getPluginPropertiesButton(String pluginName) {
+    String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']" +
+      "/following-sibling::button[@data-cy='node-properties-btn']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  //Add runtimeArgsValueLocator as string - calling method will replace 'RUNTIME_ARGS_KEY'
+  String runtimeArgsValueLocator = "//input[@value='RUNTIME_ARGS_KEY']/ancestor::div[@data-cy='runtimeargs-key']" +
+    "/following-sibling::div//textarea";
 }

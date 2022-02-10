@@ -31,8 +31,9 @@ public class ConstantsUtil {
   public static final String GUSERNAME = "gLoginUsername";
   public static final String GPAZWRD = "gPassword";
   public static final String CDFURL = "cdfurl";
+  public static final String BATCH = "Batch";
+  public static final String REALTIME = "Realtime";
   public static final int ONE = 1;
-  public static final int WAIT_TIME = 60;
   public static final String PASS_CASE = "First case passed";
   public static final String ERROR_MSG_COLOR = "#a40403";
   public static final String ERROR_MSG_MANDATORY = "Required property 'PROPERTY' has no value.";
@@ -40,4 +41,7 @@ public class ConstantsUtil {
   public static final String DEFAULT_ERROR_PROPERTIES_FILE = "errorMessage.properties";
   public static final String VALIDATION_SUCCESS_MESSAGE = "validationSuccessMessage";
   public static final String VALIDATION_ERROR_MESSAGE = "validationErrorMessage";
+  public static final int DEFAULT_TIMEOUT = 60;
+  public static final int PAGE_LOAD_TIMEOUT = 10;
+  public static final int IMPLICIT_TIMEOUT = 5;
 }

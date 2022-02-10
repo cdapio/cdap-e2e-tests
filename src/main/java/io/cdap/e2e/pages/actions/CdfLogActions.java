@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 /**
@@ -30,11 +31,11 @@ public class CdfLogActions {
   }
 
   public static void validateErrorPopupLog() throws InterruptedException {
-    SeleniumHelper.waitAndClick(cdfLogLocators.errorMessagePopup);
+    ElementHelper.clickOnElement(cdfLogLocators.errorMessagePopup);
   }
 
   public static void validateErrorPopupLog(String error) throws InterruptedException {
-    SeleniumHelper.waitAndClick(cdfLogLocators.errorMessagePopup);
+    ElementHelper.clickOnElement(cdfLogLocators.errorMessagePopup);
   }
 
   public static void dismissPopup() {

@@ -76,4 +76,7 @@ public class CdfPipelineRunLocators {
 
   @FindBy(how = How.XPATH, using = "/html/body/pre")
   public static WebElement logsTextbox;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='run-deployed-pipeline-modal-btn']")
+  public static WebElement deployedConfigRunButton;
 }

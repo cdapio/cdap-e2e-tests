@@ -18,14 +18,15 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 
 import java.io.IOException;
 
 import static io.cdap.e2e.utils.ConstantsUtil.AUTOMATION_TEST;
 import static io.cdap.e2e.utils.ConstantsUtil.DATASET;
-import static io.cdap.e2e.utils.ConstantsUtil.ONE;
 import static io.cdap.e2e.utils.ConstantsUtil.PROJECT_ID;
 
 /**
@@ -46,7 +47,7 @@ public class CdfBigQueryPropertiesActions {
   public static void enterBigQueryProperties(String tableProp) throws InterruptedException, IOException {
     CdfStudioLocators.bigQueryProperties.click();
     CdfBigQueryPropertiesLocators.bigQueryReferenceName.sendKeys(AUTOMATION_TEST);
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID,
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID,
                                        PluginPropertyUtils.pluginProp(PROJECT_ID));
     CdfBigQueryPropertiesLocators.datasetProjectID.sendKeys(PluginPropertyUtils.pluginProp(PROJECT_ID));
     CdfBigQueryPropertiesLocators.bigQueryDataSet.sendKeys(PluginPropertyUtils.pluginProp(DATASET));
@@ -54,7 +55,7 @@ public class CdfBigQueryPropertiesActions {
     CdfBigQueryPropertiesLocators.updateTable.click();
     CdfBigQueryPropertiesLocators.truncatableSwitch.click();
     CdfBigQueryPropertiesLocators.validateBttn.click();
-    SeleniumHelper.waitElementIsVisible(CdfBigQueryPropertiesLocators.textSuccess, ONE);
+    WaitHelper.waitForElementToBeDisplayed(CdfBigQueryPropertiesLocators.textSuccess);
   }
 
   public static void enterCmekProperty(String cmek) throws IOException {
@@ -62,7 +63,7 @@ public class CdfBigQueryPropertiesActions {
   }
 
   public static void enterFilePath(String path) throws InterruptedException, IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.serviceFilePath, path);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.serviceFilePath, path);
   }
 
   public static void enterBigQueryReferenceName(String referenceName) {
@@ -70,11 +71,11 @@ public class CdfBigQueryPropertiesActions {
   }
 
   public static void enterProjectId(String projectId) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID, projectId);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.projectID, projectId);
   }
 
   public static void enterDatasetProjectId(String projectId) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.datasetProjectID, projectId);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.datasetProjectID, projectId);
   }
 
   public static void enterBigQueryDataset(String dataset) {
@@ -94,15 +95,15 @@ public class CdfBigQueryPropertiesActions {
   }
 
   public static void enterPartitionStartDate(String partitionStartDate) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.partitionStartDate, partitionStartDate);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.partitionStartDate, partitionStartDate);
   }
 
   public static void enterPartitionEndDate(String partitionEndDate) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.partitionEndDate, partitionEndDate);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.partitionEndDate, partitionEndDate);
   }
 
   public static void enterFilter(String filter) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.filter, filter);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.filter, filter);
   }
 
   public static void getSchema() {
@@ -114,15 +115,15 @@ public class CdfBigQueryPropertiesActions {
   }
 
   public static void viewMaterializationProject(String projectId) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.viewMaterializationProject, projectId);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.viewMaterializationProject, projectId);
   }
 
   public static void viewMaterializationDataset(String dataset) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.viewMaterializationDataset, dataset);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.viewMaterializationDataset, dataset);
   }
 
   public static void enterTemporaryBucketName(String bucket) throws IOException {
-    SeleniumHelper.replaceElementValue(CdfBigQueryPropertiesLocators.temporaryBucketName, bucket);
+    ElementHelper.replaceElementValue(CdfBigQueryPropertiesLocators.temporaryBucketName, bucket);
   }
 
   /**
@@ -132,6 +133,6 @@ public class CdfBigQueryPropertiesActions {
    */
   @Deprecated
   public static void clickPreviewData() {
-    SeleniumHelper.waitAndClick(CdfBigQueryPropertiesLocators.previewData);
+    ElementHelper.clickOnElement(CdfBigQueryPropertiesLocators.previewData);
   }
 }
