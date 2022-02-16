@@ -23,6 +23,7 @@ import io.cdap.e2e.pages.actions.CdfStudioActions;
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.pages.locators.CdfSchemaLocators;
+import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -142,6 +143,17 @@ public interface CdfHelper {
     SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
     SeleniumHelper.dragAndDrop(
       SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@class,'plugin-endpoint_" + source + "')]")),
+      SeleniumDriver.getDriver().findElement(sinkNode));
+  }
+
+  default void connectSourceAndSinkWithTitles(String source, String sourceTitle, String sink, String sinkTitle) {
+    By sinkNode = By.xpath(CdfStudioLocators.sinkNodeWithTitle
+                             .replace("SINK_TITLE", sinkTitle).replaceAll("SINK", sink));
+    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
+    SeleniumHelper.dragAndDrop(
+      SeleniumDriver.getDriver().findElement(By.xpath(CdfStudioLocators.sourceEndpointWithTitle
+                                                        .replace("SOURCE_TITLE", sourceTitle)
+                                                        .replaceAll("SOURCE", source))),
       SeleniumDriver.getDriver().findElement(sinkNode));
   }
 

@@ -59,7 +59,7 @@ public class CdfPipelineRunLocators {
   @FindBy(xpath = "//*[@class=\"run-logs-btn\"]")
   public WebElement logs;
 
-  @FindBy(xpath = "(//*[@type=\"button\"])[7]")
+  @FindBy(xpath = "//span[text()='Download All']/parent::a/following-sibling::div//button")
   public WebElement logsArrow;
 
   @FindBy(xpath = "//*[contains(text(), 'View Raw Logs') ]")
@@ -76,4 +76,8 @@ public class CdfPipelineRunLocators {
 
   @FindBy(how = How.XPATH, using = "/html/body/pre")
   public static WebElement logsTextbox;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='run-deployed-pipeline-modal-btn']")
+  public static WebElement deployedConfigRunButton;
+
 }

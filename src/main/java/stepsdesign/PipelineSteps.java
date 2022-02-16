@@ -52,6 +52,7 @@ public class PipelineSteps implements CdfHelper {
 
   List<String> propertiesSchemaColumnList = new ArrayList<>();
   Map<String, String> sourcePropertiesOutputSchema = new HashMap<>();
+  public static Map<String, String> runtimeArguments = new HashMap<>();
 
   @Given("Open Datafusion Project to configure pipeline")
   public void openDatafusionProjectToConfigurePipeline() throws IOException, InterruptedException {
@@ -61,6 +62,17 @@ public class PipelineSteps implements CdfHelper {
   @Then("Connect source as {string} and sink as {string} to establish connection")
   public void connectSourceAndSinkToEstablishConnection(String source, String sink) {
     connectSourceAndSink(source, sink);
+  }
+
+  @Then("Connect source as {string} having title {string} and sink{int} as {string} having title {string} " +
+    "to establish connection")
+  public void connectSourceAsHavingTitleAndSinkAsHavingTitleToEstablishConnection(String source, String sourceTitle
+    , int index, String sink, String sinkTitle) {
+    int yOffset = (index - 1) * 80;
+    By sinkNode = By.xpath(CdfStudioLocators.sinkNodeWithTitle
+                             .replace("SINK_TITLE", sinkTitle).replaceAll("SINK", sink));
+    SeleniumHelper.dragAndDropByOffset(SeleniumDriver.getDriver().findElement(sinkNode), 0, yOffset);
+    connectSourceAndSinkWithTitles(source, sourceTitle, sink, sinkTitle);
   }
 
   @Then("Validate {string} plugin properties")
@@ -127,6 +139,21 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioLocators.runButton.click();
   }
 
+  @Then("Preview and run the pipeline with runtime arguments")
+  public void previewAndRunThePipelineWithRuntimeArguments() {
+    CdfStudioActions.previewSelect();
+    CdfStudioActions.clickPreviewRunButton();
+    for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
+      if (SeleniumHelper.verifyElementPresent(
+        CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey()))) {
+        SeleniumDriver.getDriver()
+          .findElement(By.xpath(CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey())))
+          .sendKeys(entry.getValue());
+      }
+    }
+    CdfStudioActions.clickConfigRunButton();
+  }
+
   @Then("Verify the preview of pipeline is {string}")
   public void verifyThePreviewOfPipelineIs(String previewStatus) {
     WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 180);
@@ -188,6 +215,20 @@ public class PipelineSteps implements CdfHelper {
   @Then("Run the Pipeline in Runtime")
   public void runThePipelineInRuntime() throws InterruptedException {
     CdfPipelineRunAction.runClick();
+  }
+
+  @Then("Run the Pipeline in Runtime with runtime arguments")
+  public void runThePipelineInRuntimeWithRuntimeArguments() throws InterruptedException {
+    CdfPipelineRunAction.runClick();
+    for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
+      if (SeleniumHelper.verifyElementPresent(
+        CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey()))) {
+        SeleniumDriver.getDriver()
+          .findElement(By.xpath(CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey())))
+          .sendKeys(entry.getValue());
+      }
+    }
+    CdfPipelineRunAction.clickDeployedConfigRunButton();
   }
 
   @Then("Wait till pipeline is in running state")
