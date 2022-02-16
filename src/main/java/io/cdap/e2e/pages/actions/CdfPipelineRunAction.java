@@ -20,8 +20,8 @@ import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import static io.cdap.e2e.utils.ConstantsUtil.COLOR;
-import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
 import static io.cdap.e2e.utils.ConstantsUtil.ONE;
 import static io.cdap.e2e.utils.ConstantsUtil.WAIT_TIME;
 
@@ -75,8 +74,19 @@ public class CdfPipelineRunAction {
   }
 
   public static String captureRawLogs() {
-    JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-    js.executeScript(JS_CLICK, cdfPipelineRunLocators.logsArrow);
+    int attempts = 0;
+    while (attempts < 5) {
+      try {
+        SeleniumHelper.waitElementIsVisible(cdfPipelineRunLocators.logsArrow);
+        cdfPipelineRunLocators.logsArrow.click();
+        break;
+      } catch (StaleElementReferenceException e) {
+        if (attempts == 4) {
+          throw e;
+        }
+      }
+      attempts++;
+    }
     cdfPipelineRunLocators.viewRawLogs.click();
     String parent = SeleniumDriver.getDriver().getWindowHandle();
     ArrayList<String> tabs2 = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
@@ -86,6 +96,10 @@ public class CdfPipelineRunAction {
     SeleniumDriver.getDriver().close();
     SeleniumDriver.getDriver().switchTo().window(parent);
     return logs;
+  }
+
+  public static void clickDeployedConfigRunButton() {
+    CdfPipelineRunLocators.deployedConfigRunButton.click();
   }
 
 }

@@ -92,6 +92,14 @@ public class SeleniumHelper {
     act.dragAndDrop(from, to).build().perform();
   }
 
+  /**
+   * Performs click-and-hold at the location of the element, moves by a given offset, then releases the mouse.
+   */
+  public static void dragAndDropByOffset(WebElement element, int xOffset, int yOffset) {
+    Actions actions = new Actions(SeleniumDriver.getDriver());
+    actions.dragAndDropBy(element, xOffset, yOffset).build().perform();
+  }
+
   public static void clickObject(WebElement element) {
     element.click();
   }

@@ -149,4 +149,12 @@ public class CdfStudioActions {
     CdfStudioLocators.sink.click();
     CdfStudioLocators.gcs.click();
   }
+
+  public static void clickConfigRunButton() {
+    CdfStudioLocators.configRun.click();
+  }
+
+  public static void clickPreviewRunButton() {
+    CdfStudioLocators.runButton.click();
+  }
 }

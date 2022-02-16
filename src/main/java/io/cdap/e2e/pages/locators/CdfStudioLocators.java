@@ -117,4 +117,14 @@ public class CdfStudioLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
   public static WebElement previewPropertiesTab;
+
+  public static String runtimeArgsValueLocator = "//input[@value='RUNTIME_ARGS_KEY']" +
+    "/ancestor::div[@data-cy='runtimeargs-key']/following-sibling::div//textarea";
+
+  public static String sourceEndpointWithTitle = "//div[@title='SOURCE_TITLE']" +
+    "/ancestor::div[contains(@data-cy,'plugin-node-SOURCE') and @data-type='batchsource']" +
+    "//*[contains(@data-cy,'plugin-endpoint-SOURCE')]";
+
+  public static String sinkNodeWithTitle = "//*[contains(@data-cy,'plugin-node-SINK') " +
+    "and @data-type='batchsink']//div[@title='SINK_TITLE']";
 }
