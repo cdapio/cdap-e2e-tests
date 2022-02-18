@@ -147,14 +147,9 @@ public interface CdfHelper {
   }
 
   default void connectSourceAndSinkWithTitles(String source, String sourceTitle, String sink, String sinkTitle) {
-    By sinkNode = By.xpath(CdfStudioLocators.sinkNodeWithTitle
-                             .replace("SINK_TITLE", sinkTitle).replaceAll("SINK", sink));
-    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
-    SeleniumHelper.dragAndDrop(
-      SeleniumDriver.getDriver().findElement(By.xpath(CdfStudioLocators.sourceEndpointWithTitle
-                                                        .replace("SOURCE_TITLE", sourceTitle)
-                                                        .replaceAll("SOURCE", source))),
-      SeleniumDriver.getDriver().findElement(sinkNode));
+    WebElement sinkNode = CdfStudioLocators.sinkNodeWithTitle(sink, sinkTitle);
+    SeleniumHelper.waitElementIsVisible(sinkNode);
+    SeleniumHelper.dragAndDrop(CdfStudioLocators.sourceEndpointWithTitle(source, sourceTitle), sinkNode);
   }
 
   default void openSourcePluginProperties(String plugin) {
@@ -197,5 +192,13 @@ public interface CdfHelper {
     }
     Assert.assertTrue("Schema displayed on UI should match with expected Schema",
                       actualOutputSchema.equals(expectedOutputSchema));
+  }
+
+  default void clickMacroButton(String pluginProperty) {
+    CdfStudioLocators.macroButton(pluginProperty).click();
+  }
+
+  default void enterMacro(String pluginProperty, String argument) {
+    SeleniumHelper.replaceElementValue(CdfStudioLocators.macroInput(pluginProperty), "${" + argument + "}");
   }
 }
