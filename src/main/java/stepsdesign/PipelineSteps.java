@@ -69,9 +69,8 @@ public class PipelineSteps implements CdfHelper {
   public void connectSourceAsHavingTitleAndSinkAsHavingTitleToEstablishConnection(String source, String sourceTitle
     , int index, String sink, String sinkTitle) {
     int yOffset = (index - 1) * 80;
-    By sinkNode = By.xpath(CdfStudioLocators.sinkNodeWithTitle
-                             .replace("SINK_TITLE", sinkTitle).replaceAll("SINK", sink));
-    SeleniumHelper.dragAndDropByOffset(SeleniumDriver.getDriver().findElement(sinkNode), 0, yOffset);
+    WebElement sinkNode = CdfStudioLocators.sinkNodeWithTitle(sink, sinkTitle);
+    SeleniumHelper.dragAndDropByOffset(sinkNode, 0, yOffset);
     connectSourceAndSinkWithTitles(source, sourceTitle, sink, sinkTitle);
   }
 
@@ -144,12 +143,7 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.previewSelect();
     CdfStudioActions.clickPreviewRunButton();
     for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
-      if (SeleniumHelper.verifyElementPresent(
-        CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey()))) {
-        SeleniumDriver.getDriver()
-          .findElement(By.xpath(CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey())))
-          .sendKeys(entry.getValue());
-      }
+      CdfStudioLocators.runtimeArgsValue(entry.getKey()).sendKeys(entry.getValue());
     }
     CdfStudioActions.clickConfigRunButton();
   }
@@ -221,12 +215,7 @@ public class PipelineSteps implements CdfHelper {
   public void runThePipelineInRuntimeWithRuntimeArguments() throws InterruptedException {
     CdfPipelineRunAction.runClick();
     for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
-      if (SeleniumHelper.verifyElementPresent(
-        CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey()))) {
-        SeleniumDriver.getDriver()
-          .findElement(By.xpath(CdfStudioLocators.runtimeArgsValueLocator.replace("RUNTIME_ARGS_KEY", entry.getKey())))
-          .sendKeys(entry.getValue());
-      }
+      CdfStudioLocators.runtimeArgsValue(entry.getKey()).sendKeys(entry.getValue());
     }
     CdfPipelineRunAction.clickDeployedConfigRunButton();
   }

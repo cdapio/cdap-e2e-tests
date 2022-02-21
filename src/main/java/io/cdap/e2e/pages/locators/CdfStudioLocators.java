@@ -16,6 +16,8 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -118,13 +120,29 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
   public static WebElement previewPropertiesTab;
 
-  public static String runtimeArgsValueLocator = "//input[@value='RUNTIME_ARGS_KEY']" +
-    "/ancestor::div[@data-cy='runtimeargs-key']/following-sibling::div//textarea";
+  public static WebElement runtimeArgsValue(String runtimeArgsKey) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//input[@value='" + runtimeArgsKey + "']/ancestor::div[@data-cy='runtimeargs-key']" +
+                 "/following-sibling::div//textarea"));
+  }
 
-  public static String sourceEndpointWithTitle = "//div[@title='SOURCE_TITLE']" +
-    "/ancestor::div[contains(@data-cy,'plugin-node-SOURCE') and @data-type='batchsource']" +
-    "//*[contains(@data-cy,'plugin-endpoint-SOURCE')]";
+  public static WebElement sourceEndpointWithTitle(String source, String sourceTitle) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//div[@title='" + sourceTitle + "']/ancestor::div[contains(@data-cy,'plugin-node-" + source + "') " +
+                 "and @data-type='batchsource']//*[contains(@data-cy,'plugin-endpoint-" + source + "')]"));
+  }
 
-  public static String sinkNodeWithTitle = "//*[contains(@data-cy,'plugin-node-SINK') " +
-    "and @data-type='batchsink']//div[@title='SINK_TITLE']";
+  public static WebElement sinkNodeWithTitle(String sink, String sinkTitle) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') " +
+                 "and @data-type='batchsink']//div[@title='" + sinkTitle + "']"));
+  }
+
+  public static WebElement macroButton(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//div[@data-cy='" + pluginProperty + "']/button"));
+  }
+
+  public static WebElement macroInput(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@data-cy='" + pluginProperty + "']"));
+  }
 }
