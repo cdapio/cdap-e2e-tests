@@ -16,6 +16,8 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -42,4 +44,11 @@ public class CdfSchemaLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='get-schema-btn']//span[text()='Get Schema']")
   public static WebElement getSchemaLoadComplete;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='select-schema-actions-dropdown']")
+  public static WebElement schemaActions;
+
+  public static WebElement schemaActionType(String schemaAction) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//li[@data-value='" + schemaAction + "']"));
+  }
 }
