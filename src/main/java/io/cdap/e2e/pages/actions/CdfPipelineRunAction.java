@@ -17,8 +17,11 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -27,10 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-
-import static io.cdap.e2e.utils.ConstantsUtil.COLOR;
-import static io.cdap.e2e.utils.ConstantsUtil.ONE;
-import static io.cdap.e2e.utils.ConstantsUtil.WAIT_TIME;
 
 /**
  * Represents CdfPipelineRunAction
@@ -44,11 +43,11 @@ public class CdfPipelineRunAction {
   }
 
   public static void runClick() throws InterruptedException {
-    SeleniumHelper.waitAndClick(cdfPipelineRunLocators.run, WAIT_TIME);
+    ElementHelper.clickOnElement(cdfPipelineRunLocators.run);
   }
 
   public static String runPipelineStatus() {
-    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(COLOR);
+    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(ConstantsUtil.COLOR);
   }
 
   public static Boolean isRunning() {
@@ -77,7 +76,7 @@ public class CdfPipelineRunAction {
     int attempts = 0;
     while (attempts < 5) {
       try {
-        SeleniumHelper.waitElementIsVisible(cdfPipelineRunLocators.logsArrow);
+        WaitHelper.waitForElementToBeDisplayed(cdfPipelineRunLocators.logsArrow);
         cdfPipelineRunLocators.logsArrow.click();
         break;
       } catch (StaleElementReferenceException e) {
@@ -90,7 +89,7 @@ public class CdfPipelineRunAction {
     cdfPipelineRunLocators.viewRawLogs.click();
     String parent = SeleniumDriver.getDriver().getWindowHandle();
     ArrayList<String> tabs2 = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
-    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ONE));
+    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ConstantsUtil.ONE));
     String logs = CdfPipelineRunLocators.logsTextbox.getText();
     Assert.assertNotNull(logs);
     SeleniumDriver.getDriver().close();
@@ -101,5 +100,4 @@ public class CdfPipelineRunAction {
   public static void clickDeployedConfigRunButton() {
     CdfPipelineRunLocators.deployedConfigRunButton.click();
   }
-
 }

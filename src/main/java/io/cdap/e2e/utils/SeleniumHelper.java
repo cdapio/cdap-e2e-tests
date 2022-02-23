@@ -38,10 +38,9 @@ import java.util.Properties;
  */
 public class SeleniumHelper {
 
-  static String path;
   private static final Logger logger = LoggerFactory.getLogger(SeleniumHelper.class);
-  private static final long DEFAULT_TIMEOUT = 30;
-  private static Properties connectProperties = new Properties();
+  static String path;
+  private static final Properties connectProperties = new Properties();
 
   static {
     try {
@@ -77,94 +76,112 @@ public class SeleniumHelper {
     }
   }
 
-  public static boolean isElementPresent(WebElement webElement) {
-    try {
-      boolean isPresent = webElement.isDisplayed();
-      return isPresent;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
+  public static String readParameters(String property) throws IOException {
+    return connectProperties.getProperty(property);
   }
 
+  public static <T> T getPropertiesLocators(Class<T> className) {
+    return PageFactory.initElements(SeleniumDriver.getDriver(), className);
+  }
+
+  /**
+   * @deprecated Use {@link ElementHelper#isElementDisplayed(WebElement)}
+   */
+  @Deprecated
+  public static boolean isElementPresent(WebElement webElement) {
+    return ElementHelper.isElementDisplayed(webElement);
+  }
+
+  /**
+   * @deprecated Use {@link ElementHelper#dragAndDrop(WebElement, WebElement)}
+   */
+  @Deprecated
   public static void dragAndDrop(WebElement from, WebElement to) {
-    Actions act = new Actions(SeleniumDriver.getDriver());
-    //Dragged and dropped.
-    act.dragAndDrop(from, to).build().perform();
+    ElementHelper.dragAndDrop(from, to);
   }
 
   /**
    * Performs click-and-hold at the location of the element, moves by a given offset, then releases the mouse.
+   * @deprecated Use {@link ElementHelper#dragAndDropByOffset(WebElement, int, int)}
    */
+  @Deprecated
   public static void dragAndDropByOffset(WebElement element, int xOffset, int yOffset) {
-    Actions actions = new Actions(SeleniumDriver.getDriver());
-    actions.dragAndDropBy(element, xOffset, yOffset).build().perform();
+    ElementHelper.dragAndDropByOffset(element, xOffset, yOffset);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement)}
+   */
+  @Deprecated
   public static void clickObject(WebElement element) {
-    element.click();
+    ElementHelper.clickOnElement(element);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#sendKeys(WebElement, String)}
+   */
+  @Deprecated
   public static void sendKeys(WebElement element, String keys) {
-    element.sendKeys(keys);
+    ElementHelper.sendKeys(element, keys);
   }
 
+  /**
+   * @deprecated Use {@link WaitHelper#waitForElementToBeDisplayed(WebElement, long)}
+   */
+  @Deprecated
   public static void waitElementIsVisible(WebElement element, long timeoutInSec) {
-    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), timeoutInSec);
-    wait.until(ExpectedConditions.visibilityOf(element));
+    WaitHelper.waitForElementToBeDisplayed(element, timeoutInSec);
   }
 
+  /**
+   * @deprecated Use {@link WaitHelper#waitForElementToBeDisplayed(WebElement)}
+   */
+  @Deprecated
   public static void waitElementIsVisible(WebElement element) {
-    waitElementIsVisible(element, DEFAULT_TIMEOUT);
+    WaitHelper.waitForElementToBeDisplayed(element);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement, long)}
+   */
+  @Deprecated
   public static void waitAndClick(WebElement element, long timeOutInSec) {
-    waitElementIsVisible(element, timeOutInSec);
-    element.click();
+    ElementHelper.clickOnElement(element, timeOutInSec);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#clickOnElement(WebElement)}
+   */
+  @Deprecated
   public static void waitAndClick(WebElement element) {
-    waitAndClick(element, DEFAULT_TIMEOUT);
-  }
-
-  public static String readParameters(String property) throws IOException {
-    return connectProperties.getProperty(property);
+    ElementHelper.clickOnElement(element);
   }
 
   /**
    * Replacing the value of the text box when clear is not working
    * https://github.com/SeleniumHQ/selenium/issues/6741
+   *
+   * @deprecated Use {@link ElementHelper#replaceElementValue(WebElement, String)}
    */
+  @Deprecated
   public static void replaceElementValue(WebElement element, String value) {
-    replaceElementValue(element, value, 1024);
+    ElementHelper.replaceElementValue(element, value);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#replaceElementValue(WebElement, String, int)}
+   */
+  @Deprecated
   public static void replaceElementValue(WebElement element, String value, int limit) {
-    boolean flag = false;
-    for (int i = 0; i < limit; i++) {
-      if (element.getAttribute("value").equals(StringUtils.EMPTY)) {
-        flag = true;
-        break;
-      }
-      element.sendKeys(Keys.BACK_SPACE);
-    }
-    if (!flag) {
-      Assert.fail("Element's current value is not cleared - " + element + " - "
-                    + "Current value :" + element.getAttribute("value"));
-    }
-    element.sendKeys(value);
+    ElementHelper.replaceElementValue(element, value, limit);
   }
 
+  /**
+   * @deprecated Use {@link ElementHelper#isElementDisplayed(WebElement)}
+   */
+  @Deprecated
   public static boolean verifyElementPresent(String locator) {
-    try {
-      SeleniumDriver.getDriver().findElement(By.xpath(locator));
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
-
-  public static <T> T getPropertiesLocators(Class<T> className) {
-    return PageFactory.initElements(
-      SeleniumDriver.getDriver(), className);
+    WebElement element = SeleniumDriver.getDriver().findElement(By.xpath(locator));
+    return ElementHelper.isElementDisplayed(element);
   }
 }

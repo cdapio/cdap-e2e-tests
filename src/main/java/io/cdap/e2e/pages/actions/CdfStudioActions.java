@@ -17,28 +17,49 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
-import io.cdap.e2e.utils.ConstantsUtil;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-
-import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Represents CdfStudioActions
+ * Represents Cdf Studio page Actions
  */
 public class CdfStudioActions {
+  private static final Logger logger = LoggerFactory.getLogger(CdfStudioActions.class);
   public static CdfStudioLocators cdfStudioLocators;
 
   static {
     cdfStudioLocators = SeleniumHelper.getPropertiesLocators(CdfStudioLocators.class);
   }
 
+  public static void selectDataPipelineType(String option) {
+    ElementHelper.clickOnElement(CdfStudioLocators.dataPipelineTypeDropdown);
+    /* TODO: Replace JsExecutor click with normal click: https://cdap.atlassian.net/browse/CDAP-18885 */
+    ElementHelper.clickOnElementUsingJsExecutor(CdfStudioLocators.locateDataPipelineTypeDropdownOption(option));
+  }
+
+  public static void expandPluginGroupIfNotAlreadyExpanded(String pluginGroupName) {
+    ElementHelper.clickIfDisplayed(CdfStudioLocators.locatePluginGroupCollapsed(pluginGroupName));
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.locatePluginGroupExpanded(pluginGroupName));
+  }
+
+  public static void selectPluginFromList(String pluginName) {
+    logger.info("Click on plugin from the list: " + pluginName);
+    ElementHelper.clickOnElement(CdfStudioLocators.locatePluginNameInList(pluginName));
+  }
+
+  public static void navigateToPluginPropertiesPage(String pluginName) {
+    ElementHelper.hoverOverElement(CdfStudioLocators.locatePluginNodeInCanvas(pluginName));
+    ElementHelper.clickOnElement(CdfStudioLocators.locatePluginPropertiesButton(pluginName));
+  }
+
   /**
-   * @deprecated
-   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   * @deprecated Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
    */
   @Deprecated
   public static void selectGCS() throws InterruptedException {
@@ -47,8 +68,7 @@ public class CdfStudioActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   * @deprecated Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
    */
   @Deprecated
   public static void clickSource() {
@@ -56,8 +76,8 @@ public class CdfStudioActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link CdfStudioActions#clickSink()} and {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
+   * @deprecated Use {@link CdfStudioActions#clickSink()} and
+   * {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
    */
   @Deprecated
   public static void sinkBigQuery() {
@@ -87,8 +107,7 @@ public class CdfStudioActions {
   }
 
   public static void pipelineDeploy() {
-    JavascriptExecutor jse = (JavascriptExecutor) SeleniumDriver.getDriver();
-    jse.executeScript(JS_CLICK, CdfStudioLocators.pipelineDeploy);
+    ElementHelper.clickOnElement(CdfStudioLocators.pipelineDeploy);
   }
 
   public static String bannerErrorMessage() {
@@ -104,8 +123,7 @@ public class CdfStudioActions {
   }
 
   /**
-   * @deprecated
-   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
+   * @deprecated Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
    */
   @Deprecated
@@ -115,11 +133,10 @@ public class CdfStudioActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link io.cdap.e2e.utils.CdfHelper#connectSourceAndSink(String, String)}
+   * @deprecated Use {@link io.cdap.e2e.utils.CdfHelper#connectSourceAndSink(String, String)}
    */
   @Deprecated
-  public static void  connectSourceAndSink(String source, String sink) {
+  public static void connectSourceAndSink(String source, String sink) {
     SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@title,'" + sink + "')]")));
     SeleniumHelper.dragAndDrop(
@@ -128,8 +145,7 @@ public class CdfStudioActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
+   * @deprecated Use {@link io.cdap.e2e.utils.CdfHelper#selectSourcePlugin(String)}
    */
   @Deprecated
   public static void selectBQ() throws InterruptedException {
@@ -137,12 +153,12 @@ public class CdfStudioActions {
   }
 
   public static void clickCloseButton() {
-    SeleniumHelper.waitAndClick(CdfStudioLocators.closeButton);
+    ElementHelper.clickOnElement(CdfStudioLocators.closeButton);
   }
 
   /**
-   * @deprecated
-   * Use {@link CdfStudioActions#clickSink()} and {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
+   * @deprecated Use {@link CdfStudioActions#clickSink()} and
+   * {@link io.cdap.e2e.utils.CdfHelper#selectSinkPlugin(String)}
    */
   @Deprecated
   public static void sinkGcs() {

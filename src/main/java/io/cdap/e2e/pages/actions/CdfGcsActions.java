@@ -17,12 +17,14 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
@@ -49,7 +51,7 @@ public class CdfGcsActions {
   }
 
   public static void enterProjectId() throws IOException {
-    SeleniumHelper.replaceElementValue(CdfGCSLocators.projectID, PluginPropertyUtils.pluginProp(PROJECT_ID));
+    ElementHelper.replaceElementValue(CdfGCSLocators.projectID, PluginPropertyUtils.pluginProp(PROJECT_ID));
   }
 
   public static void getGcsBucket(String bucket) {
@@ -68,8 +70,7 @@ public class CdfGcsActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link CdfGcsActions#enterSampleSize(String)}
+   * @deprecated Use {@link CdfGcsActions#enterSampleSize(String)}
    */
   @Deprecated
   public static void enterSamplesize() {
@@ -81,8 +82,7 @@ public class CdfGcsActions {
   }
 
   /**
-   * @deprecated
-   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
+   * @deprecated Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginProperties(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginProperties(String)} as per plugin type.
    */
   @Deprecated
@@ -99,8 +99,7 @@ public class CdfGcsActions {
   }
 
   /**
-   * @deprecated
-   * Use {@link CdfGcsActions#enterDelimiterField(String)}
+   * @deprecated Use {@link CdfGcsActions#enterDelimiterField(String)}
    */
   @Deprecated
   public static void delimiter() throws IOException {
@@ -109,13 +108,12 @@ public class CdfGcsActions {
 
   public static void selectFormat(String formatType) throws InterruptedException {
     CdfGCSLocators.format.click();
-    SeleniumHelper.waitAndClick(SeleniumDriver.getDriver().findElement(By.xpath(
+    ElementHelper.clickOnElement(SeleniumDriver.getDriver().findElement(By.xpath(
       "//li[@data-value='" + formatType + "']")));
   }
 
   /**
-   * @deprecated
-   * Use {@link io.cdap.e2e.utils.CdfHelper#validateSchema(Map)}
+   * @deprecated Use {@link io.cdap.e2e.utils.CdfHelper#validateSchema(Map)}
    */
   @Deprecated
   public static void validateSchema() {
@@ -162,7 +160,7 @@ public class CdfGcsActions {
 
   public static void clickOverrideDataType(String dataType) {
     CdfGCSLocators.overrideDataType.click();
-    SeleniumHelper.waitAndClick(
+    ElementHelper.clickOnElement(
       SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-value='" + dataType + "']")));
   }
 
@@ -171,20 +169,20 @@ public class CdfGcsActions {
   }
 
   /**
-   * @deprecated
-   * Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
+   * @deprecated Use either {@link io.cdap.e2e.utils.CdfHelper#openSinkPluginPreviewData(String)}
    * or {@link io.cdap.e2e.utils.CdfHelper#openSourcePluginPreviewData(String)} as per plugin type.
    */
   @Deprecated
   public static void clickPreviewData() {
     SeleniumHelper.waitAndClick(CdfGCSLocators.gcsPreviewData);
   }
+
   public static void enterSampleSize(String sampleSize) {
-    SeleniumHelper.replaceElementValue(CdfGCSLocators.samplesize, sampleSize);
+    ElementHelper.replaceElementValue(CdfGCSLocators.samplesize, sampleSize);
   }
 
   public static void enterPathSuffix(String pathSuffix) {
-    SeleniumHelper.replaceElementValue(CdfGCSLocators.pathSuffix, pathSuffix);
+    ElementHelper.replaceElementValue(CdfGCSLocators.pathSuffix, pathSuffix);
   }
 
   public static void toggleWriteHeader() {
@@ -192,12 +190,12 @@ public class CdfGcsActions {
   }
 
   public static void enterLocation(String location) {
-    SeleniumHelper.replaceElementValue(CdfGCSLocators.location, location);
+    ElementHelper.replaceElementValue(CdfGCSLocators.location, location);
   }
 
   public static void selectContentType(String contentType) {
     CdfGCSLocators.contentType.click();
-    SeleniumHelper.waitAndClick(SeleniumDriver.getDriver().findElement(By.xpath(
+    ElementHelper.clickOnElement(SeleniumDriver.getDriver().findElement(By.xpath(
       "//li[@data-value='" + contentType + "']")));
   }
 
