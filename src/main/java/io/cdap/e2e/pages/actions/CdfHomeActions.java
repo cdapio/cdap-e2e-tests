@@ -17,15 +17,10 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfHomeLocators;
-import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static io.cdap.e2e.utils.ConstantsUtil.JS_CLICK;
-import static io.cdap.e2e.utils.ConstantsUtil.PASS_CASE;
 
 /**
  * Represents CdfHomeActions
@@ -39,9 +34,6 @@ public class CdfHomeActions {
   }
 
   public static void clickStudio() {
-    JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
-    WebElement element = CdfHomeLocators.studio;
-    js.executeScript(JS_CLICK, element);
-    logger.info(PASS_CASE);
+    ElementHelper.clickOnElement(CdfHomeLocators.studio);
   }
 }

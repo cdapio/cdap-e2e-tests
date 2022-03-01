@@ -26,7 +26,6 @@ import io.cdap.e2e.pages.locators.CdfSchemaLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -46,19 +45,18 @@ public interface CdfHelper {
 
   default void openCdf() throws IOException, InterruptedException {
     SeleniumDriver.openPage(SeleniumHelper.readParameters(ConstantsUtil.CDFURL));
-    try {
-      SeleniumDriver.getDriver().switchTo().alert().accept();
-      SeleniumDriver.waitForPageToLoad();
-    } catch (NoAlertPresentException Ex) {
-      SeleniumDriver.waitForPageToLoad();
-    }
+    PageHelper.acceptAlertIfPresent();
+    WaitHelper.waitForPageToLoad();
+    /* TODO: Remove below wait once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
+    WaitHelper.waitForElementToBeDisplayed(
+      CdfStudioLocators.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST));
   }
 
   default int countOfNoOfRecordsTransferredToBigQueryIn(String tableName) throws IOException, InterruptedException {
     int countRecords;
     countRecords = BigQueryClient.countBqQuery(PluginPropertyUtils.pluginProp(tableName));
     BeforeActions.scenario.write("**********No of Records Transferred in table" +
-                                   PluginPropertyUtils.pluginProp(tableName) + "*:" + countRecords);
+      PluginPropertyUtils.pluginProp(tableName) + "*:" + countRecords);
     Assert.assertTrue(countRecords > 0);
     return countRecords;
   }
@@ -69,14 +67,14 @@ public interface CdfHelper {
     CdfGcsActions.selectFormat(formatType);
     CdfGcsActions.skipHeader();
     CdfGcsActions.getSchema();
-    SeleniumHelper.waitElementIsVisible(CdfGCSLocators.getSchemaButton);
+    WaitHelper.waitForElementToBeDisplayed(CdfGCSLocators.getSchemaButton);
   }
 
   default void saveAndDeployPipeline() throws InterruptedException {
     CdfStudioActions.pipelineName();
-    CdfStudioActions.pipelineNameIp("Pipeline-" + UUID.randomUUID().toString());
+    CdfStudioActions.pipelineNameIp("Pipeline-" + UUID.randomUUID());
     CdfStudioActions.pipelineSave();
-    SeleniumHelper.waitElementIsVisible(CdfPipelineRunLocators.savedSuccessMessage, ConstantsUtil.ONE);
+    WaitHelper.waitForElementToBeDisplayed(CdfPipelineRunLocators.savedSuccessMessage);
     CdfStudioActions.pipelineDeploy();
   }
 
@@ -129,7 +127,7 @@ public interface CdfHelper {
 
   default void waitForSinkOnCanvas(String pluginName) {
     String a = "//*[contains(@data-cy,'plugin-node-" + pluginName + "']";
-    SeleniumHelper.waitElementIsVisible(
+    WaitHelper.waitForElementToBeDisplayed(
       SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@data-cy,'plugin-node-" + pluginName + "')]")));
   }
 
@@ -140,40 +138,40 @@ public interface CdfHelper {
 
   default void connectSourceAndSink(String source, String sink) {
     By sinkNode = By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') and @data-type='batchsink']");
-    SeleniumHelper.waitElementIsVisible(SeleniumDriver.getDriver().findElement(sinkNode));
-    SeleniumHelper.dragAndDrop(
+    WaitHelper.waitForElementToBeDisplayed(SeleniumDriver.getDriver().findElement(sinkNode));
+    ElementHelper.dragAndDrop(
       SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@class,'plugin-endpoint_" + source + "')]")),
       SeleniumDriver.getDriver().findElement(sinkNode));
   }
 
   default void connectSourceAndSinkWithTitles(String source, String sourceTitle, String sink, String sinkTitle) {
     WebElement sinkNode = CdfStudioLocators.sinkNodeWithTitle(sink, sinkTitle);
-    SeleniumHelper.waitElementIsVisible(sinkNode);
-    SeleniumHelper.dragAndDrop(CdfStudioLocators.sourceEndpointWithTitle(source, sourceTitle), sinkNode);
+    WaitHelper.waitForElementToBeDisplayed(sinkNode);
+    ElementHelper.dragAndDrop(CdfStudioLocators.sourceEndpointWithTitle(source, sourceTitle), sinkNode);
   }
 
   default void openSourcePluginProperties(String plugin) {
     SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
-                 "@data-type='batchsource']//div[@class='node-metadata']/div[2]")).click();
+        "@data-type='batchsource']//div[@class='node-metadata']/div[2]")).click();
   }
 
   default void openSinkPluginProperties(String plugin) {
     SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@data-cy,'plugin-node-" + plugin + "') and " +
-                 "@data-type='batchsink']//div[@class='node-metadata']/div[2]")).click();
+        "@data-type='batchsink']//div[@class='node-metadata']/div[2]")).click();
   }
 
   default void openSourcePluginPreviewData(String plugin) {
     SeleniumDriver.getDriver().findElement(
       By.xpath("//*[@data-type='batchsource']//*[contains(@data-cy,'-preview-data-btn') " +
-                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+        "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
   }
 
   default void openSinkPluginPreviewData(String plugin) {
     SeleniumDriver.getDriver().findElement(
       By.xpath("//*[@data-type='batchsink']//*[contains(@data-cy,'-preview-data-btn') " +
-                 "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
+        "and contains(@data-cy,'" + plugin + "') and @class='node-preview-data-btn ng-scope']")).click();
   }
 
   default boolean compareTransferredRecords() {
@@ -185,13 +183,13 @@ public interface CdfHelper {
   default void validateSchema(Map<String, String> expectedOutputSchema) {
     Map<String, String> actualOutputSchema = new HashMap<>();
     int index = 0;
-    for (WebElement element : SCHEMA_LOCATORS.outputSchemaColumnNames) {
+    for (WebElement element : CdfSchemaLocators.outputSchemaColumnNames) {
       actualOutputSchema.put(element.getAttribute("value"),
-                             SCHEMA_LOCATORS.outputSchemaDataTypes.get(index).getAttribute("title"));
+        CdfSchemaLocators.outputSchemaDataTypes.get(index).getAttribute("title"));
       index++;
     }
     Assert.assertTrue("Schema displayed on UI should match with expected Schema",
-                      actualOutputSchema.equals(expectedOutputSchema));
+      actualOutputSchema.equals(expectedOutputSchema));
   }
 
   default void clickMacroButton(String pluginProperty) {
@@ -199,6 +197,6 @@ public interface CdfHelper {
   }
 
   default void enterMacro(String pluginProperty, String argument) {
-    SeleniumHelper.replaceElementValue(CdfStudioLocators.macroInput(pluginProperty), "${" + argument + "}");
+    ElementHelper.replaceElementValue(CdfStudioLocators.macroInput(pluginProperty), "${" + argument + "}");
   }
 }
