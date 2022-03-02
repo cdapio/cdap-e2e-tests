@@ -77,7 +77,7 @@ public class CdfStudioLocators {
   public static WebElement pipelineDeploy;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
-  public static WebElement configRun;
+  public static WebElement previewConfigRunButton;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
   public static WebElement statusBanner;

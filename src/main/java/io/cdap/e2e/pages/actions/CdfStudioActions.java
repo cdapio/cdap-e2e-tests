@@ -166,8 +166,8 @@ public class CdfStudioActions {
     CdfStudioLocators.gcs.click();
   }
 
-  public static void clickConfigRunButton() {
-    CdfStudioLocators.configRun.click();
+  public static void clickPreviewConfigRunButton() {
+    CdfStudioLocators.previewConfigRunButton.click();
   }
 
   public static void clickPreviewRunButton() {
