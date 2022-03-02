@@ -165,14 +165,14 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioLocators.runButton.click();
   }
 
-  @Then("Preview and run the pipeline with runtime arguments")
+  @Then("Enter runtime argument value {string} for key {string}")
+  public void enterRuntimeArgumentValueForKey(String value, String runtimeArgumentKey) {
+    CdfStudioLocators.runtimeArgsValue(runtimeArgumentKey).sendKeys(PluginPropertyUtils.pluginProp(value));
+  }
+
+  @Then("Run the preview of pipeline with runtime arguments")
   public void previewAndRunThePipelineWithRuntimeArguments() {
-    CdfStudioActions.previewSelect();
-    CdfStudioActions.clickPreviewRunButton();
-    for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
-      CdfStudioLocators.runtimeArgsValue(entry.getKey()).sendKeys(entry.getValue());
-    }
-    CdfStudioActions.clickConfigRunButton();
+    CdfStudioActions.clickPreviewConfigRunButton();
   }
 
   @Then("Verify the preview of pipeline is {string}")
@@ -236,11 +236,7 @@ public class PipelineSteps implements CdfHelper {
   }
 
   @Then("Run the Pipeline in Runtime with runtime arguments")
-  public void runThePipelineInRuntimeWithRuntimeArguments() throws InterruptedException {
-    CdfPipelineRunAction.runClick();
-    for (Map.Entry<String, String> entry : runtimeArguments.entrySet()) {
-      CdfStudioLocators.runtimeArgsValue(entry.getKey()).sendKeys(entry.getValue());
-    }
+  public void runThePipelineInRuntimeWithRuntimeArguments() {
     CdfPipelineRunAction.clickDeployedConfigRunButton();
   }
 
