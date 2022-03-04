@@ -177,9 +177,9 @@ public class PipelineSteps implements CdfHelper {
 
   @Then("Verify the preview of pipeline is {string}")
   public void verifyThePreviewOfPipelineIs(String previewStatus) {
-    String actualStatusBanner = WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBannerText).getText();
+    String actualStatusBanner = WaitHelper
+      .waitForElementToBeDisplayed(CdfStudioLocators.statusBannerText, 300).getText();
     Assert.assertTrue(actualStatusBanner.contains(previewStatus));
-
     if (!previewStatus.equalsIgnoreCase("failed")) {
       WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
     }
@@ -242,7 +242,7 @@ public class PipelineSteps implements CdfHelper {
 
   @Then("Wait till pipeline is in running state")
   public void waitTillPipelineIsInRunningState() {
-    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 300);
+    WebDriverWait wait = new WebDriverWait(SeleniumDriver.getDriver(), 900);
     wait.until(ExpectedConditions.or(
       ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Succeeded']")),
       ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-cy='Failed']"))));
