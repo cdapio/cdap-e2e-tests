@@ -17,56 +17,74 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfLogLocators;
+import io.cdap.e2e.utils.AssertionHelper;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 /**
- * Represents CdfLogActions
+ * Represents Cdf Logs Page Actions
  */
 public class CdfLogActions {
-  public static CdfLogLocators cdfLogLocators;
 
   static {
-    cdfLogLocators = SeleniumHelper.getPropertiesLocators(CdfLogLocators.class);
+    SeleniumHelper.getPropertiesLocators(CdfLogLocators.class);
   }
 
-  public static void validateErrorPopupLog() throws InterruptedException {
-    ElementHelper.clickOnElement(cdfLogLocators.errorMessagePopup);
-  }
-
-  public static void validateErrorPopupLog(String error) throws InterruptedException {
-    ElementHelper.clickOnElement(cdfLogLocators.errorMessagePopup);
-  }
-
-  public static void dismissPopup() {
-    cdfLogLocators.dismissable.click();
-  }
-
+  /**
+   * Click on the Logs button on the header
+   */
   public static void goToLogs() {
-    cdfLogLocators.goToLogs.click();
+    ElementHelper.clickOnElement(CdfLogLocators.goToLogs);
   }
 
-  public static void validateFailed() {
-    cdfLogLocators.validateFailed.isDisplayed();
+  /**
+   * Click on the 'VIEW ADVANCED LOGS' button
+   */
+  public static void viewAdvancedLogs() {
+    ElementHelper.clickOnElement(CdfLogLocators.getGoToAdvanceLogs);
   }
 
-  public static void validateCategoryError() {
-    cdfLogLocators.validateCategoryError.isDisplayed();
+  /**
+   * Verify if 'Pipeline ... succeeded' log is shown
+   */
+  public static void verifyPipelineSucceededLog() {
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.validateSucceeded);
   }
 
-  public static void validateLogError() {
-    cdfLogLocators.validateCategoryError.isDisplayed();
+  /**
+   * Verify if 'The preview of the pipeline has failed' error message popup is displayed
+   */
+  public static void verifyPipelinePreviewFailedPopupMessage() {
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.errorMessagePopup);
   }
 
-  public static void goToAdvanceLogs() {
-    cdfLogLocators.getGoToAdvanceLogs.click();
+  /**
+   * Click on the close button(x) on the error message
+   */
+  public static void dismissPopupMessage() {
+    ElementHelper.clickOnElement(CdfLogLocators.dismissable);
   }
 
-  public static void validateSucceeded() {
-    cdfLogLocators.validateSucceeded.isDisplayed();
+  /**
+   * Verify if 'Pipeline ... failed' log is shown
+   */
+  public static void verifyPipelineFailedLog() {
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.validateFailed);
   }
 
+  /**
+   * Verify if 'Pipeline ... failed' log is shown with 'ERROR' Level
+   */
+  public static void verifyPipelineFailedLogIsShownWithErrorLevel() {
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.validateCategoryError);
+    AssertionHelper.verifyElementContainsText(CdfLogLocators.validateCategoryError, ConstantsUtil.ERROR);
+  }
+
+  /**
+   * Click on the close button(x) for the Logs page
+   */
   public static void closeLogs() {
-    cdfLogLocators.closeLogs.click();
+    ElementHelper.clickOnElement(CdfLogLocators.closeLogs);
   }
 }

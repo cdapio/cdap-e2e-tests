@@ -15,55 +15,61 @@
  */
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
 /**
- * Represents CdfPipelineRunLocators
+ * Represents Cdf Pipeline Run Page Locators
  */
 public class CdfPipelineRunLocators {
-  @FindBy(xpath = "//*[@class=\"icon-svg icon-play\"]")
-  public WebElement run;
+  @FindBy(xpath = "//div[@data-cy='pipeline-run-btn']//*[contains(@class, 'icon-play')]")
+  public static WebElement run;
 
-  @FindBy(xpath = "//*[@class=\"icon-svg icon-sliders configure-icon\"]")
-  public WebElement configure;
+  @FindBy(xpath = "//div[@data-cy='pipeline-configure-btn']//*[contains(@class, 'configure-icon')]")
+  public static WebElement configure;
 
-  @FindBy(xpath = "//*[@class=\"btn pipeline-action-btn pipeline-stop-btn\"]")
-  public WebElement stop;
+  @FindBy(xpath = "//div[contains(@class, 'pipeline-stop-btn')]//*[contains(@class, 'icon-stop')]")
+  public static WebElement stop;
 
-  @FindBy(xpath = "//*[@class=\"icon-svg icon-circle\"]")
-  public WebElement runPipelineStatus;
+  @FindBy(xpath = "//span[contains(@class, 'run-status-bubble')]//*[contains(@class, 'icon-circle')]")
+  public static WebElement runPipelineStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Deployed\"]")
-  public WebElement deployedStatus;
+  public static WebElement deployedStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Provisioning\"]")
-  public WebElement provisioningStatus;
+  public static WebElement provisioningStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Stopped\"]")
-  public WebElement stoppedStatus;
+  public static WebElement stoppedStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Starting\"]")
-  public WebElement startingStatus;
+  public static WebElement startingStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Failed\"]")
-  public WebElement failedStatus;
+  public static WebElement failedStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Succeeded\"]")
-  public WebElement succeededStatus;
+  public static WebElement succeededStatus;
 
   @FindBy(xpath = "//*[@data-cy=\"Running\"]")
-  public WebElement runningStatus;
+  public static WebElement runningStatus;
 
-  @FindBy(xpath = "//*[@class=\"run-logs-btn\"]")
-  public WebElement logs;
+  public static WebElement locatePipelineStatus(String status) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='" + status + "']"));
+  }
+
+  @FindBy(xpath = "//div[@data-cy='log-viewer-btn-toggle']//div[contains(@class, 'run-logs-btn')]")
+  public static WebElement logs;
 
   @FindBy(xpath = "//span[text()='Download All']/parent::a/following-sibling::div//button")
-  public WebElement logsArrow;
+  public static WebElement logsArrow;
 
   @FindBy(xpath = "//*[contains(text(), 'View Raw Logs') ]")
-  public WebElement viewRawLogs;
+  public static WebElement viewRawLogs;
 
   @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[1]/following-sibling::span")
   public static WebElement recordsInCount;
@@ -71,13 +77,13 @@ public class CdfPipelineRunLocators {
   @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[2]/following-sibling::span")
   public static WebElement recordsOutCount;
 
-  @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
-  public static WebElement savedSuccessMessage;
-
   @FindBy(how = How.XPATH, using = "/html/body/pre")
   public static WebElement logsTextbox;
 
   @FindBy(how = How.XPATH, using = "//button[@data-cy='run-deployed-pipeline-modal-btn']")
   public static WebElement deployedConfigRunButton;
 
+  /* TODO: Move this locator to CdfStudioLocators class */
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
+  public static WebElement savedSuccessMessage;
 }

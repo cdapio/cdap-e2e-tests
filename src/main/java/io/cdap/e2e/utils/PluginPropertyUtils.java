@@ -28,16 +28,16 @@ import java.util.Properties;
  */
 public class PluginPropertyUtils {
 
-  protected static Properties pluginProperties = new Properties();
   private static final Properties errorProperties = new Properties();
   private static final Logger logger = LoggerFactory.getLogger(PluginPropertyUtils.class);
+  protected static Properties pluginProperties = new Properties();
 
   static {
     try {
       pluginProperties.load(PluginPropertyUtils.class
-                              .getResourceAsStream("/" + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE));
+        .getResourceAsStream("/" + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE));
       errorProperties.load(PluginPropertyUtils.class
-                             .getResourceAsStream("/" + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE));
+        .getResourceAsStream("/" + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE));
     } catch (Exception e) {
       logger.error("Error while reading properties file" + e);
     }
@@ -51,6 +51,14 @@ public class PluginPropertyUtils {
     return errorProperties.getProperty(property);
   }
 
+  /**
+   * @param property
+   * @deprecated Use
+   * {@link io.cdap.e2e.pages.actions.CdfPluginPropertiesActions#verifyRequiredPropertyHasNoValueErrorMessage(String)}
+   * and
+   * {@link io.cdap.e2e.pages.actions.CdfPluginPropertiesActions#verifyPluginPropertyInlineErrorMessageColor(String)}
+   */
+  @Deprecated
   public static void validateMandatoryPropertyError(String property) {
     String expectedErrorMessage = ConstantsUtil.ERROR_MSG_MANDATORY.replaceAll("PROPERTY", property);
     String actualErrorMessage = findPropertyErrorElement(property).getText();
@@ -60,11 +68,24 @@ public class PluginPropertyUtils {
     Assert.assertEquals(expectedColor, actualColor);
   }
 
+  /**
+   * @param property
+   * @return
+   * @deprecated Use
+   * {@link io.cdap.e2e.pages.locators.CdfPluginPropertiesLocators#locatePluginPropertyInlineError(String)}
+   */
+  @Deprecated
   public static WebElement findPropertyErrorElement(String property) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//*[@data-cy='" + property + "']/following-sibling::div[@data-cy='property-row-error']"));
   }
 
+  /**
+   * @param element
+   * @return
+   * @deprecated Use {@link ElementHelper#getElementColorCssProperty(WebElement)}
+   */
+  @Deprecated
   public static String getErrorColor(WebElement element) {
     String color = element.getCssValue(ConstantsUtil.COLOR);
     String[] hexValue = color.replace("rgba(", "").

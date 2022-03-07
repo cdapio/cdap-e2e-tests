@@ -17,67 +17,128 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
+import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
+import io.cdap.e2e.utils.PageHelper;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
-import io.cdap.e2e.utils.WaitHelper;
 import org.junit.Assert;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 /**
- * Represents CdfPipelineRunAction
+ * Represents Cdf Pipeline Run Page Actions
  */
 public class CdfPipelineRunAction {
-  private static final Logger logger = LoggerFactory.getLogger(CdfPipelineRunAction.class);
-  public static CdfPipelineRunLocators cdfPipelineRunLocators;
 
   static {
-    cdfPipelineRunLocators = SeleniumHelper.getPropertiesLocators(CdfPipelineRunLocators.class);
+    SeleniumHelper.getPropertiesLocators(CdfPipelineRunLocators.class);
   }
 
-  public static void runClick() throws InterruptedException {
-    ElementHelper.clickOnElement(cdfPipelineRunLocators.run);
+  /**
+   * Click on the Run button
+   */
+  public static void runClick() {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.run);
   }
 
-  public static String runPipelineStatus() {
-    return cdfPipelineRunLocators.runPipelineStatus.getAttribute(ConstantsUtil.COLOR);
+  /**
+   * Click on the Run button inside 'Runtime Arguments' dialog
+   */
+  public static void clickDeployedConfigRunButton() {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.deployedConfigRunButton);
   }
 
+  /**
+   * Get the Pipeline's Status bubble color
+   *
+   * @return color attribute value
+   */
+  public static String getColorAttributeOfPipelineStatusBubble() {
+    return CdfPipelineRunLocators.runPipelineStatus.getAttribute(ConstantsUtil.COLOR);
+  }
+
+  /**
+   * Check if the Pipeline is in the expected Status
+   *
+   * @param element WebElement of Pipeline's expected Status
+   * @return boolean
+   */
+  private static boolean validatePipelineExpectedStatus(WebElement element) {
+    return ElementHelper.isElementDisplayed(element);
+  }
+
+  /**
+   * Check if the pipeline is in Running Status
+   *
+   * @return Boolean
+   */
   public static Boolean isRunning() {
-    return provideState(cdfPipelineRunLocators.runningStatus);
+    return validatePipelineExpectedStatus(CdfPipelineRunLocators.runningStatus);
   }
 
-  public static void logsClick() {
-    cdfPipelineRunLocators.logs.click();
-  }
-
+  /**
+   * Check if the pipeline is in Provisioning Status
+   *
+   * @return Boolean
+   */
   public static Boolean isProvisioning() {
-    return provideState(cdfPipelineRunLocators.provisioningStatus);
+    return validatePipelineExpectedStatus(CdfPipelineRunLocators.provisioningStatus);
   }
 
-  private static boolean provideState(WebElement element) {
-    boolean bool = false;
-    try {
-      bool = element.isDisplayed();
-    } catch (NoSuchElementException e) {
-      logger.error("Element not found" + e);
-    }
-    return bool;
+  /**
+   * Wait till the Pipeline's status changes (from Running) to either Succeeded, Failed or Stopped within the
+   * Timeout: {@link ConstantsUtil#PIPELINE_RUN_TIMEOUT_SECONDS}
+   */
+  public static void waitTillPipelineRunCompletes() {
+    SeleniumDriver.getWaitDriver(ConstantsUtil.PIPELINE_RUN_TIMEOUT_SECONDS).until(ExpectedConditions.or(
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.succeededStatus),
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.failedStatus),
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.stoppedStatus)
+    ));
   }
 
-  public static String captureRawLogs() {
+  /**
+   * Wait till the Pipeline's status changes (from Running) to either Succeeded, Failed or Stopped within the given
+   * timeout
+   *
+   * @param timeoutInSeconds timeout
+   */
+  public static void waitTillPipelineRunCompletes(long timeoutInSeconds) {
+    SeleniumDriver.getWaitDriver(timeoutInSeconds).until(ExpectedConditions.or(
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.succeededStatus),
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.failedStatus),
+      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.stoppedStatus)
+    ));
+  }
+
+  /**
+   * Verify the Pipeline's Status
+   *
+   * @param status Deployed/Provisioning/Starting/Running/Succeeded/Failed
+   */
+  public static void verifyPipelineRunStatus(String status) {
+    AssertionHelper.verifyElementDisplayed(CdfPipelineRunLocators.locatePipelineStatus(status),
+      "Pipeline status should be " + status);
+  }
+
+  /**
+   * Click on the Logs button
+   */
+  public static void logsClick() {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.logs);
+  }
+
+  /**
+   * View Raw Logs
+   */
+  public static void viewRawLogs() {
     int attempts = 0;
     while (attempts < 5) {
       try {
-        WaitHelper.waitForElementToBeDisplayed(cdfPipelineRunLocators.logsArrow);
-        cdfPipelineRunLocators.logsArrow.click();
+        ElementHelper.clickOnElement(CdfPipelineRunLocators.logsArrow);
         break;
       } catch (StaleElementReferenceException e) {
         if (attempts == 4) {
@@ -86,18 +147,22 @@ public class CdfPipelineRunAction {
       }
       attempts++;
     }
-    cdfPipelineRunLocators.viewRawLogs.click();
-    String parent = SeleniumDriver.getDriver().getWindowHandle();
-    ArrayList<String> tabs2 = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
-    SeleniumDriver.getDriver().switchTo().window(tabs2.get(ConstantsUtil.ONE));
-    String logs = CdfPipelineRunLocators.logsTextbox.getText();
-    Assert.assertNotNull(logs);
-    SeleniumDriver.getDriver().close();
-    SeleniumDriver.getDriver().switchTo().window(parent);
-    return logs;
+
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.viewRawLogs);
   }
 
-  public static void clickDeployedConfigRunButton() {
-    CdfPipelineRunLocators.deployedConfigRunButton.click();
+  /**
+   * Capture Raw Logs
+   *
+   * @return logs
+   */
+  public static String captureRawLogs() {
+    viewRawLogs();
+    PageHelper.switchToWindow(ConstantsUtil.ONE);
+    String logs = CdfPipelineRunLocators.logsTextbox.getText();
+    Assert.assertNotNull(logs);
+    PageHelper.closeCurrentWindow();
+    PageHelper.switchBackToMainWindow();
+    return logs;
   }
 }

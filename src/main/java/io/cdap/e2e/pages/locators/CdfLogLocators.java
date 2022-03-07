@@ -25,26 +25,26 @@ import org.openqa.selenium.support.FindBy;
 public class CdfLogLocators {
 
   @FindBy(xpath = "//*[contains(text(),'The preview of the pipeline has failed')]")
-  public WebElement errorMessagePopup;
+  public static WebElement errorMessagePopup;
 
   @FindBy(xpath = "//*[@ng-if='dismissable']")
-  public WebElement dismissable;
+  public static WebElement dismissable;
 
   @FindBy(xpath = "//*[@class='button-label' and contains(text(),'Logs')]")
-  public WebElement goToLogs;
+  public static WebElement goToLogs;
 
   @FindBy(xpath = "//*[contains(text(),'Pipeline') and contains(text(),'failed')]")
-  public WebElement validateFailed;
+  public static WebElement validateFailed;
 
   @FindBy(xpath = "//*[contains(text(),'Pipeline') and contains(text(),'failed')]/parent::*//child::div[2]")
-  public WebElement validateCategoryError;
+  public static WebElement validateCategoryError;
 
   @FindBy(xpath = "//*[@class=\"MuiButton-label\"  and contains(text(),'View')]")
-  public WebElement getGoToAdvanceLogs;
+  public static WebElement getGoToAdvanceLogs;
 
   @FindBy(xpath = "//*[contains(text(),'Pipeline') and contains(text(),'succeeded')]")
-  public WebElement validateSucceeded;
+  public static WebElement validateSucceeded;
 
   @FindBy(xpath = "//*[contains(@class, 'close')]")
-  public WebElement closeLogs;
+  public static WebElement closeLogs;
 }

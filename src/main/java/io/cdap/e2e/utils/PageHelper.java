@@ -20,12 +20,17 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+
 /**
  * Page helper
  */
 public class PageHelper {
   private static final Logger logger = LoggerFactory.getLogger(PageHelper.class);
 
+  /**
+   * Accept alert if present
+   */
   public static void acceptAlertIfPresent() {
     try {
       logger.info("Accepting alert if present");
@@ -35,6 +40,9 @@ public class PageHelper {
     }
   }
 
+  /**
+   * Dismiss alert if present
+   */
   public static void dismissAlertIfPresent() {
     try {
       logger.info("Dismiss alert if present");
@@ -42,5 +50,34 @@ public class PageHelper {
     } catch (NoAlertPresentException exception) {
       logger.info("No alert present");
     }
+  }
+
+  /**
+   * Switch to browser window based on the window index
+   *
+   * @param windowIndex Starts with 0
+   */
+  public static void switchToWindow(int windowIndex) {
+    WaitHelper.waitForNewWindow(windowIndex + 1);
+    logger.info("Switching to Window at index (index starts with 0): " + windowIndex);
+    ArrayList<String> listOfWindows = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
+    SeleniumDriver.getDriver().switchTo().window(listOfWindows.get(windowIndex));
+  }
+
+  /**
+   * Close the current window
+   */
+  public static void closeCurrentWindow() {
+    logger.info("Close the current window");
+    SeleniumDriver.getDriver().close();
+  }
+
+  /**
+   * Switch back to main window (index: 0)
+   */
+  public static void switchBackToMainWindow() {
+    logger.info("Switching back to the Main window (index: 0)");
+    ArrayList<String> listOfWindows = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
+    SeleniumDriver.getDriver().switchTo().window(listOfWindows.get(0));
   }
 }
