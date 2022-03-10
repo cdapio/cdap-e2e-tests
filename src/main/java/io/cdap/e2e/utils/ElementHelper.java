@@ -162,4 +162,51 @@ public class ElementHelper {
     WaitHelper.waitForElementToBeDisplayed(element, timeoutInSeconds);
     return isElementDisplayed(element);
   }
+
+  /**
+   * Select the radioButton option after waiting for it to be enabled and scrolling to it
+   * @param element Radio button element to select
+   */
+  public static void selectRadioButton(WebElement element) {
+    selectRadioButton(element, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Select the radioButton option after waiting for given timeout to it to be enabled and scrolling to it
+   * @param element Radio button element to select
+   * @param timeoutInSeconds timeout
+   */
+  public static void selectRadioButton(WebElement element, long timeoutInSeconds) {
+    logger.info("Select radio button: " + element);
+    clickOnEnabledElement(element, timeoutInSeconds);
+  }
+
+  /**
+   * Select the checkbox option after waiting for it to be enabled and scrolling to it
+   * @param element checkbox element to select
+   */
+  public static void selectCheckbox(WebElement element) {
+    selectCheckbox(element, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Select the checkbox option after waiting for given timeout to it to be enabled and scrolling to it
+   * @param element checkbox element to select
+   * @param timeoutInSeconds timeout
+   */
+  public static void selectCheckbox(WebElement element, long timeoutInSeconds) {
+    logger.info("Select checkbox: " + element);
+    clickOnEnabledElement(element, timeoutInSeconds);
+  }
+
+  /**
+   * Click on the WebElement after waiting for it to be enabled and scrolling to it
+   * @param element
+   * @param timeoutInSeconds
+   */
+  public static void clickOnEnabledElement(WebElement element, long timeoutInSeconds) {
+    WaitHelper.waitForElementToBeEnabled(element, timeoutInSeconds);
+    scrollToElement(element);
+    element.click();
+  }
 }
