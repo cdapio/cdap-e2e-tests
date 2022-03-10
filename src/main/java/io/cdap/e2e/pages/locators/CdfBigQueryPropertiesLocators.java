@@ -16,6 +16,8 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -25,16 +27,16 @@ import org.openqa.selenium.support.How;
  */
 public class CdfBigQueryPropertiesLocators {
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='referenceName' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='referenceName']")
   public static WebElement bigQueryReferenceName;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='dataset' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='dataset']")
   public static WebElement bigQueryDataSet;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"project\" and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='project']")
   public static WebElement projectID;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='table' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='table']")
   public static WebElement bigQueryTable;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-truncateTable']")
@@ -44,57 +46,73 @@ public class CdfBigQueryPropertiesLocators {
   public static WebElement updateTable;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-properties-validate-btn']")
-  public static WebElement validateBttn;
+  public static WebElement validateButton;
 
-  @FindBy(how = How.XPATH, using = "//*[@class='fa fa-remove']")
+  @FindBy(how = How.XPATH, using = "//a[@data-testid='close-config-popover']")
   public static WebElement closeButton;
-
-  @FindBy(how = How.XPATH, using = "//*[@role='button' and contains(text(),'Actions')]")
-  public static WebElement actionButton;
-
-  @FindBy(how = How.XPATH, using = "//*[@role='option' and contains(text(),'Export')]")
-  public static WebElement exportButton;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
   public static WebElement textSuccess;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"cmekKey\" and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='cmekKey']")
   public static WebElement cmekKey;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"datasetProject\" and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='datasetProject']")
   public static WebElement datasetProjectID;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"dataset\" and @type='text']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='dataset']")
   public static WebElement dataset;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"serviceFilePath\" and @type='text']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='serviceFilePath']")
   public static WebElement serviceFilePath;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='partitionFrom' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='partitionFrom']")
   public static WebElement partitionStartDate;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='partitionTo' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='partitionTo']")
   public static WebElement partitionEndDate;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='filter' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='filter']")
   public static WebElement filter;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='bucket' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='bucket']")
   public static WebElement temporaryBucketName;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-enableQueryingViews']")
   public static WebElement enableQueryingViews;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationProject' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='viewMaterializationProject']")
   public static WebElement viewMaterializationProject;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='viewMaterializationDataset' and @class='MuiInputBase-input']")
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='viewMaterializationDataset']")
   public static WebElement viewMaterializationDataset;
 
-  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Get Schema')]")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='get-schema-btn']//span[text()='Get Schema']")
   public static WebElement getSchemaButton;
 
-  @FindBy(how = How.XPATH,
-    using = "//*[@data-cy='BigQueryTable-preview-data-btn' and @class='node-preview-data-btn ng-scope']")
-  public static WebElement previewData;
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='gcsChunkSize']")
+  public static WebElement chunkSize;
+
+  public static WebElement partitioningType(String option) {
+    return SeleniumDriver.getDriver()
+      .findElement(By.xpath("//*[@data-cy='partitioningType']//*[@value='" + option + "' and @type='radio']"));
+  }
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='partitionByField']")
+  public static WebElement partitionField;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='rangeStart']")
+  public static WebElement rangeStart;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='rangeEnd']")
+  public static WebElement rangeEnd;
+
+  @FindBy(how = How.XPATH, using = "//input[@data-cy='rangeInterval']")
+  public static WebElement rangeInterval;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='switch-partitionFilterRequired']")
+  public static WebElement requirePartitionFilter;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='clusteringOrder']//*[@data-cy='key']/input")
+  public static WebElement clusteringOrder;
 }

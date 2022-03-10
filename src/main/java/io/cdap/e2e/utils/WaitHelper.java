@@ -91,4 +91,34 @@ public class WaitHelper {
       "with the timeout: " + timeoutInSeconds + " seconds");
     return SeleniumDriver.getWaitDriver(timeoutInSeconds).until(ExpectedConditions.invisibilityOf(element));
   }
+
+  /**
+   * Wait for element to be enabled
+   *
+   * @param element WebElement to wait for
+   */
+  public static void waitForElementToBeEnabled(WebElement element) {
+    waitForElementToBeEnabled(element, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * @param element          WebElement to wait for
+   * @param timeoutInSeconds timeout
+   */
+  public static void waitForElementToBeEnabled(WebElement element, long timeoutInSeconds) {
+    ExpectedCondition<Boolean> elementToBeEnabled = new ExpectedCondition<Boolean>() {
+      @Override
+      public @Nullable Boolean apply(@Nullable WebDriver webDriver) {
+        return element.isEnabled();
+      }
+
+      public String toString() {
+        return "element to be enabled: " + element;
+      }
+    };
+
+    logger.info("Waiting for the element: " + element + " to be enabled " +
+                  "with the timeout: " + timeoutInSeconds + " seconds");
+    SeleniumDriver.getWaitDriver(timeoutInSeconds).until(elementToBeEnabled);
+  }
 }
