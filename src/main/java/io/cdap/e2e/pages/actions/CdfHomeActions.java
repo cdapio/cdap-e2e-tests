@@ -27,12 +27,14 @@ import org.slf4j.LoggerFactory;
  */
 public class CdfHomeActions {
   private static final Logger logger = LoggerFactory.getLogger(CdfHomeActions.class);
-  public static CdfHomeLocators cdfHomeLocators;
 
   static {
-    cdfHomeLocators = SeleniumHelper.getPropertiesLocators(CdfHomeLocators.class);
+    SeleniumHelper.getPropertiesLocators(CdfHomeLocators.class);
   }
 
+  /**
+   * Click on the Studio button under Integrate tile on the home page
+   */
   public static void clickStudio() {
     ElementHelper.clickOnElement(CdfHomeLocators.studio);
   }

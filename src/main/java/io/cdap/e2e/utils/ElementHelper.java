@@ -17,6 +17,7 @@
 package io.cdap.e2e.utils;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -33,6 +34,11 @@ public class ElementHelper {
   private static final JavascriptExecutor js = (JavascriptExecutor) SeleniumDriver.getDriver();
   private static final Actions actions = new Actions(SeleniumDriver.getDriver());
 
+  /**
+   * Scrolling to the WebElement
+   *
+   * @param element WebElement
+   */
   public static void scrollToElement(WebElement element) {
     logger.info("Scrolling to the element: " + element);
     actions.moveToElement(element).perform();
@@ -41,6 +47,7 @@ public class ElementHelper {
   /**
    * Scrolling to get the element in view using the Javascript Executor.
    * It should only be used if necessary, as it does not replicate how a user would interact with the page.
+   *
    * @param element
    */
   public static void scrollToElementUsingJsExecutor(WebElement element) {
@@ -51,6 +58,7 @@ public class ElementHelper {
   /**
    * Clicking on an element using the Javascript Executor.
    * It should only be used if necessary, as it does not replicate how a user would interact with the page.
+   *
    * @param element
    */
   public static void clickOnElementUsingJsExecutor(WebElement element) {
@@ -58,6 +66,11 @@ public class ElementHelper {
     js.executeScript(ConstantsUtil.JS_CLICK, element);
   }
 
+  /**
+   * Click on the WebElement after waiting for it be clickable and scrolling to it
+   *
+   * @param element WebElement
+   */
   public static void clickOnElement(WebElement element) {
     WaitHelper.waitForElementToBeClickable(element);
     scrollToElement(element);
@@ -65,6 +78,12 @@ public class ElementHelper {
     element.click();
   }
 
+  /**
+   * Click on the WebElement after waiting for it be clickable and scrolling to it
+   *
+   * @param element          WebElement
+   * @param timeoutInSeconds timeout for the element to be clickable
+   */
   public static void clickOnElement(WebElement element, long timeoutInSeconds) {
     WaitHelper.waitForElementToBeClickable(element, timeoutInSeconds);
     scrollToElement(element);
@@ -72,16 +91,33 @@ public class ElementHelper {
     element.click();
   }
 
-  public static void clickIfDisplayed(WebElement element, long timeoutInSeconds) {
-    if (isElementDisplayed(element, timeoutInSeconds)) {
-      clickOnElement(element, timeoutInSeconds);
+  /**
+   * Click on the WebElement if it is displayed
+   *
+   * @param locator          Locator of the WebElement
+   * @param timeoutInSeconds timeout for the element to be displayed
+   */
+  public static void clickIfDisplayed(By locator, long timeoutInSeconds) {
+    if (isElementDisplayed(locator, timeoutInSeconds)) {
+      clickOnElement(SeleniumDriver.getDriver().findElement(locator));
     }
   }
 
-  public static void clickIfDisplayed(WebElement element) {
-    clickIfDisplayed(element, ConstantsUtil.SMALL_TIMEOUT_SECONDS);
+  /**
+   * Click on the WebElement if it is displayed within a small timeout: {@link ConstantsUtil#SMALL_TIMEOUT_SECONDS}
+   *
+   * @param locator Locator of the WebElement
+   */
+  public static void clickIfDisplayed(By locator) {
+    clickIfDisplayed(locator, ConstantsUtil.SMALL_TIMEOUT_SECONDS);
   }
 
+  /**
+   * Send keys to a WebElement
+   *
+   * @param element WebElement
+   * @param keys    keys
+   */
   public static void sendKeys(WebElement element, String keys) {
     WaitHelper.waitForElementToBeDisplayed(element);
     scrollToElement(element);
@@ -89,6 +125,11 @@ public class ElementHelper {
     element.sendKeys(keys);
   }
 
+  /**
+   * Hover over a WebElement
+   *
+   * @param element WebElement
+   */
   public static void hoverOverElement(WebElement element) {
     WaitHelper.waitForElementToBeDisplayed(element);
     scrollToElement(element);
@@ -96,6 +137,12 @@ public class ElementHelper {
     actions.moveToElement(element).build().perform();
   }
 
+  /**
+   * Clear value of a WebElement
+   *
+   * @param element WebElement
+   * @param limit   limit for the clear operation
+   */
   public static void clearElementValue(WebElement element, int limit) {
     WaitHelper.waitForElementToBeDisplayed(element);
     scrollToElement(element);
@@ -115,6 +162,11 @@ public class ElementHelper {
       + "Current value :" + element.getAttribute("value"));
   }
 
+  /**
+   * Clear value of a WebElement
+   *
+   * @param element WebElement
+   */
   public static void clearElementValue(WebElement element) {
     clearElementValue(element, 1024);
   }
@@ -127,11 +179,24 @@ public class ElementHelper {
     replaceElementValue(element, value, 1024);
   }
 
+  /**
+   * Replace the value of a WebElement after attempting to clear the value
+   *
+   * @param element WebElement
+   * @param value   value to replace
+   * @param limit   limit for the clear operation
+   */
   public static void replaceElementValue(WebElement element, String value, int limit) {
     clearElementValue(element, limit);
     element.sendKeys(value);
   }
 
+  /**
+   * Perform drag and drop between the Source WebElement and the Target WebElement
+   *
+   * @param source WebElement
+   * @param target WebElement
+   */
   public static void dragAndDrop(WebElement source, WebElement target) {
     WaitHelper.waitForElementToBeDisplayed(source);
     WaitHelper.waitForElementToBeDisplayed(target);
@@ -148,19 +213,96 @@ public class ElementHelper {
     actions.dragAndDropBy(element, xOffset, yOffset).build().perform();
   }
 
+  /**
+   * Check if a WebElement is displayed
+   *
+   * @param element WebElement
+   * @return boolean
+   */
   public static boolean isElementDisplayed(WebElement element) {
     logger.info("Check if element: " + element + " is displayed.");
     try {
-      boolean isPresent = element.isDisplayed();
-      return isPresent;
+      return element.isDisplayed();
     } catch (NoSuchElementException e) {
       return false;
     }
   }
 
-  public static boolean isElementDisplayed(WebElement element, long timeoutInSeconds) {
-    WaitHelper.waitForElementToBeDisplayed(element, timeoutInSeconds);
-    return isElementDisplayed(element);
+  /**
+   * Check if a WebElement gets displayed with a timeout
+   *
+   * @param locator          Locator of the WebElement
+   * @param timeoutInSeconds timeout
+   * @return boolean
+   */
+  public static boolean isElementDisplayed(By locator, long timeoutInSeconds) {
+    return WaitHelper.waitForElementToBeOptionallyDisplayed(locator, timeoutInSeconds);
+  }
+
+  /**
+   * Get WebElement's text
+   *
+   * @param element WebElement
+   * @return
+   */
+  public static String getElementText(WebElement element) {
+    WaitHelper.waitForElementToBeDisplayed(element);
+    logger.info("Get text of the WebElement: " + element);
+    return element.getText();
+  }
+
+  /**
+   * Get WebElement's attribute value
+   *
+   * @param element   WebElement
+   * @param attribute Attribute name
+   * @return Attribute value
+   */
+  public static String getElementAttribute(WebElement element, String attribute) {
+    logger.info("Get attribute: " + attribute + " of the WebElement: " + element);
+    return element.getAttribute(attribute);
+  }
+
+  /**
+   * Get WebElement's css property value
+   *
+   * @param element     WebElement
+   * @param cssProperty css property
+   * @return css property value
+   */
+  public static String getElementCssProperty(WebElement element, String cssProperty) {
+    logger.info("Get css property: " + cssProperty + " of the WebElement: " + element);
+    return element.getCssValue(cssProperty);
+  }
+
+  /**
+   * Get WebElement's css property: "color"
+   *
+   * @param element WebElement
+   * @return Color css property value, Eg. "#a40403"
+   */
+  public static String getElementColorCssProperty(WebElement element) {
+    String color = getElementCssProperty(element, ConstantsUtil.COLOR);
+    String[] hexValue = color.replace("rgba(", "").
+      replace(")", "").split(",");
+    int hexValue1 = Integer.parseInt(hexValue[0]);
+    hexValue[1] = hexValue[1].trim();
+    int hexValue2 = Integer.parseInt(hexValue[1]);
+    hexValue[2] = hexValue[2].trim();
+    int hexValue3 = Integer.parseInt(hexValue[2]);
+    return String.format("#%02x%02x%02x", hexValue1, hexValue2, hexValue3);
+  }
+
+  /**
+   * Click on Dropdown and click on Dropdown option
+   *
+   * @param dropdownElement Dropdown WebElement
+   * @param option          Dropdown option
+   */
+  public static void selectDropdownOption(WebElement dropdownElement, String option) {
+    ElementHelper.clickOnElement(dropdownElement);
+    ElementHelper.clickOnElement(
+      SeleniumDriver.getDriver().findElement(By.xpath("//li[@data-value='" + option + "']")));
   }
 
   /**

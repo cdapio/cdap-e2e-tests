@@ -99,7 +99,7 @@ public interface CdfHelper {
   }
 
   default void succeedPipelineVerification() {
-    CdfLogActions.validateSucceeded();
+    CdfLogActions.verifyPipelineSucceededLog();
   }
 
   default int recordIn() {

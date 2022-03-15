@@ -28,6 +28,7 @@ import java.util.List;
  * Represents Cdf Studio Page Locators
  */
 public class CdfStudioLocators {
+
   @FindBy(how = How.XPATH, using = "//div[contains(@class, 'left-top-section')]//select")
   public static WebElement dataPipelineTypeDropdown;
 
@@ -40,7 +41,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsink']")
   public static WebElement bigQueryObject;
 
-  @FindBy(how = How.XPATH, using = "//*[text()='Sink ']")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-Sink-group']//span[normalize-space(text())='Sink']")
   public static WebElement sink;
 
   @FindBy(how = How.XPATH, using = "//*[contains(@class,'plugin-endpoint_SAP-ODP')]")
@@ -58,23 +59,36 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='pipeline-preview-btn']")
   public static WebElement previewButton;
 
-  @FindBy(how = How.XPATH, using = "//*[@class='fa fa-play text-success']")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='preview-top-run-btn']//div[normalize-space(text())='Run']")
   public static WebElement runButton;
 
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'Preview')]")
   public static WebElement preview;
 
-  @FindBy(how = How.XPATH, using = "//*[@class=\"pipeline-name ng-binding ng-scope placeholder\"]")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//div[contains(@class, 'pipeline-name')]")
   public static WebElement pipelineName;
 
   @FindBy(how = How.XPATH, using = "//*[@id=\"pipeline-name-input\"]")
   public static WebElement pipelineNameIp;
 
-  @FindBy(how = How.XPATH, using = "//*[@class=\"btn btn-primary save-button\"]")
+  @FindBy(how = How.XPATH, using = "//textarea[@data-cy='pipeline-description-input']")
+  public static WebElement pipelineDescriptionTextarea;
+
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//button[contains(@class, 'save-button')]")
   public static WebElement pipelineSave;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
+  public static WebElement savedSuccessMessage;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"deploy-pipeline-btn\"]")
   public static WebElement pipelineDeploy;
+
+  public static By locatorOfdeployingPipelineMessage() {
+    return By.xpath("//h2[contains(text(), 'Deploying Pipeline')]");
+  }
+
+  @FindBy(how = How.XPATH, using = "//h2[contains(text(), 'Deploying Pipeline')]")
+  public static WebElement deployingPipelineMessage;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement previewConfigRunButton;
@@ -85,20 +99,11 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']//span")
   public static WebElement statusBannerText;
 
-  @FindBy(how = How.XPATH, using = "//button[@data-cy='plugin-properties-validate-btn']/span[text()='Validate']")
-  public static WebElement validateButton;
-
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsource']")
   public static WebElement sourceBigQuery;
 
-  @FindBy(how = How.XPATH, using = "//*[@class='fa fa-remove']")
+  @FindBy(how = How.XPATH, using = "//span[contains(@class, 'fa-remove')]")
   public static WebElement closeButton;
-
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-success-msg']")
-  public static WebElement pluginValidationSuccessMsg;
-
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-error-msg']")
-  public static WebElement pluginValidationErrorMsg;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-GCS-batchsink']")
   public static WebElement gcs;
@@ -112,33 +117,32 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@title=\"GCS\"]//following-sibling::div")
   public static WebElement gcsProperties;
 
-  @FindBy(how = How.XPATH,
-    using = "(//h2[text()='Input Records']/parent::div//div[not(@data-cy='preview-data-row')]/div[text()!=''])")
-  public static List<WebElement> previewInputRecordColumnNames;
-
-  @FindBy(how = How.XPATH,
-    using = "(//h2[text()='Output Records']/parent::div//div[not(@data-cy='preview-data-row')]/div[text()!=''])")
-  public static List<WebElement> previewOutputRecordColumnNames;
-
-  @FindBy(how = How.XPATH, using = "//*[@role='tablist']/li[contains(text(),'Properties')]")
-  public static WebElement previewPropertiesTab;
-
   public static WebElement runtimeArgsValue(String runtimeArgsKey) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//input[@value='" + runtimeArgsKey + "']/ancestor::div[@data-cy='runtimeargs-key']" +
-                 "/following-sibling::div//textarea"));
+        "/following-sibling::div//textarea"));
   }
 
   public static WebElement sourceEndpointWithTitle(String source, String sourceTitle) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//div[@title='" + sourceTitle + "']/ancestor::div[contains(@data-cy,'plugin-node-" + source + "') " +
-                 "and @data-type='batchsource']//*[contains(@data-cy,'plugin-endpoint-" + source + "')]"));
+        "and @data-type='batchsource']//*[contains(@data-cy,'plugin-endpoint-" + source + "')]"));
   }
 
   public static WebElement sinkNodeWithTitle(String sink, String sinkTitle) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') " +
-                 "and @data-type='batchsink']//div[@title='" + sinkTitle + "']"));
+        "and @data-type='batchsink']//div[@title='" + sinkTitle + "']"));
+  }
+
+  public static WebElement locateSourceEndpointInCanvas(String sourcePluginName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@class,'plugin-endpoint_" + sourcePluginName + "')]"));
+  }
+
+  public static WebElement locateSinkNodeInCanvas(String sinkPluginName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') and @data-type='batchsink']"));
   }
 
   public static WebElement macroButton(String pluginProperty) {
@@ -160,14 +164,28 @@ public class CdfStudioLocators {
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
-  public static WebElement locatePluginGroupCollapsed(String pluginGroupName) {
+  public static By locatorOfPluginGroupCollapsed(String pluginGroupName) {
     String xpath = "//span[normalize-space(text())='" + pluginGroupName + "']" +
       "/preceding-sibling::span[contains(@class, 'caret-right')]";
-    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+    return By.xpath(xpath);
+  }
+
+  public static WebElement locatePluginGroupCollapsed(String pluginGroupName) {
+    return SeleniumDriver.getDriver().findElement(locatorOfPluginGroupCollapsed(pluginGroupName));
   }
 
   public static WebElement locatePluginNameInList(String pluginName) {
     String xpath = "//div[contains(@class, 'plugin-name')][normalize-space(text()) = '" + pluginName + "']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locateSinkPluginNameInList(String pluginName) {
+    String xpath = "//*[@data-cy='plugin-" + pluginName + "-batchsink']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locateRealtimeSourcePluginNameInList(String pluginName) {
+    String xpath = "//*[@data-cy='plugin-" + pluginName + "-streamingsource']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
@@ -181,4 +199,34 @@ public class CdfStudioLocators {
       "/following-sibling::button[@data-cy='node-properties-btn']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
+
+  /**
+   * @deprecated Use {@link CdfPluginPropertiesLocators#validateButton}
+   */
+  @Deprecated
+  @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]")
+  public static WebElement validateButton;
+
+  /**
+   * @deprecated Use {@link CdfPluginPropertiesLocators#locatorOfLoadingSpinnerOnValidateButton()}
+   * @return
+   */
+  @Deprecated
+  public static By locatorOfLoadingSpinnerOnValidateButton() {
+    return By.xpath("//button[contains(@class, 'validate-btn')]//span[contains(@class, 'fa-spin')]");
+  }
+
+  /**
+   * @deprecated Use {@link CdfPluginPropertiesLocators#loadingSpinnerOnValidateButton}
+   */
+  @Deprecated
+  @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]//span[contains(@class, 'fa-spin')]")
+  public static WebElement loadingSpinnerOnValidateButton;
+
+  /**
+   * @deprecated Use {@link CdfPluginPropertiesLocators#pluginValidationErrorMsg}
+   */
+  @Deprecated
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-error-msg']")
+  public static WebElement pluginValidationErrorMsg;
 }

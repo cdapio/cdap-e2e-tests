@@ -34,6 +34,8 @@ public class ConstantsUtil {
   public static final String CDFURL = "cdfurl";
   public static final String BATCH = "Batch";
   public static final String REALTIME = "Realtime";
+  public static final String ERROR = "ERROR";
+  public static final String SINK_PLUGIN_GROUPNAME = "Sink";
   public static final int ONE = 1;
   public static final String PASS_CASE = "First case passed";
   public static final String ERROR_MSG_COLOR = "#a40403";
@@ -42,6 +44,10 @@ public class ConstantsUtil {
   public static final String DEFAULT_ERROR_PROPERTIES_FILE = "errorMessage.properties";
   public static final String VALIDATION_SUCCESS_MESSAGE = "validationSuccessMessage";
   public static final String VALIDATION_ERROR_MESSAGE = "validationErrorMessage";
+  public static final String INVALID_CREDENTIALS_ERROR_MESSAGE = "invalid.property.credentials";
+  public static final String PROPERTIES_TAB = "Properties";
+  public static final String PREVIEW_TAB = "Preview";
+  public static final String DOCUMENTATION_TAB = "Documentation";
   /* TODO: Remove FIRST_PLUGIN_IN_LIST constant once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
   public static final String FIRST_PLUGIN_IN_LIST = "BigQuery";
   /**
@@ -63,4 +69,17 @@ public class ConstantsUtil {
    * SMALL_TIMEOUT_SECONDS: To be used as a small static wait (only if needed)
    */
   public static final int SMALL_TIMEOUT_SECONDS = 5;
+  /**
+   * PIPELINE_DEPLOY_TIMEOUT_SECONDS: To be used as a timeout for deploying the pipeline
+   */
+  public static final int PIPELINE_DEPLOY_TIMEOUT_SECONDS = 60;
+  /**
+   * PIPELINE_PREVIEW_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Preview
+   */
+  public static final int PIPELINE_PREVIEW_TIMEOUT_SECONDS = 300;
+
+  /**
+   * PIPELINE_RUN_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Runs
+   */
+  public static final int PIPELINE_RUN_TIMEOUT_SECONDS = 900;
 }
