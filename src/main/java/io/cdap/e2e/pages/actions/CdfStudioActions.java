@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.pages.actions;
 
+import io.cdap.e2e.pages.locators.CdfLogLocators;
 import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
@@ -177,10 +178,37 @@ public class CdfStudioActions {
   }
 
   /**
+   * Enter value for macro runtime argument
+   *
+   * @param runtimeArgumentKey macro argument
+   * @param value              actual value to enter
+   */
+  public static void enterRuntimeArgumentValue(String runtimeArgumentKey, String value) {
+    ElementHelper.sendKeys(CdfStudioLocators.runtimeArgsValue(runtimeArgumentKey), value);
+  }
+
+  /**
    * Click on the Run button inside Preview - Configure dialog
    */
   public static void clickPreviewConfigRunButton() {
     ElementHelper.clickOnElement(CdfStudioLocators.previewConfigRunButton);
+  }
+
+  /**
+   * Wait till the Pipeline's preview run status banner is displayed within
+   * Timeout: {@link ConstantsUtil#PIPELINE_PREVIEW_TIMEOUT_SECONDS}
+   */
+  public static void waitTillPipelinePreviewRunCompletes() {
+    waitTillPipelinePreviewRunCompletes(ConstantsUtil.PIPELINE_PREVIEW_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Wait till the Pipeline's preview run status banner is displayed within the given timeout
+   *
+   * @param timeoutInSeconds timeout
+   */
+  public static void waitTillPipelinePreviewRunCompletes(long timeoutInSeconds) {
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBannerText, timeoutInSeconds);
   }
 
   /**
@@ -210,6 +238,21 @@ public class CdfStudioActions {
     if (!expectedPreviewStatus.equalsIgnoreCase("failed")) {
       WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
     }
+  }
+
+  /**
+   * Click on logs button in preview menu
+   */
+  public static void clickPreviewLogsButton() {
+    CdfStudioLocators.previewLogsButton.click();
+  }
+
+  /**
+   * Verify the Pipeline Preview Run's status in logs
+   * @param status
+   */
+  public static void verifyPipelinePreviewStatusInLogs(String status) {
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.getPipelineStatusFromLogs(status));
   }
 
   /**
@@ -355,5 +398,19 @@ public class CdfStudioActions {
   @Deprecated
   public static void clickCloseButton() {
     CdfPluginPropertiesActions.clickCloseButton();
+  }
+
+  /**
+   * Click on the Close button in status banner if displayed
+   */
+  public static void closeStatusBannerIfDisplayed() {
+    ElementHelper.clickIfDisplayed(CdfStudioLocators.statusBannerCloseButtonLocator);
+  }
+
+  /**
+   * Click on the Close button in status banner
+   */
+  public static void closeStatusBanner() {
+    ElementHelper.clickOnElement(CdfStudioLocators.statusBannerCloseButton);
   }
 }

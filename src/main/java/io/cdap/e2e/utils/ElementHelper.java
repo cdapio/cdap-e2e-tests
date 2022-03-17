@@ -296,13 +296,12 @@ public class ElementHelper {
   /**
    * Click on Dropdown and click on Dropdown option
    *
-   * @param dropdownElement Dropdown WebElement
-   * @param option          Dropdown option
+   * @param dropdownElement       WebElement dropdownSelectWebElement
+   * @param dropdownOptionLocator By dropdown option locator
    */
-  public static void selectDropdownOption(WebElement dropdownElement, String option) {
+  public static void selectDropdownOption(WebElement dropdownElement, By dropdownOptionLocator) {
     ElementHelper.clickOnElement(dropdownElement);
-    ElementHelper.clickOnElement(
-      SeleniumDriver.getDriver().findElement(By.xpath("//li[@data-value='" + option + "']")));
+    ElementHelper.clickOnElement(SeleniumDriver.getDriver().findElement(dropdownOptionLocator));
   }
 
   /**

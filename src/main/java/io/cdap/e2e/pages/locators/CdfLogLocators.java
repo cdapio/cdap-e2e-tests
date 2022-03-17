@@ -16,6 +16,8 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -47,4 +49,9 @@ public class CdfLogLocators {
 
   @FindBy(xpath = "//*[contains(@class, 'close')]")
   public static WebElement closeLogs;
+
+  public static WebElement getPipelineStatusFromLogs(String status) {
+    return SeleniumDriver.getDriver()
+      .findElement(By.xpath("//*[contains(text(),'Pipeline') and contains(text(),'" + status + "')]"));
+  }
 }

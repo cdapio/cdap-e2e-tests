@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
+import io.cdap.e2e.pages.locators.CdfPluginPropertiesLocators;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
@@ -60,8 +61,8 @@ public class CdfGcsActions {
   }
 
   public static void selectFormat(String formatType) throws InterruptedException {
-    ElementHelper.clickOnElement(CdfGCSLocators.format);
-    ElementHelper.clickOnElement(CdfGCSLocators.getDropdownListItem(formatType));
+    ElementHelper.selectDropdownOption(CdfGCSLocators.format,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem(formatType));
   }
 
   public static void clickValidateButton() {
@@ -69,8 +70,8 @@ public class CdfGcsActions {
   }
 
   public static void selectFileEncoding(String encoding) {
-    ElementHelper.clickOnElement(CdfGCSLocators.fileEncoding);
-    ElementHelper.clickOnElement(CdfGCSLocators.getDropdownListItem(encoding));
+    ElementHelper.selectDropdownOption(CdfGCSLocators.fileEncoding,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem(encoding));
   }
 
   public static void enterMaxSplitSize(String maxSplitSize) {
@@ -94,8 +95,8 @@ public class CdfGcsActions {
   }
 
   public static void clickOverrideDataType(String dataType) {
-    ElementHelper.clickOnElement(CdfGCSLocators.overrideDataType);
-    ElementHelper.clickOnElement(CdfGCSLocators.getDropdownListItem(dataType));
+    ElementHelper.selectDropdownOption(CdfGCSLocators.overrideDataType,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem(dataType));
   }
 
   public static void enterDelimiterField(String delimiter) {
@@ -119,8 +120,8 @@ public class CdfGcsActions {
   }
 
   public static void selectContentType(String contentType) {
-    ElementHelper.clickOnElement(CdfGCSLocators.contentType);
-    ElementHelper.clickOnElement(CdfGCSLocators.getDropdownListItem(contentType));
+    ElementHelper.selectDropdownOption(CdfGCSLocators.contentType,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem(contentType));
   }
 
   public static void enterEncryptionKeyName(String cmek) {

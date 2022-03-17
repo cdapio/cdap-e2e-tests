@@ -76,4 +76,8 @@ public class CdfPluginPropertiesLocators {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//*[@role='tablist']/li[normalize-space(text())='" + tabName + "']"));
   }
+
+  public static By locateDropdownListItem(String option) {
+    return By.xpath("//li[@data-value='" + option + "']");
+  }
 }

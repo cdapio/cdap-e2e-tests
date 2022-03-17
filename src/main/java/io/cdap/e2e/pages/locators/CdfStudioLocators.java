@@ -93,11 +93,19 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement previewConfigRunButton;
 
+  @FindBy(how = How.XPATH, using = "//div[contains(@class,'log-viewer')]")
+  public static WebElement previewLogsButton;
+
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
   public static WebElement statusBanner;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']//span")
   public static WebElement statusBannerText;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']//button")
+  public static WebElement statusBannerCloseButton;
+
+  public static By statusBannerCloseButtonLocator = By.xpath("//*[@data-cy='valium-banner-hydrator']//button");
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsource']")
   public static WebElement sourceBigQuery;

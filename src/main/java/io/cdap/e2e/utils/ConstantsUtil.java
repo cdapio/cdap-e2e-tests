@@ -48,6 +48,9 @@ public class ConstantsUtil {
   public static final String PROPERTIES_TAB = "Properties";
   public static final String PREVIEW_TAB = "Preview";
   public static final String DOCUMENTATION_TAB = "Documentation";
+  public static final String LOGS_SEPARATOR_MESSAGE = "---------------------------------------------------------" +
+    "------------------------------MESSAGE----------------------------------------------------------------------" +
+    "-----------------";
   /* TODO: Remove FIRST_PLUGIN_IN_LIST constant once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
   public static final String FIRST_PLUGIN_IN_LIST = "BigQuery";
   /**

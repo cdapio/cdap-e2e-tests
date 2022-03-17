@@ -28,6 +28,11 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
 /**
  * Represents Cdf Pipeline Run Page Actions
  */
@@ -164,5 +169,25 @@ public class CdfPipelineRunAction {
     PageHelper.closeCurrentWindow();
     PageHelper.switchBackToMainWindow();
     return logs;
+  }
+
+  /**
+   * Write logs to file - if file already preset then append logs
+   *
+   * @param file    filename
+   * @param message logs separator message
+   * @param rawLogs captured raw logs
+   * @throws FileNotFoundException
+   */
+  public static void writeRawLogsToFile(File file, String message, String rawLogs) throws FileNotFoundException {
+    PrintWriter out;
+    if (file.exists()) {
+      out = new PrintWriter(new FileOutputStream(file, true));
+    } else {
+      out = new PrintWriter(file);
+    }
+    out.println(message);
+    out.println(rawLogs);
+    out.close();
   }
 }
