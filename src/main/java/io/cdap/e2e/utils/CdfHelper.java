@@ -49,7 +49,7 @@ public interface CdfHelper {
     WaitHelper.waitForPageToLoad();
     /* TODO: Remove below wait once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
     WaitHelper.waitForElementToBeDisplayed(
-      CdfStudioLocators.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST));
+      CdfStudioLocators.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
   }
 
   default int countOfNoOfRecordsTransferredToBigQueryIn(String tableName) throws IOException, InterruptedException {

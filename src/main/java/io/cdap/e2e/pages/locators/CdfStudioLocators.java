@@ -22,8 +22,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
-import java.util.List;
-
 /**
  * Represents Cdf Studio Page Locators
  */
@@ -182,8 +180,9 @@ public class CdfStudioLocators {
     return SeleniumDriver.getDriver().findElement(locatorOfPluginGroupCollapsed(pluginGroupName));
   }
 
-  public static WebElement locatePluginNameInList(String pluginName) {
-    String xpath = "//div[contains(@class, 'plugin-name')][normalize-space(text()) = '" + pluginName + "']";
+  public static WebElement locatePluginNameInList(String pluginName, String  pluginGroupName) {
+    String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group']" +
+      "//div[contains(@class, 'plugin-name')][normalize-space(text()) = '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
@@ -197,6 +196,12 @@ public class CdfStudioLocators {
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
+  public static WebElement locatePluginEndpointInCanvas(String pluginTitle) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//div[@title='" + pluginTitle + "']/ancestor::div[contains(@data-cy,'plugin-node-')]" +
+                 "//*[contains(@data-cy,'plugin-endpoint-')]"));
+  }
+
   public static WebElement locatePluginNodeInCanvas(String pluginName) {
     String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
@@ -206,6 +211,18 @@ public class CdfStudioLocators {
     String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']" +
       "/following-sibling::button[@data-cy='node-properties-btn']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locateSourcePluginPreviewDataLinkOnPluginNode(String pluginName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsource']//div[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + pluginName + "')]//a"));
+  }
+
+  public static WebElement locateSinkPluginPreviewDataLinkOnPluginNode(String pluginName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-type='batchsink']//div[contains(@data-cy,'-preview-data-btn') " +
+                 "and contains(@data-cy,'" + pluginName + "')]//a"));
   }
 
   /**
