@@ -118,9 +118,4 @@ public class CdfGCSLocators {
   public static WebElement recursive(String value) {
     return SeleniumDriver.getDriver().findElement(By.xpath("//input[@name='recursive' and @value='" + value + "']"));
   }
-
-  //TODO: Move to CdfPluginPropertiesLocators.java once PR#76 merged
-  public static WebElement getDropdownListItem(String option) {
-    return SeleniumDriver.getDriver().findElement(By.xpath("//li[@data-value='" + option + "']"));
-  }
 }
