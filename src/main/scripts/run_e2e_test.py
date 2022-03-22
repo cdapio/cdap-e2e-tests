@@ -19,6 +19,7 @@ import requests
 import subprocess
 import xml.etree.ElementTree as ET
 import zipfile
+import shutil
 
 def run_shell_command(cmd):
     process = subprocess.run(cmd.split(" "))
@@ -76,4 +77,13 @@ os.chdir("e2e")
 run_shell_command("mvn clean install")
 print("Running e2e integration tests")
 os.chdir("../plugin")
-run_shell_command("mvn clean install -P e2e-tests")
+try:
+    run_shell_command("mvn clean install -P e2e-tests")
+except AssertionError as e:
+    raise e
+finally:
+    os.chdir("..")
+    cwd = os.getcwd()
+    print("Copying sandbox logs to e2e-debug")
+    shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/data/logs", cwd+"/plugin/target/e2e-debug/sandbox/data/logs")
+    shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/logs", cwd+"/plugin/target/e2e-debug/sandbox/logs")
