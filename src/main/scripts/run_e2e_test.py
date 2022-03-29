@@ -27,7 +27,7 @@ def run_shell_command(cmd):
 
 # Start CDAP sandbox
 print("Downloading CDAP sandbox")
-sandbox_url = "https://builds.cask.co/artifact/CDAP-BUT/shared/build-latestSuccessful/SDK/cdap/cdap-standalone/target/cdap-sandbox-6.7.0-SNAPSHOT.zip"
+sandbox_url = "https://builds.cask.co/artifact/CDAP-BUT/shared/build-latestSuccessful/SDK/cdap/cdap-standalone/target/cdap-sandbox-6.8.0-SNAPSHOT.zip"
 sandbox_dir = sandbox_url.split("/")[-1].split(".zip")[0]
 r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
