@@ -34,8 +34,12 @@ z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./sandbox")
 print("Start the sandbox")
 run_shell_command(f"chmod +x sandbox/{sandbox_dir}/bin/cdap")
-os.system("export JAVA_OPTS=-Xmx16G")
-run_shell_command(f"sandbox/{sandbox_dir}/bin/cdap sandbox start")
+my_env = os.environ.copy()
+my_env["_JAVA_OPTIONS"] = "-Xmx32G"
+sandbox_start_cmd = "sandbox/" + sandbox_dir + "/bin/cdap sandbox start"
+process = subprocess.Popen(sandbox_start_cmd, shell=True, env=my_env)
+process.communicate()
+assert process.returncode == 0
 
 # Build the plugin
 os.chdir("plugin")
