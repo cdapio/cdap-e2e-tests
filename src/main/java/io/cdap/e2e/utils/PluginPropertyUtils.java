@@ -31,6 +31,7 @@ public class PluginPropertyUtils {
   private static final Properties errorProperties = new Properties();
   private static final Logger logger = LoggerFactory.getLogger(PluginPropertyUtils.class);
   protected static Properties pluginProperties = new Properties();
+  private static final Properties pluginPropertyDataCyAttributes = new Properties();
 
   static {
     try {
@@ -38,6 +39,8 @@ public class PluginPropertyUtils {
         .getResourceAsStream("/" + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE));
       errorProperties.load(PluginPropertyUtils.class
         .getResourceAsStream("/" + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE));
+      pluginPropertyDataCyAttributes.load(PluginPropertyUtils.class
+                             .getResourceAsStream("/" + ConstantsUtil.DEFAULT_DATACY_ATTRIBUTES_FILE));
     } catch (Exception e) {
       logger.error("Error while reading properties file" + e);
     }
@@ -49,6 +52,18 @@ public class PluginPropertyUtils {
 
   public static String errorProp(String property) {
     return errorProperties.getProperty(property);
+  }
+
+  public static void addPluginProp(String property, String value) {
+    pluginProperties.put(property, value);
+  }
+
+  public static void removePluginProp(String property) {
+    pluginProperties.remove(property);
+  }
+
+  public static String getPluginPropertyDataCyAttribute(String property) {
+    return pluginPropertyDataCyAttributes.getProperty(property);
   }
 
   /**

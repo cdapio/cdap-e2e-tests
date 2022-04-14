@@ -190,4 +190,24 @@ public class CdfPipelineRunAction {
     out.println(rawLogs);
     out.close();
   }
+
+  /**
+   * Get Count displayed on Source plugin as records 'Out'
+   *
+   * @return Records Out count
+   */
+  public static int getCountDisplayedOnSourcePluginAsRecordsOut() {
+    String outCount = CdfPipelineRunLocators.recordsOutCount.getText();
+    return Integer.parseInt(outCount.replaceAll(",", ""));
+  }
+
+  /**
+   * Get Count displayed on Sink plugin as records 'In'
+   *
+   * @return
+   */
+  public static int getCountDisplayedOnSinkPluginAsRecordsIn() {
+    String inCount = CdfPipelineRunLocators.recordsInCount.getText();
+    return Integer.parseInt(inCount.replaceAll(",", ""));
+  }
 }

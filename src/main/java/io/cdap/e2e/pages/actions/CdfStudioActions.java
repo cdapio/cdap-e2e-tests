@@ -67,9 +67,9 @@ public class CdfStudioActions {
    *
    * @param pluginName
    */
-  public static void selectPluginFromList(String pluginName) {
+  public static void selectPluginFromList(String pluginName, String pluginGroupName) {
     logger.info("Click on plugin from the list: " + pluginName);
-    ElementHelper.clickOnElement(CdfStudioLocators.locatePluginNameInList(pluginName));
+    ElementHelper.clickOnElement(CdfStudioLocators.locatePluginNameInList(pluginName, pluginGroupName));
   }
 
   /**
@@ -323,6 +323,33 @@ public class CdfStudioActions {
     WebElement sinkNode = CdfStudioLocators.sinkNodeWithTitle(sink, sinkTitle);
     ElementHelper.dragAndDropByOffset(sinkNode, 0, yOffset);
     connectSourceAndSink(source, sourceTitle, sink, sinkTitle);
+  }
+
+  /**
+   * @param fromPlugin Title of the plugin from which connection needs to start
+   * @param toPlugin   Title of the plugin to connect to
+   */
+  public static void establishConnection(String fromPlugin, String toPlugin) {
+    ElementHelper.dragAndDrop(CdfStudioLocators.locatePluginEndpointInCanvas(fromPlugin),
+                              CdfStudioLocators.locatePluginNodeInCanvas(toPlugin));
+  }
+
+  /**
+   * Click 'Preview Data' link on the source plugin
+   *
+   * @param pluginName
+   */
+  public static void clickPreviewDataLinkOnSourcePluginNode(String pluginName) {
+    ElementHelper.clickOnElement(CdfStudioLocators.locateSourcePluginPreviewDataLinkOnPluginNode(pluginName));
+  }
+
+  /**
+   * Click 'Preview Data' link on the sink plugin
+   *
+   * @param pluginName
+   */
+  public static void clickPreviewDataLinkOnSinkPluginNode(String pluginName) {
+    ElementHelper.clickOnElement(CdfStudioLocators.locateSinkPluginPreviewDataLinkOnPluginNode(pluginName));
   }
 
   /**

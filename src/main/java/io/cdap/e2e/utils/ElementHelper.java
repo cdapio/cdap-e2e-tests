@@ -23,6 +23,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Wait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,6 +93,15 @@ public class ElementHelper {
   }
 
   /**
+   * Click on the WebElement using Actions class
+   *
+   * @param element WebElement
+   */
+  public static void clickUsingActions(WebElement element) {
+    actions.moveToElement(element).click().perform();
+  }
+
+  /**
    * Click on the WebElement if it is displayed
    *
    * @param locator          Locator of the WebElement
@@ -120,6 +130,19 @@ public class ElementHelper {
    */
   public static void sendKeys(WebElement element, String keys) {
     WaitHelper.waitForElementToBeDisplayed(element);
+    scrollToElement(element);
+    logger.info("Send keys to element: " + element);
+    element.sendKeys(keys);
+  }
+
+  /**
+   * Send keys to a WebElement
+   *
+   * @param element WebElement
+   * @param keys    keys
+   */
+  public static void sendKeysToTextarea(WebElement element, String keys) {
+    WaitHelper.waitForElementToBeEnabled(element);
     scrollToElement(element);
     logger.info("Send keys to element: " + element);
     element.sendKeys(keys);
@@ -169,6 +192,25 @@ public class ElementHelper {
    */
   public static void clearElementValue(WebElement element) {
     clearElementValue(element, 1024);
+  }
+
+  /**
+   * Execute Select All command based on System OS and clear the text
+   *
+   * @param element WebElement
+   */
+  public static void selectAllTextAndClear(WebElement element) {
+    String currentOs = System.getProperty("os.name");
+    String selectAllCommand = Keys.CONTROL + "a";
+
+    if (currentOs.toLowerCase().contains("mac")) {
+      selectAllCommand = Keys.COMMAND + "a";
+    }
+
+    logger.info("Select All text and clear for WebElement: " + element);
+    WaitHelper.waitForElementToBeEnabled(element);
+    element.sendKeys(selectAllCommand);
+    element.sendKeys(Keys.BACK_SPACE);
   }
 
   /**

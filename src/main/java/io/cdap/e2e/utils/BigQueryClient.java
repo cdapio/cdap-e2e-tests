@@ -46,11 +46,23 @@ public class BigQueryClient {
     return getSoleQueryResult(selectQuery).map(Integer::parseInt).orElse(0);
   }
 
+  public static int countBqQuery(String dataset, String table) throws IOException, InterruptedException {
+    String projectId = PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID);
+    String selectQuery = "SELECT count(*) " + " FROM `" + projectId + "." + dataset + "." + table + "`";
+    return getSoleQueryResult(selectQuery).map(Integer::parseInt).orElse(0);
+  }
+
   //Deleting the table
   public static void dropBqQuery(String table) throws IOException, InterruptedException {
     String projectId = PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID);
     String datasetName = PluginPropertyUtils.pluginProp(ConstantsUtil.DATASET);
     String dropQuery = "DROP TABLE `" + projectId + "." + datasetName + "." + table + "`";
+    getSoleQueryResult(dropQuery);
+  }
+
+  public static void dropBqQuery(String dataset, String table) throws IOException, InterruptedException {
+    String projectId = PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID);
+    String dropQuery = "DROP TABLE `" + projectId + "." + dataset + "." + table + "`";
     getSoleQueryResult(dropQuery);
   }
 
