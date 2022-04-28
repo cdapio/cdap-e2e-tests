@@ -171,10 +171,10 @@ public class CdfStudioActions {
   }
 
   /**
-   * Click on the Preview menu button to Open/Close the Preview menu
+   * Click on the Preview menu button to Close the Preview menu
    */
-  public static void previewSelect() {
-    ElementHelper.clickOnElement(CdfStudioLocators.preview);
+  public static void closePreviewMenu() {
+    ElementHelper.clickOnElement(CdfStudioLocators.previewActiveButton);
   }
 
   /**
