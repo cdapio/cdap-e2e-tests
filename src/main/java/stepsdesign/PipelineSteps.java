@@ -307,13 +307,13 @@ public class PipelineSteps implements CdfHelper {
 
   @Then("Close the preview")
   public void closeThePreview() {
-    CdfStudioActions.previewSelect();
+    CdfStudioActions.closePreviewMenu();
   }
 
   @Then("Close the preview data")
   public void closeThePreviewData() {
     CdfPluginPropertiesActions.clickCloseButton();
-    CdfStudioActions.previewSelect();
+    CdfStudioActions.closePreviewMenu();
   }
 
   @Then("Deploy the pipeline")

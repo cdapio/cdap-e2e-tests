@@ -60,8 +60,8 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//div[@data-cy='preview-top-run-btn']//div[normalize-space(text())='Run']")
   public static WebElement runButton;
 
-  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Preview')]")
-  public static WebElement preview;
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-active-btn']")
+  public static WebElement previewActiveButton;
 
   @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//div[contains(@class, 'pipeline-name')]")
   public static WebElement pipelineName;
