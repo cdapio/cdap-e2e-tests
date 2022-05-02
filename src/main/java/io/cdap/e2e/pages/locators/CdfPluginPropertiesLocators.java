@@ -62,6 +62,9 @@ public class CdfPluginPropertiesLocators {
     using = "(//h2[text()='Output Records']/parent::div//div[not(@data-cy='preview-data-row')]/div[text()!=''])")
   public static List<WebElement> previewOutputRecordsTableColumnNames;
 
+  @FindBy(how = How.XPATH, using = "//*[contains(@data-cy, 'schema-row')]")
+  public static List<WebElement> outputSchemaRows;
+
   public static WebElement locateMacroButtonOfProperty(String pluginProperty) {
     return SeleniumDriver.getDriver().findElement(By.xpath("//div[@data-cy='" + pluginProperty + "']/button"));
   }
@@ -128,7 +131,7 @@ public class CdfPluginPropertiesLocators {
 
   public static By locatorOfSelectedPropertyRadioButton(String property, String value) {
     return By.xpath("//*[@data-cy='" + property + "']" +
-                      "//input[@type='radio' and @value='" + value + "' and @checked]//ancestor::label");
+      "//input[@type='radio' and @value='" + value + "' and @checked]//ancestor::label");
   }
 
   public static By locateOutputSchemaFieldTypeEntry(String fieldName, String fieldType) {
@@ -157,5 +160,31 @@ public class CdfPluginPropertiesLocators {
 
   public static WebElement locateElementWithText(String text) {
     return SeleniumDriver.getDriver().findElement(locatorOfElementWithText(text));
+  }
+
+  public static By locatorOfOutputSchemaFieldTypeEntry(String fieldName, String fieldType) {
+    return By.xpath("//input[@value='" + fieldName + "']/following-sibling::div//select[@title='" + fieldType + "']");
+  }
+
+  public static WebElement locateOutputSchemaRow(int rowIndex) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(@data-cy, '" + rowIndex + "')]"));
+  }
+
+  public static WebElement locateExpandButtonOfSchemaRow(String fieldName) {
+    String xpath = "//input[@value='" + fieldName + "']" +
+      "//ancestor::div[contains(@data-cy, 'schema-row')]/*[@data-cy='expand-button']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static By locatorOfExpandButtonOfRecordFieldInsideSchemaRow(String fieldName) {
+    String xpath = "//input[@value='" + fieldName + "']" +
+      "/ancestor::div[contains(@data-cy,'schema-row')]/following-sibling::div[1]//*[@data-cy='expand-button']";
+    return By.xpath(xpath);
+  }
+
+  public static WebElement locateExpandButtonOfRecordFieldInsideSchemaRow(String fieldName) {
+    String xpath = "//input[@value='" + fieldName + "']" +
+      "/ancestor::div[contains(@data-cy,'schema-row')]/following-sibling::div[1]//*[@data-cy='expand-button']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 }

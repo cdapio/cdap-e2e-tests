@@ -20,6 +20,7 @@ import io.cdap.e2e.pages.locators.CdfLogLocators;
 import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
+import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 /**
@@ -71,6 +72,20 @@ public class CdfLogActions {
    */
   public static void verifyPipelineFailedLog() {
     AssertionHelper.verifyElementDisplayed(CdfLogLocators.validateFailed);
+  }
+
+  /**
+   * Verify if the Pipeline logs show the expected Log entry (Log level and message)
+   *
+   * @param expectedLogLevel
+   * @param expectedLogMessage
+   */
+  public static void verifyPipelineLogsForExpectedLogEntry(String expectedLogLevel, String expectedLogMessage) {
+    if (PluginPropertyUtils.errorProp(expectedLogMessage) != null) {
+      expectedLogMessage = PluginPropertyUtils.errorProp(expectedLogMessage);
+    }
+
+    AssertionHelper.verifyElementDisplayed(CdfLogLocators.locateLogEntry(expectedLogLevel, expectedLogMessage));
   }
 
   /**

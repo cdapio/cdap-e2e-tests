@@ -216,6 +216,26 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.clickGetSchemaButton();
   }
 
+  /**
+   * Usage Example:
+   * Then Verify the Output Schema matches the Expected Schema for listed Hierarchical fields:
+   * | FieldName  |         SchemaJsonArray              |
+   * | fieldOne   | expectedSchemaJsonArrayForFieldOne   |
+   * | fieldTwo   | expectedSchemaJsonArrayForFieldTwo   |
+   * | fieldThree | expectedSchemaJsonArrayForFieldThree |
+   *
+   * @param table
+   */
+  @Then("Verify the Output Schema matches the Expected Schema for listed Hierarchical fields:")
+  public void verifyOutputSchemaMatchesExpectedSchemaForHierarchicalFields(DataTable table) {
+    List<Map<String, String>> data = table.asMaps(String.class, String.class);
+
+    for (Map<String, String> row : data) {
+      CdfPluginPropertiesActions.verifyOutputSchemaForHierarchicalField(row.get("FieldName"), row.get(
+        "SchemaJsonArray"));
+    }
+  }
+
   @Then("Capture the generated Output Schema")
   public void getOutputSchema() {
     propertiesSchemaColumnList = CdfPluginPropertiesActions.getListOfFieldsFromOutputSchema();
@@ -387,6 +407,29 @@ public class PipelineSteps implements CdfHelper {
       CdfPipelineRunAction.writeRawLogsToFile(BeforeActions.file, logsSeparatorMessage, rawLogs);
     } catch (Exception e) {
       BeforeActions.scenario.write("Exception in capturing logs : " + e);
+    }
+  }
+
+  /**
+   * Usage Example:
+   * Open Pipeline logs and verify Log entries having below listed Level and Message:
+   * | Level |       Message        |
+   * | ERROR | expected log message |
+   * | WARN  | expected log message |
+   * | DEBUG | expected log message |
+   * <p>
+   * NOTE: Partial messages will work as well
+   *
+   * @param table
+   */
+  @Then("Open Pipeline logs and verify Log entries having below listed Level and Message:")
+  public void openPipelineLogsAndVerifyLogEntry(DataTable table) {
+    List<Map<String, String>> data = table.asMaps(String.class, String.class);
+    CdfPipelineRunAction.logsClick();
+    CdfLogActions.viewAdvancedLogs();
+
+    for (Map<String, String> row : data) {
+      CdfLogActions.verifyPipelineLogsForExpectedLogEntry(row.get("Level"), row.get("Message"));
     }
   }
 
