@@ -32,6 +32,8 @@ public class ConstantsUtil {
   public static final String COLOR = "color";
   public static final String GUSERNAME = "gLoginUsername";
   public static final String GPAZWRD = "gPassword";
+  public static final String ODFUSERNAME = "odfUsername";
+  public static final String ODFPAZWRD = "odfPassword";
   public static final String CDFURL = "cdfurl";
   public static final String BATCH = "Batch";
   public static final String REALTIME = "Realtime";
