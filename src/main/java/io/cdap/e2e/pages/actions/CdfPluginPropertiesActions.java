@@ -103,6 +103,15 @@ public class CdfPluginPropertiesActions {
   }
 
   /**
+   * Select "Macro" as action from Actions dropdown of Output Schema Plugin Property
+   */
+  public static void selectMacroActionOfOutputSchemaProperty() {
+    ElementHelper.selectDropdownOption(CdfSchemaLocators.schemaActions,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem("macro"));
+    WaitHelper.waitForElementToBeHidden(CdfSchemaLocators.schemaActionType("macro"));
+  }
+
+  /**
    * Click on the Get Schema button inside Plugin's properties page
    */
   public static void clickGetSchemaButton() {
@@ -568,5 +577,50 @@ public class CdfPluginPropertiesActions {
     ElementHelper.selectDropdownOption(CdfPluginPropertiesLocators.locatePropertyElement(pluginPropertyDataCyAttribute),
       CdfPluginPropertiesLocators.locateDropdownListItem(
         optionFromPluginPropertiesFile));
+  }
+
+  /**
+   * Override default value of auto-detect with service account file path or json set in environment variable.
+   *
+   * Set values in below environment variable to override service account details
+   * SERVICE_ACCOUNT_TYPE = FilePath or JSON
+   * SERVICE_ACCOUNT_FILE_PATH = file path of json file
+   * SERVICE_ACCOUNT_JSON = service account json
+   */
+  public static void overrideServiceAccountDetailsIfProvided() {
+    String serviceAccountType = System.getenv("SERVICE_ACCOUNT_TYPE");
+    logger.debug("ServiceAccount type set in environment variable 'SERVICE_ACCOUNT_TYPE' with value: "
+                   + serviceAccountType);
+    if (serviceAccountType != null) {
+      if (serviceAccountType.equalsIgnoreCase("FilePath")) {
+        String serviceAccountFilePath = System.getenv("SERVICE_ACCOUNT_FILE_PATH");
+        if (serviceAccountFilePath == null) {
+          logger.error("ServiceAccount override failed - " +
+                         "Environment variable SERVICE_ACCOUNT_FILE_PATH is not set with filepath");
+          return;
+        }
+        if (!serviceAccountFilePath.equalsIgnoreCase("auto-detect")) {
+          CdfPluginPropertiesActions.replaceValueInInputProperty("serviceFilePath", serviceAccountFilePath);
+          logger.info("ServiceAccount FilePath entered from environment variable with value: "
+                        + serviceAccountFilePath);
+        }
+        return;
+      }
+      if (serviceAccountType.equalsIgnoreCase("JSON")) {
+        String serviceAccountJSON = System.getenv("SERVICE_ACCOUNT_JSON");
+        if (serviceAccountJSON == null) {
+          logger.error("ServiceAccount override failed - " +
+                         "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
+          return;
+        }
+        CdfPluginPropertiesActions.selectPluginPropertyRadioButton("serviceAccountType", "JSON");
+        CdfPluginPropertiesActions.enterValueInInputProperty("serviceAccountJSON", serviceAccountJSON);
+        logger.info("ServiceAccount JSON entered from environment variable : SERVICE_ACCOUNT_JSON");
+        return;
+      }
+      logger.error("ServiceAccount override failed - ServiceAccount type set in environment variable " +
+                     "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
+                     "Value should be either 'FilePath' or 'JSON'");
+    }
   }
 }

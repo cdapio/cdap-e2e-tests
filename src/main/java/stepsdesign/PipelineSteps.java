@@ -134,6 +134,12 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.fillValueInMacroEnabledTextareaProperty(property, value);
   }
 
+  @Then("Select Macro action of output schema property: {string} and set the value to {string}")
+  public void selectMacroActionOfOutputSchemaPropertyAndSetTheValueTo(String property, String value) {
+    CdfPluginPropertiesActions.selectMacroActionOfOutputSchemaProperty();
+    CdfPluginPropertiesActions.fillValueInMacroEnabledInputProperty(property, value);
+  }
+
   @When("Click on the Validate button")
   public void clickOnValidateButton() {
     CdfPluginPropertiesActions.clickValidateButton();
@@ -410,5 +416,10 @@ public class PipelineSteps implements CdfHelper {
   @Then("Select dropdown plugin property: {string} with option value: {string}")
   public void selectDropdownPluginPropertyOptionValue(String pluginProperty, String option) {
     CdfPluginPropertiesActions.selectPluginPropertyDropdownOption(pluginProperty, option);
+  }
+
+  @Then("Override Service account details if set in environment variables")
+  public void overrideServiceAccountDetailsIfSetInEnvVars() {
+    CdfPluginPropertiesActions.overrideServiceAccountDetailsIfProvided();
   }
 }

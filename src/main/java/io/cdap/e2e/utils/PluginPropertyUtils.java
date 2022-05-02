@@ -37,12 +37,20 @@ public class PluginPropertyUtils {
     try {
       pluginProperties.load(PluginPropertyUtils.class
         .getResourceAsStream("/" + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE));
+    } catch (Exception e) {
+      logger.error("Error while reading " + ConstantsUtil.DEFAULT_PLUGIN_PROPERTIES_FILE + " file " + e.getMessage());
+    }
+    try {
       errorProperties.load(PluginPropertyUtils.class
         .getResourceAsStream("/" + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE));
+    } catch (Exception e) {
+      logger.error("Error while reading " + ConstantsUtil.DEFAULT_ERROR_PROPERTIES_FILE + " file " + e.getMessage());
+    }
+    try {
       pluginPropertyDataCyAttributes.load(PluginPropertyUtils.class
                              .getResourceAsStream("/" + ConstantsUtil.DEFAULT_DATACY_ATTRIBUTES_FILE));
     } catch (Exception e) {
-      logger.error("Error while reading properties file" + e);
+      logger.error("Error while reading " + ConstantsUtil.DEFAULT_DATACY_ATTRIBUTES_FILE + " file " + e.getMessage());
     }
   }
 
