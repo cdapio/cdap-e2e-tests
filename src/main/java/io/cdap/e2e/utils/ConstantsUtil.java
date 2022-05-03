@@ -81,7 +81,7 @@ public class ConstantsUtil {
   /**
    * PIPELINE_PREVIEW_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Preview
    */
-  public static final int PIPELINE_PREVIEW_TIMEOUT_SECONDS = 300;
+  public static final int PIPELINE_PREVIEW_TIMEOUT_SECONDS = 600;
 
   /**
    * PIPELINE_RUN_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Runs
