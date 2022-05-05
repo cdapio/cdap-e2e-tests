@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.pages.locators;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -33,4 +34,8 @@ public class HdfSignInLocator {
 
   @FindBy(id = "submit")
   public WebElement loginButton;
+
+  public static By locatorOfLoginButton() {
+    return By.id("submit");
+  }
 }

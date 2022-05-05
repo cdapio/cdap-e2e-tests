@@ -17,8 +17,10 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.HdfSignInLocator;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 
 import java.io.IOException;
 
@@ -30,20 +32,19 @@ import static io.cdap.e2e.utils.ConstantsUtil.HDFUSERNAME;
  */
 public class HdfSignInActions {
   public static HdfSignInLocator hdfSignInLocator;
-  private static boolean logged = false;
 
   static {
     hdfSignInLocator = SeleniumHelper.getPropertiesLocators(HdfSignInLocator.class);
-  }
-
-  public static boolean logged() {
-    return logged;
   }
 
   public static void login() throws InterruptedException, IOException {
     ElementHelper.sendKeys(hdfSignInLocator.hdfUsername, SeleniumHelper.readParameters(HDFUSERNAME));
     ElementHelper.sendKeys(hdfSignInLocator.hdfPassword, SeleniumHelper.readParameters(HDFPAZWRD));
     ElementHelper.clickOnElement(hdfSignInLocator.loginButton);
-    logged = true;
+  }
+
+  public static boolean logged() {
+    return !WaitHelper.waitForElementToBeOptionallyDisplayed(
+      HdfSignInLocator.locatorOfLoginButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
   }
 }
