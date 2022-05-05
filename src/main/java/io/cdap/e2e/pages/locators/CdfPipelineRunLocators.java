@@ -74,6 +74,12 @@ public class CdfPipelineRunLocators {
   @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[1]/following-sibling::span")
   public static WebElement recordsInCount;
 
+  public static WebElement locateRecordsInCountOnPluginNodeAsNonZero(String pluginNodeId) {
+    String xpath = "//*[@data-nodeid='" + pluginNodeId + "']" +
+      "//*[contains(text(),'In')]//following-sibling::span[text()!='0']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
   @FindBy(how = How.XPATH, using = "(//*[contains(@class, 'metric-records-out-label')])[2]/following-sibling::span")
   public static WebElement recordsOutCount;
 

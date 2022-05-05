@@ -23,6 +23,7 @@ import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PageHelper;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 import org.junit.Assert;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -94,6 +95,17 @@ public class CdfPipelineRunAction {
   }
 
   /**
+   * Wait for the pipeline to be in the expected Status
+   *
+   * @param pipelineStatus   Expected Pipeline Status
+   * @param timeoutInSeconds Timeout
+   */
+  public static void waitForPipelineToTransitionToStatus(String pipelineStatus, long timeoutInSeconds) {
+    WaitHelper.waitForElementToBeDisplayed(
+      CdfPipelineRunLocators.locatePipelineStatus(pipelineStatus), timeoutInSeconds);
+  }
+
+  /**
    * Wait till the Pipeline's status changes (from Running) to either Succeeded, Failed or Stopped within the
    * Timeout: {@link ConstantsUtil#PIPELINE_RUN_TIMEOUT_SECONDS}
    */
@@ -117,6 +129,13 @@ public class CdfPipelineRunAction {
       ExpectedConditions.visibilityOf(CdfPipelineRunLocators.failedStatus),
       ExpectedConditions.visibilityOf(CdfPipelineRunLocators.stoppedStatus)
     ));
+  }
+
+  /**
+   * Stop the Pipeline
+   */
+  public static void stopPipeline() {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.stop);
   }
 
   /**
@@ -209,5 +228,17 @@ public class CdfPipelineRunAction {
   public static int getCountDisplayedOnSinkPluginAsRecordsIn() {
     String inCount = CdfPipelineRunLocators.recordsInCount.getText();
     return Integer.parseInt(inCount.replaceAll(",", ""));
+  }
+
+  /**
+   * Wait till Data transfer begins in the Pipeline. Ex. Sink node's "In" count should show non-zero value
+   *
+   * @param pluginNodeId
+   * @param timeoutInSeconds
+   */
+  public static void waitTillDataTransferBegins(String pluginNodeId, long timeoutInSeconds) {
+    WaitHelper.waitForElementToBeDisplayed(
+      CdfPipelineRunLocators.locateRecordsInCountOnPluginNodeAsNonZero(pluginNodeId),
+      timeoutInSeconds);
   }
 }
