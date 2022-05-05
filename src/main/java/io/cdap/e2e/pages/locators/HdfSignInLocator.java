@@ -21,14 +21,14 @@ import org.openqa.selenium.support.FindBy;
 
 
 /**
- * Represents OdfSignInLocator
+ * Represents HdfSignInLocator
  */
-public class OdfSignInLocator {
+public class HdfSignInLocator {
   @FindBy(id = "username")
-  public WebElement odfUsername;
+  public WebElement hdfUsername;
 
   @FindBy(id = "password")
-  public WebElement odfPassword;
+  public WebElement hdfPassword;
 
 
   @FindBy(id = "submit")

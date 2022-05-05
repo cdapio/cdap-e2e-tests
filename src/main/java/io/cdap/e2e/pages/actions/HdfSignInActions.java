@@ -16,27 +16,34 @@
 
 package io.cdap.e2e.pages.actions;
 
-import io.cdap.e2e.pages.locators.OdfSignInLocator;
+import io.cdap.e2e.pages.locators.HdfSignInLocator;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 
 import java.io.IOException;
 
-import static io.cdap.e2e.utils.ConstantsUtil.ODFPAZWRD;
-import static io.cdap.e2e.utils.ConstantsUtil.ODFUSERNAME;
+import static io.cdap.e2e.utils.ConstantsUtil.HDFPAZWRD;
+import static io.cdap.e2e.utils.ConstantsUtil.HDFUSERNAME;
 
 /**
- * Represents OdfSignInActions
+ * Represents HdfSignInActions
  */
-public class OdfSignInActions {
-  public static OdfSignInLocator odfSignInLocator;
+public class HdfSignInActions {
+  public static HdfSignInLocator hdfSignInLocator;
+  private static boolean logged = false;
 
   static {
-    odfSignInLocator = SeleniumHelper.getPropertiesLocators(OdfSignInLocator.class);
+    hdfSignInLocator = SeleniumHelper.getPropertiesLocators(HdfSignInLocator.class);
+  }
+
+  public static boolean logged() {
+    return logged;
   }
 
   public static void login() throws InterruptedException, IOException {
-    odfSignInLocator.odfUsername.sendKeys(SeleniumHelper.readParameters(ODFUSERNAME));
-    odfSignInLocator.odfPassword.sendKeys(SeleniumHelper.readParameters(ODFPAZWRD));
-    odfSignInLocator.loginButton.click();
+    ElementHelper.sendKeys(hdfSignInLocator.hdfUsername, SeleniumHelper.readParameters(HDFUSERNAME));
+    ElementHelper.sendKeys(hdfSignInLocator.hdfPassword, SeleniumHelper.readParameters(HDFPAZWRD));
+    ElementHelper.clickOnElement(hdfSignInLocator.loginButton);
+    logged = true;
   }
 }
