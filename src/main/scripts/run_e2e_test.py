@@ -37,7 +37,7 @@ z.extractall("./sandbox")
 print("Start the sandbox")
 run_shell_command(f"chmod +x sandbox/{sandbox_dir}/bin/cdap")
 my_env = os.environ.copy()
-my_env["_JAVA_OPTIONS"] = "-Xmx32G"
+my_env["_JAVA_OPTIONS"] = "-Xmx24G"
 sandbox_start_cmd = "sandbox/" + sandbox_dir + "/bin/cdap sandbox restart"
 process = subprocess.Popen(sandbox_start_cmd, shell=True, env=my_env)
 process.communicate()
