@@ -20,6 +20,7 @@ import io.cdap.e2e.pages.actions.CdfGcsActions;
 import io.cdap.e2e.pages.actions.CdfLogActions;
 import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import io.cdap.e2e.pages.actions.CdfStudioActions;
+import io.cdap.e2e.pages.actions.HdfSignInActions;
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
 import io.cdap.e2e.pages.locators.CdfPipelineRunLocators;
 import io.cdap.e2e.pages.locators.CdfSchemaLocators;
@@ -47,6 +48,13 @@ public interface CdfHelper {
     SeleniumDriver.openPage(SeleniumHelper.readParameters(ConstantsUtil.CDFURL));
     PageHelper.acceptAlertIfPresent();
     WaitHelper.waitForPageToLoad();
+
+    if (Boolean.parseBoolean(SeleniumHelper.readParameters(ConstantsUtil.TESTONHDF)) && !HdfSignInActions.logged()) {
+      HdfSignInActions.login();
+      PageHelper.acceptAlertIfPresent();
+      WaitHelper.waitForPageToLoad();
+    }
+
     /* TODO: Remove below wait once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
     WaitHelper.waitForElementToBeDisplayed(
       CdfStudioLocators.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));

@@ -344,6 +344,11 @@ public class PipelineSteps implements CdfHelper {
     CdfPipelineRunAction.clickDeployedConfigRunButton();
   }
 
+  @Then("Wait for pipeline to be in status: {string} with a timeout of {long} seconds")
+  public void waitForPipelineToBeInStatus(String pipelineStatus, long timeoutInSeconds) {
+    CdfPipelineRunAction.waitForPipelineToTransitionToStatus(pipelineStatus, timeoutInSeconds);
+  }
+
   @Then("Wait till pipeline is in running state")
   public void waitTillPipelineIsInRunningState() {
     CdfPipelineRunAction.waitTillPipelineRunCompletes();
@@ -352,6 +357,17 @@ public class PipelineSteps implements CdfHelper {
   @Then("Wait till pipeline is in running status with a timeout of {long} seconds")
   public void waitTillPipelineIsInRunningState(long timeoutInSeconds) {
     CdfPipelineRunAction.waitTillPipelineRunCompletes(timeoutInSeconds);
+  }
+
+  @Then("Wait till data transfer begins by waiting for a non-zero records 'In' count on Plugin node: {string} " +
+    "with a timeout of {long} seconds")
+  public void waitTillDataTransferBegins(String pluginNodeId, long timeoutInSeconds) {
+    CdfPipelineRunAction.waitTillDataTransferBegins(pluginNodeId, timeoutInSeconds);
+  }
+
+  @Then("Stop the pipeline")
+  public void stopPipeline() {
+    CdfPipelineRunAction.stopPipeline();
   }
 
   @Then("Verify the pipeline status is {string}")
