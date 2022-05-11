@@ -1,0 +1,20 @@
+# Selenium browser window size
+windowSize=1920x1040
+# CDAP application url
+cdfurl=http://localhost:11011/pipelines/ns/default/studio
+
+testOnHdf=false
+hdfUsername=cdap
+hdfPassword=cdap123
+
+# properties to be removed-start
+Project-ID=cdf-athena
+@TC-Demo-1_GCS=gs://cdf-athena-test/test.csv
+Data-Set=test_automation
+tableDemo=DemoCheck1
+delimiter@=@
+# GCP project Id
+projectId=cdf-athena
+# GCP datatest
+dataset=test_automation
+# properties to be removed-end

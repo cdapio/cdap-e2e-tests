@@ -607,7 +607,7 @@ public class CdfPluginPropertiesActions {
         return;
       }
       if (serviceAccountType.equalsIgnoreCase("JSON")) {
-        String serviceAccountJSON = System.getenv("SERVICE_ACCOUNT_JSON");
+        String serviceAccountJSON = System.getenv("SERVICE_ACCOUNT_JSON").replace("\n", "");
         if (serviceAccountJSON == null) {
           logger.error("ServiceAccount override failed - " +
                          "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
