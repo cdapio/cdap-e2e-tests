@@ -117,7 +117,45 @@ public class CdfPluginPropertiesLocators {
       .findElement(By.xpath("//*[@data-cy='" + property + "']//input[@type='radio' and @value='" + value + "']"));
   }
 
+  public static WebElement locatePropertyToggle(String pluginProperty) {
+    return SeleniumDriver.getDriver()
+      .findElement(By.xpath("//*[@data-cy='" + pluginProperty + "']//*[@data-cy]"));
+  }
+
+  public static WebElement locatePropertyDropdownSelectedItem(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='" + pluginProperty + "']/input"));
+  }
+
+  public static By locatorOfSelectedPropertyRadioButton(String property, String value) {
+    return By.xpath("//*[@data-cy='" + property + "']" +
+                      "//input[@type='radio' and @value='" + value + "' and @checked]//ancestor::label");
+  }
+
   public static By locateOutputSchemaFieldTypeEntry(String fieldName, String fieldType) {
     return By.xpath("//input[@value='" + fieldName + "']/following-sibling::div//select[@title='" + fieldType + "']");
+  }
+
+  public static By locatorOfPropertyElement(String pluginProperty) {
+    return By.xpath("//*[@data-cy='" + pluginProperty + "']");
+  }
+
+  public static By locatorOfPropertyElementText(String pluginProperty) {
+    return By.xpath("//*[@data-cy='" + pluginProperty + "' and text()]");
+  }
+
+  public static By locatorOfElementContainingText(String text) {
+    return By.xpath("//*[contains(text(),'" + text + "')]");
+  }
+
+  public static By locatorOfElementWithText(String text) {
+    return By.xpath("//*[text()='" + text + "']");
+  }
+
+  public static WebElement locateElementContainingText(String text) {
+    return SeleniumDriver.getDriver().findElement(locatorOfElementContainingText(text));
+  }
+
+  public static WebElement locateElementWithText(String text) {
+    return SeleniumDriver.getDriver().findElement(locatorOfElementWithText(text));
   }
 }
