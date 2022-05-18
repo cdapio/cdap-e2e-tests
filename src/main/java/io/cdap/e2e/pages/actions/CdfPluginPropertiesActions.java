@@ -24,6 +24,7 @@ import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.JsonUtils;
 import io.cdap.e2e.utils.PluginPropertyUtils;
+import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
 import org.junit.Assert;
@@ -622,5 +623,155 @@ public class CdfPluginPropertiesActions {
                      "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
                      "Value should be either 'FilePath' or 'JSON'");
     }
+  }
+
+  /**
+   * Verify plugin property contains text
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param text           If text is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then text to VERIFY is fetched from it
+   *                       else text param is used as it is.
+   */
+  public static void verifyPluginPropertyContainsText(String pluginProperty, String text) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    String textFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(text);
+    if (textFromPluginPropertiesFile == null) {
+      AssertionHelper.verifyElementContainsText(SeleniumDriver.getDriver().findElement(
+        CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)), text);
+      return;
+    }
+
+    AssertionHelper.verifyElementContainsText(SeleniumDriver.getDriver().findElement(
+      CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)),
+                                              textFromPluginPropertiesFile);
+  }
+
+  /**
+   * Verify input plugin property contains value
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param expectedValue  If expectedValue is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then expectedValue to verify is fetched from it
+   *                       else expectedValue param is used as it is.
+   */
+  public static void verifyInputPluginPropertyContainsValue(String pluginProperty, String expectedValue) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    String actualValue = ElementHelper
+      .getElementAttribute(CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute), "value");
+
+    String expectedValueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedValue);
+    if (expectedValueFromPluginPropertiesFile == null) {
+      Assert.assertEquals("Verify value displayed in Input plugin property "
+                            + pluginPropertyDataCyAttribute, expectedValue, actualValue);
+      return;
+    }
+
+    Assert.assertEquals("Verify value displayed in Input plugin property "
+                          + pluginPropertyDataCyAttribute, expectedValueFromPluginPropertiesFile, actualValue);
+  }
+
+  /**
+   * Verify dropdown plugin property is selected with list option
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param expectedOption If expectedOption is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then expectedOption to verify is fetched from it
+   *                       else expectedOption param is used as it is.
+   */
+  public static void verifyDropdownPluginPropertySelectedWithOption(String pluginProperty, String expectedOption) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    String actualOption = ElementHelper.getElementAttribute(
+      CdfPluginPropertiesLocators.locatePropertyDropdownSelectedItem(pluginPropertyDataCyAttribute), "value");
+
+    String expectedOptionFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedOption);
+    if (expectedOptionFromPluginPropertiesFile == null) {
+      Assert.assertEquals("Verify Option selected in dropdown plugin property "
+                            + pluginPropertyDataCyAttribute, expectedOption, actualOption);
+      return;
+    }
+
+    Assert.assertEquals("Verify Option selected in dropdown plugin property "
+                          + pluginPropertyDataCyAttribute, expectedOptionFromPluginPropertiesFile, actualOption);
+  }
+
+  /**
+   * Verify toggle plugin property's current toggled state
+   *
+   * @param pluginProperty       @data-cy attribute value of Plugin Property.
+   *                             If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                             then its data-cy is fetched from it
+   *                             else pluginProperty is used as it is.
+   * @param expectedToggledState If expectedToggledState is present in
+   *                             {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                             then expectedToggledState to verify is fetched from it
+   *                             else expectedToggledState param is used as it is.
+   */
+  public static void verifyPluginPropertyToggleState(String pluginProperty, String expectedToggledState) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    String expectedToggledStateFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedToggledState);
+    if (expectedToggledStateFromPluginPropertiesFile == null) {
+      AssertionHelper.verifyElementContainsText
+        (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute), expectedToggledState);
+      return;
+    }
+
+    AssertionHelper.verifyElementContainsText
+      (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute),
+       expectedToggledStateFromPluginPropertiesFile);
+  }
+
+  /**
+   * Verify radio button plugin property is selected with expected value
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param expectedValue  If expectedValue is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then expectedValue to verify is fetched from it
+   *                       else expectedValue param is used as it is.
+   */
+  public static void verifyRadioButtonPluginPropertySelectedValue(String pluginProperty, String expectedValue) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    String expectedValueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedValue);
+    if (expectedValueFromPluginPropertiesFile == null) {
+      expectedValueFromPluginPropertiesFile = expectedValue;
+    }
+
+    boolean isElementDisplayed = ElementHelper.isElementDisplayed(
+      CdfPluginPropertiesLocators.locatorOfSelectedPropertyRadioButton(pluginPropertyDataCyAttribute
+        , expectedValueFromPluginPropertiesFile), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    Assert.assertTrue("Verify radio button " + pluginPropertyDataCyAttribute + " is selected with "
+                        + expectedValueFromPluginPropertiesFile, isElementDisplayed);
   }
 }

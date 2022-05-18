@@ -35,6 +35,7 @@ public class ConstantsUtil {
   public static final String HDFUSERNAME = "hdfUsername";
   public static final String HDFPAZWRD = "hdfPassword";
   public static final String CDFURL = "cdfurl";
+  public static final String WRANGLER_CONNECTIONS_URL = "cdfConnectionsUrl";
   public static final String TESTONHDF = "testOnHdf";
   public static final String BATCH = "Batch";
   public static final String REALTIME = "Realtime";

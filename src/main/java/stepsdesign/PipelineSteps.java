@@ -15,6 +15,7 @@
  */
 package stepsdesign;
 
+import io.cdap.e2e.pages.actions.CdfConnectionActions;
 import io.cdap.e2e.pages.actions.CdfLogActions;
 import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import io.cdap.e2e.pages.actions.CdfPluginPropertiesActions;
@@ -438,4 +439,76 @@ public class PipelineSteps implements CdfHelper {
   public void overrideServiceAccountDetailsIfSetInEnvVars() {
     CdfPluginPropertiesActions.overrideServiceAccountDetailsIfProvided();
   }
+
+  @Then("Click on the Browse Connections button")
+  public void clickBrowseConnectionsButton() {
+    CdfConnectionActions.clickBrowseConnectionsButton();
+  }
+
+  @Then("Select connection: {string}")
+  public void selectConnection(String connectionName) {
+    CdfConnectionActions.selectConnection(connectionName);
+  }
+
+  @Given("Open Wrangler connections page")
+  public void openWranglerConnectionsPage() throws IOException {
+    CdfConnectionActions.openWranglerConnectionsPage();
+  }
+
+  @Then("Verify the test connection is successful")
+  public void verifyTheTestConnectionIsSuccessful() {
+    CdfConnectionActions.verifyTheTestConnectionIsSuccessful();
+  }
+
+  @Then("Verify the connection with name: {string} is created successfully")
+  public void verifyTheConnectionWithNameIsCreatedSuccessfully(String connectionName) {
+    CdfConnectionActions.verifyConnectionIsCreatedSuccessfully(connectionName);
+  }
+
+  @Then("Select connection data row with name: {string}")
+  public void selectConnectionDataRowWithName(String dataName) {
+    CdfConnectionActions.selectConnectionDataWithName(dataName);
+  }
+
+  @Then("Select connection data rows with path: {string}")
+  public void selectConnectionDataRowsWithPath(String dataPath) {
+    CdfConnectionActions.selectConnectionDataWithPath(dataPath);
+  }
+
+  @Then("Verify connection datatable is displayed for the data: {string}")
+  public void verifyConnectionDatatableIsDisplayedForTheData(String dataPath) {
+    CdfConnectionActions.verifyTheConnectionDataTableDisplayed(dataPath);
+  }
+
+  @Then("Click Create Pipeline button and choose the type of pipeline as: {string}")
+  public void clickCreatePipelineButtonAndChoosePipelineType(String pipelineType) {
+    CdfConnectionActions.clickCreatePipelineButton();
+    CdfConnectionActions.selectPipelineType(pipelineType);
+  }
+
+  @Then("Verify input plugin property: {string} contains value: {string}")
+  public void verifyInputPluginPropertyContainsValue(String pluginProperty, String value) {
+    CdfPluginPropertiesActions.verifyInputPluginPropertyContainsValue(pluginProperty, value);
+  }
+
+  @Then("Verify dropdown plugin property: {string} is selected with option: {string}")
+  public void verifyDropdownPluginPropertySelectedWithOption(String pluginProperty, String option) {
+    CdfPluginPropertiesActions.verifyDropdownPluginPropertySelectedWithOption(pluginProperty, option);
+  }
+
+  @Then("Verify plugin property: {string} contains text: {string}")
+  public void verifyPluginPropertyContainsText(String pluginProperty, String text) {
+    CdfPluginPropertiesActions.verifyPluginPropertyContainsText(pluginProperty, text);
+  }
+
+  @Then("Verify toggle plugin property: {string} is toggled to: {string}")
+  public void verifyTogglePluginPropertyIsToggledTo(String pluginProperty, String toggleValue) {
+    CdfPluginPropertiesActions.verifyPluginPropertyToggleState(pluginProperty, toggleValue);
+  }
+
+  @Then("Verify radio button plugin property: {string} is selected with value: {string}")
+  public void verifyRadioButtonPluginPropertyIsSelectedWithValue(String pluginProperty, String value) {
+    CdfPluginPropertiesActions.verifyRadioButtonPluginPropertySelectedValue(pluginProperty, value);
+  }
+
 }
