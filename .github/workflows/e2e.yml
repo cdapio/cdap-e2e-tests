@@ -78,7 +78,6 @@ jobs:
           authToken: ${{ secrets.GITHUB_TOKEN }}
           state: success
           context: Cucumber report
-          target_url: https://cdapio.github.io/cdap-e2e-tests/cucumber-reports/${{ github.ref }}/advanced-reports/cucumber-html-reports/overview-features.html
           sha: ${{github.event.pull_request.head.sha || github.sha}}
 
           
