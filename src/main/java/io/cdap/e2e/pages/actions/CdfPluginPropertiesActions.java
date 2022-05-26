@@ -28,6 +28,7 @@ import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -291,6 +292,40 @@ public class CdfPluginPropertiesActions {
   }
 
   /**
+   * Scroll down until Field-Type entry is found in the Output Schema table
+   *
+   * @param fieldName
+   * @param fieldType
+   * @return
+   */
+  public static Boolean scrollDownInOutputSchemaUntilFieldEntry(String fieldName, String fieldType) {
+    By locator = CdfPluginPropertiesLocators.locatorOfOutputSchemaFieldTypeEntry(fieldName, fieldType);
+    boolean isFieldTypeEntryPresent = WaitHelper.waitForElementToBeOptionallyPresent(locator, 1);
+    int totalSchemaRowsInit = CdfPluginPropertiesLocators.outputSchemaRows.size();
+    int totalSchemaRowsUpdated;
+
+    // Output Schema table only populates ~20 fields by default. Rest of the fields are not even present in the DOM.
+    // They are only populated once the user starts scrolling down.
+    // In the 'while' loop written below, we are scrolling down if the expected field is not present until all the
+    // Output Schema fields are populated.
+    while (!isFieldTypeEntryPresent) {
+      ElementHelper.scrollToElementUsingJsExecutor(
+        CdfPluginPropertiesLocators.locateOutputSchemaRow(totalSchemaRowsInit - 1));
+
+      isFieldTypeEntryPresent = WaitHelper.waitForElementToBeOptionallyPresent(locator, 1);
+      totalSchemaRowsUpdated = CdfPluginPropertiesLocators.outputSchemaRows.size();
+
+      if (totalSchemaRowsUpdated == totalSchemaRowsInit) {
+        break;
+      } else {
+        totalSchemaRowsInit = totalSchemaRowsUpdated;
+      }
+    }
+
+    return isFieldTypeEntryPresent;
+  }
+
+  /**
    * Verify if the generated Output Schema matches the expected Schema
    *
    * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
@@ -301,8 +336,7 @@ public class CdfPluginPropertiesActions {
       JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
 
     expectedOutputSchema.forEach((key, value) -> {
-      boolean isFieldTypeEntryPresent = WaitHelper.waitForElementToBeOptionallyPresent(
-        CdfPluginPropertiesLocators.locateOutputSchemaFieldTypeEntry(key, value), 1);
+      boolean isFieldTypeEntryPresent = scrollDownInOutputSchemaUntilFieldEntry(key, value);
 
       if (!isFieldTypeEntryPresent) {
         logger.info("Unable to find <Field name: Field type>: " + key + ": " + value);
@@ -311,6 +345,43 @@ public class CdfPluginPropertiesActions {
 
     Assert.assertTrue("Schema displayed on UI should match with the expected Schema",
       getOutputSchema().equals(expectedOutputSchema));
+  }
+
+  /**
+   * Verify Output Schema for the Expected Schema of the Hierarchical Field
+   *
+   * @param fieldName       Hierarchical Field
+   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
+   *                        ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   */
+  public static void verifyOutputSchemaForHierarchicalField(String fieldName, String schemaJsonArray) {
+    CdfPluginPropertiesLocators.locateExpandButtonOfSchemaRow(fieldName).click();
+
+    boolean isFieldOfArrayType = WaitHelper.waitForElementToBeOptionallyPresent(
+      CdfPluginPropertiesLocators.locatorOfExpandButtonOfRecordFieldInsideSchemaRow(fieldName), 2);
+    if (isFieldOfArrayType) {
+      CdfPluginPropertiesLocators.locateExpandButtonOfRecordFieldInsideSchemaRow(fieldName).click();
+    }
+
+    verifyIfExpectedSchemaFieldsArePresent(schemaJsonArray);
+  }
+
+  /**
+   * Verify if the Expected Schema is present in the generated Output Schema
+   *
+   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
+   *                        ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   */
+  public static void verifyIfExpectedSchemaFieldsArePresent(String schemaJsonArray) {
+    Map<String, String> expectedOutputSchema =
+      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
+    Boolean isFieldTypeEntryPresent = false;
+
+    for (Map.Entry<String, String> entry : expectedOutputSchema.entrySet()) {
+      isFieldTypeEntryPresent = scrollDownInOutputSchemaUntilFieldEntry(entry.getKey(), entry.getValue());
+      Assert.assertTrue("Unable to find <Field name: Field type>: " +
+        entry.getKey() + ": " + entry.getValue(), isFieldTypeEntryPresent);
+    }
   }
 
   /**

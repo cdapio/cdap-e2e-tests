@@ -54,4 +54,10 @@ public class CdfLogLocators {
     return SeleniumDriver.getDriver()
       .findElement(By.xpath("//*[contains(text(),'Pipeline') and contains(text(),'" + status + "')]"));
   }
+
+  public static WebElement locateLogEntry(String logLevel, String logMessage) {
+    String xpath = "//div[@data-cy='log-viewer-row']//div[normalize-space(text()) ='" + logLevel + "']" +
+      "//following-sibling::div[@data-cy='log-message'][contains(normalize-space(.), \"" + logMessage + "\")]";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
 }
