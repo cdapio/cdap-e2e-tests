@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.pages.locators;
 
+import io.cdap.e2e.utils.SeleniumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,4 +51,22 @@ public class CdfConnectionLocators {
   public static By locatorOfPipelineTypeButton(String pipelineType) {
     return By.xpath("//a//*[text()='" + pipelineType + "']");
   }
+
+  public static WebElement locateConnectionType(String connectionType) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//div[@data-cy='categorized-connection-type-" + connectionType + "']"));
+  }
+
+  public static WebElement locateConnectionActionMenu(String connectionType, String connectionName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']" +
+                 "/parent::a/following-sibling::div[contains(@class,'actions-popover')]"));
+  }
+
+  public static WebElement locateConnectionAction(String connectionType, String connectionName, String action) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']" +
+                 "/parent::a/following-sibling::div//li[text()='" + action + "']"));
+  }
+
 }
