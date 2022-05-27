@@ -218,4 +218,51 @@ public class CdfConnectionActions {
       CdfConnectionLocators.locatorOfPipelineTypeButton(pipelineTypeToSelect)));
   }
 
+  /**
+   * Expand the connections for provided connection type
+   *
+   * @param connectionType i.e. BigQuery / GCS / File
+   */
+  public static void expandConnections(String connectionType) {
+    String isExpanded = ElementHelper.getElementAttribute(CdfConnectionLocators.locateConnectionType(connectionType),
+                                                          "aria-expanded");
+    if (isExpanded.equalsIgnoreCase("false")) {
+      ElementHelper.clickOnElement(CdfConnectionLocators.locateConnectionType(connectionType));
+    }
+  }
+
+  /**
+   * Open the connection's action menu
+   *
+   * @param connectionType i.e. BigQuery / GCS / File
+   * @param connectionName If connectionName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then actual connectionName is fetched from it
+   *                       else connectionName param used as it is.
+   */
+  public static void openConnectionActionMenu(String connectionType, String connectionName) {
+    String actualConnectionName = PluginPropertyUtils.pluginProp(connectionName);
+    if (actualConnectionName == null) {
+      actualConnectionName = connectionName;
+    }
+    ElementHelper.clickOnElement(
+      CdfConnectionLocators.locateConnectionActionMenu(connectionType, actualConnectionName));
+  }
+
+  /**
+   * Select the action for connection
+   *
+   * @param connectionType i.e. BigQuery / GCS / File
+   * @param connectionName If connectionName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then actual connectionName is fetched from it
+   *                       else connectionName param used as it is.
+   * @param action         (Edit/Export/Duplicate/Delete)
+   */
+  public static void selectConnectionAction(String connectionType, String connectionName, String action) {
+    String actualConnectionName = PluginPropertyUtils.pluginProp(connectionName);
+    if (actualConnectionName == null) {
+      actualConnectionName = connectionName;
+    }
+    ElementHelper.clickOnElement(
+      CdfConnectionLocators.locateConnectionAction(connectionType, actualConnectionName, action));
+  }
 }
