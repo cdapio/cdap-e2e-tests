@@ -75,6 +75,7 @@ jobs:
         uses: google-github-actions/upload-cloud-storage@v0
         if: always()
         with:
+          authToken: ${{ secrets.GITHUB_TOKEN }}
           path: ./plugin/target/cucumber-reports
           destination: e2e-tests-cucumber-reports/${{ github.event.repository.name }}/${{ github.ref }}
       - name: github-status-action
