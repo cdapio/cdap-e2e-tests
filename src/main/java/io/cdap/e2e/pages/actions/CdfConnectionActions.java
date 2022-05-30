@@ -26,6 +26,7 @@ import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
+import org.junit.Assert;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
@@ -264,5 +265,22 @@ public class CdfConnectionActions {
     }
     ElementHelper.clickOnElement(
       CdfConnectionLocators.locateConnectionAction(connectionType, actualConnectionName, action));
+  }
+
+  /**
+   * Verify connection is not present
+   *
+   * @param connectionType i.e. BigQuery / GCS / File
+   * @param connectionName If connectionName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
+   *                       then actual connectionName is fetched from it
+   *                       else connectionName param used as it is.
+   */
+  public static void verifyConnectionIsNotPresent(String connectionType, String connectionName) {
+    String actualConnectionName = PluginPropertyUtils.pluginProp(connectionName);
+    if (actualConnectionName == null) {
+      actualConnectionName = connectionName;
+    }
+    Assert.assertTrue("Connection " + connectionName + " is not present", !ElementHelper.isElementDisplayed(
+      CdfConnectionLocators.locatorOfConnection(connectionType, actualConnectionName), 5));
   }
 }

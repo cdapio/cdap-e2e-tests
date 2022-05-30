@@ -57,6 +57,15 @@ public class CdfConnectionLocators {
       By.xpath("//div[@data-cy='categorized-connection-type-" + connectionType + "']"));
   }
 
+  public static WebElement locateConnection(String connectionType, String connectionName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']"));
+  }
+
+  public static By locatorOfConnection(String connectionType, String connectionName) {
+    return By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']");
+  }
+
   public static WebElement locateConnectionActionMenu(String connectionType, String connectionName) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']" +

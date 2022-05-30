@@ -96,6 +96,11 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.selectRealtimeSourcePlugin(pluginName);
   }
 
+  @Then("Verify plugin: {string} node is displayed on the canvas with a timeout of {long} seconds")
+  public void verifyPluginNodeIsDisplayedOnTheCanvas(String pluginName, long timeoutInSeconds) {
+    CdfStudioActions.verifyPluginNodeIsDisplayedOnCanvas(pluginName, timeoutInSeconds);
+  }
+
   @When("Navigate to the properties page of plugin: {string}")
   public void navigateToPluginPropertiesPage(String pluginName) {
     CdfStudioActions.navigateToPluginPropertiesPage(pluginName);
@@ -527,6 +532,27 @@ public class PipelineSteps implements CdfHelper {
   public void clickCreatePipelineButtonAndChoosePipelineType(String pipelineType) {
     CdfConnectionActions.clickCreatePipelineButton();
     CdfConnectionActions.selectPipelineType(pipelineType);
+  }
+
+  @Then("Expand connections of type: {string}")
+  public void expandConnectionsOfType(String connectionType) {
+    CdfConnectionActions.expandConnections(connectionType);
+  }
+
+  @Then("Open action menu for connection: {string} of type: {string}")
+  public void openActionMenuForConnectionOfType(String connectionName, String connectionType) {
+    CdfConnectionActions.openConnectionActionMenu(connectionType, connectionName);
+  }
+
+  @Then("Select action: {string} for connection: {string} of type: {string}")
+  public void selectActionForConnectionOfType(String action, String connectionName,
+                                                            String connectionType) {
+    CdfConnectionActions.selectConnectionAction(connectionType, connectionName, action);
+  }
+
+  @Then("Verify connection: {string} of type: {string} is deleted successfully")
+  public void verifyConnectionOfTypeIsDeletedSuccessfully(String connectionName, String connectionType) {
+    CdfConnectionActions.verifyConnectionIsNotPresent(connectionType, connectionName);
   }
 
   @Then("Verify input plugin property: {string} contains value: {string}")
