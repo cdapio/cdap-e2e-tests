@@ -94,6 +94,18 @@ public class CdfStudioActions {
   }
 
   /**
+   * Verify Plugin node is displayed on the canvas
+   *
+   * @param pluginName
+   */
+  public static void verifyPluginNodeIsDisplayedOnCanvas(String pluginName, long timeoutInSeconds) {
+    logger.info("Waiting for plugin : " + pluginName + " node to displayed on the canvas");
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), timeoutInSeconds);
+    AssertionHelper.verifyElementDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName)
+      , "Plugin : " + pluginName + " node should be displayed on the canvas");
+  }
+
+  /**
    * Navigate to the Plugin's properties page by hovering over the Plugin node and clicking on the Properties button
    *
    * @param pluginName
