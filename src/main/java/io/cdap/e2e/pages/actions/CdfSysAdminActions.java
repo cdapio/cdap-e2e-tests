@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfSysAdminLocators;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.Select;
@@ -32,6 +33,14 @@ public class CdfSysAdminActions {
 
   static {
     cdfSysAdminLocators = SeleniumHelper.getPropertiesLocators(CdfSysAdminLocators.class);
+  }
+
+  public static void clickSystemAdminMenu() {
+    ElementHelper.clickOnElement(CdfSysAdminLocators.systemAdminMenu);
+  }
+
+  public static void clickConfigurationMenu() {
+    ElementHelper.clickOnElement(CdfSysAdminLocators.configurationMenu);
   }
 
   public static void selectMacroAPIService(String service) {

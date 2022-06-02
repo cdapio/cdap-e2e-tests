@@ -25,6 +25,12 @@ import org.openqa.selenium.support.How;
  */
 public class CdfSysAdminLocators {
 
+  @FindBy(how = How.XPATH, using = "//a[@data-cy='System Admin']")
+  public static WebElement systemAdminMenu;
+
+  @FindBy(how = How.XPATH, using = "//a[@href='/cdap/administration/configuration']")
+  public static WebElement configurationMenu;
+
   @FindBy(how = How.XPATH, using = "//*[@data-cy='request-method-selector']")
   public static WebElement apiCallType;
 
