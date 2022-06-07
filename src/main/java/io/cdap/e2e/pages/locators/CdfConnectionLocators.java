@@ -38,6 +38,11 @@ public class CdfConnectionLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='connection-browser-search']//input")
   public static WebElement searchDirectoryInput;
 
+  public static WebElement locateSelectButtonOfConnectionDataRow(String dataName) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[text()='" + dataName + "']/ancestor::a//span[text()='Select']/parent::button"));
+  }
+
   public static By locatorOfDataTableTitle(String title) {
     return By.xpath("//div[@title='" + title + "' and text()='" + title + "']");
   }

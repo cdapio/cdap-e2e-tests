@@ -187,4 +187,7 @@ public class CdfPluginPropertiesLocators {
       "/ancestor::div[contains(@data-cy,'schema-row')]/following-sibling::div[1]//*[@data-cy='expand-button']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
+
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-undefined']//button")
+  public static WebElement browseButton;
 }

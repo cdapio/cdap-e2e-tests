@@ -488,6 +488,11 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.overrideServiceAccountDetailsIfProvided();
   }
 
+  @Then("Click on the Browse button inside plugin properties")
+  public void clickBrowseButtonInsidePluginProperties() {
+    CdfPluginPropertiesActions.clickBrowseButton();
+  }
+
   @Then("Click on the Browse Connections button")
   public void clickBrowseConnectionsButton() {
     CdfConnectionActions.clickBrowseConnectionsButton();
@@ -521,6 +526,16 @@ public class PipelineSteps implements CdfHelper {
   @Then("Select connection data rows with path: {string}")
   public void selectConnectionDataRowsWithPath(String dataPath) {
     CdfConnectionActions.selectConnectionDataWithPath(dataPath);
+  }
+
+  @Then("Wait till connection data loading completes with a timeout of {long} seconds")
+  public void waitTillConnectionDataLoadingCompletes(long timeoutInSeconds) {
+    CdfConnectionActions.waitTillConnectionDataLoadingCompletes(timeoutInSeconds);
+  }
+
+  @Then("Click SELECT button inside connection data row with name: {string}")
+  public void clickSelectButtonInsideConnectionDataRowWithName(String dataName) {
+    CdfConnectionActions.clickSelectButtonOfConnectionDataRow(dataName);
   }
 
   @Then("Verify connection datatable is displayed for the data: {string}")

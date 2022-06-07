@@ -845,4 +845,11 @@ public class CdfPluginPropertiesActions {
     Assert.assertTrue("Verify radio button " + pluginPropertyDataCyAttribute + " is selected with "
                         + expectedValueFromPluginPropertiesFile, isElementDisplayed);
   }
+
+  /**
+   * Click on the BROWSE button inside Plugin's properties page
+   */
+  public static void clickBrowseButton() {
+    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.browseButton);
+  }
 }

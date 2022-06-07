@@ -107,6 +107,17 @@ public class CdfConnectionActions {
   }
 
   /**
+   * Wait till data loading for selected connection content completes.
+   * Example : For BQ connection if dataset is selected then wait till all table names inside dataset gets loaded.
+   *
+   * @param timeoutInSeconds
+   */
+  public static void waitTillConnectionDataLoadingCompletes(long timeoutInSeconds) {
+    WaitHelper.waitForElementToBeHidden(CdfConnectionLocators.locatorOfConnectionDataLoadingIndicator,
+                                        timeoutInSeconds);
+  }
+
+  /**
    * Select data row for connection
    *
    * Based on the connection type - table with rows containing data (i.e.bucket, dataset, table, directory names etc.)
@@ -115,8 +126,7 @@ public class CdfConnectionActions {
    * Example : For GCS pass actual bucket name as parameter.
    */
   private static void selectConnectionDataRow(String dataRow) {
-    WaitHelper.waitForElementToBeHidden(CdfConnectionLocators.locatorOfConnectionDataLoadingIndicator,
-                                        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    waitTillConnectionDataLoadingCompletes (ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.sendKeys(CdfConnectionLocators.searchDirectoryInput, dataRow);
     int attempts = 0;
     while (attempts < 5) {
@@ -175,6 +185,41 @@ public class CdfConnectionActions {
     String[] dataPathSplit = dataPathToSelect.split("/");
     for (String dataRow : dataPathSplit) {
       selectConnectionDataRow(dataRow);
+    }
+  }
+
+  /**
+   * Click SELECT button inside connection data row using name
+   *
+   * Example :
+   * For BQ, table with dataset names will be displayed.
+   * To click on SELECT button of dataset row use this method with dataset name as parameter.
+   *
+   * Once SELECT button is clicked, steps to select source/target BQ table will be skipped.
+   *
+   * @param dataName If dataName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a key
+   *                 then actual dataName to select is fetched from it
+   *                 else dataName used as it is.
+   */
+  public static void clickSelectButtonOfConnectionDataRow(String dataName) {
+    String dataToSelect = PluginPropertyUtils.pluginProp(dataName);
+    if (dataToSelect == null) {
+      dataToSelect = dataName;
+    }
+    waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    ElementHelper.sendKeys(CdfConnectionLocators.searchDirectoryInput, dataToSelect);
+    int attempts = 0;
+    while (attempts < 5) {
+      try {
+        ElementHelper.hoverOverElement(CdfConnectionLocators.locateSelectButtonOfConnectionDataRow(dataToSelect));
+        ElementHelper.clickOnElement(CdfConnectionLocators.locateSelectButtonOfConnectionDataRow(dataToSelect));
+        break;
+      } catch (StaleElementReferenceException e) {
+        if (attempts == 4) {
+          throw e;
+        }
+      }
+      attempts++;
     }
   }
 
