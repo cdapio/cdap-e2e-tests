@@ -325,7 +325,11 @@ public class CdfConnectionActions {
     if (actualConnectionName == null) {
       actualConnectionName = connectionName;
     }
-    Assert.assertTrue("Connection " + connectionName + " is not present", !ElementHelper.isElementDisplayed(
-      CdfConnectionLocators.locatorOfConnection(connectionType, actualConnectionName), 5));
+    WaitHelper.waitForElementToBeHidden(
+      CdfConnectionLocators.locatorOfConnection(connectionType, actualConnectionName),
+      ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    Assert.assertTrue("Connection " + connectionName + " should not be present"
+      , !ElementHelper.isElementDisplayed(CdfConnectionLocators.locatorOfConnection(connectionType,
+                                                                                    actualConnectionName), 5));
   }
 }
