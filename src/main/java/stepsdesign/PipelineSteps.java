@@ -595,4 +595,8 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.verifyRadioButtonPluginPropertySelectedValue(pluginProperty, value);
   }
 
+  @Then("Move plugins: {string} by xOffset {int} and yOffset {int}")
+  public void movePlugin(String pluginName, int xOffset, int yOffset) {
+    CdfStudioActions.movePlugin(pluginName, xOffset, yOffset);
+  }
 }
