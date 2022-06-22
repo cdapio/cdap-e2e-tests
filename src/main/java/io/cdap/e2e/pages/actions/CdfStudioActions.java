@@ -452,4 +452,14 @@ public class CdfStudioActions {
   public static void closeStatusBanner() {
     ElementHelper.clickOnElement(CdfStudioLocators.statusBannerCloseButton);
   }
+
+  /**
+   * Click on the element and move.
+   * @param pluginName plugin title.
+   * @param xOffset horizontal move offset.
+   * @param yOffset vertical move offset.
+   */
+  public static void movePlugin(String pluginName, int xOffset, int yOffset) {
+    ElementHelper.dragAndDropByOffset(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), xOffset, yOffset);
+  }
 }
