@@ -347,6 +347,25 @@ public class CdfStudioActions {
   }
 
   /**
+   * @param fromPlugin   Title of the plugin from which connection needs to start
+   * @param fromNodeType Node type of the plugin endpoint from which connection needs to start i.e. error / alert
+   * @param toPlugin     Title of the plugin to connect to
+   */
+  public static void establishConnection(String fromPlugin, String fromNodeType, String toPlugin) {
+    ElementHelper.dragAndDrop(CdfStudioLocators.locatePluginEndpointInCanvas(fromPlugin, fromNodeType),
+                              CdfStudioLocators.locatePluginNodeInCanvas(toPlugin));
+  }
+
+  /**
+   * @param pluginName Title of the plugin which needs to be moved
+   * @param xOffset    xOffset
+   * @param yOffset    yOffset
+   */
+  public static void movePluginNodeOnCanvasByOffset(String pluginName, int xOffset, int yOffset) {
+    ElementHelper.dragAndDropByOffset(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), xOffset, yOffset);
+  }
+
+  /**
    * Click 'Preview Data' link on the source plugin
    *
    * @param pluginName

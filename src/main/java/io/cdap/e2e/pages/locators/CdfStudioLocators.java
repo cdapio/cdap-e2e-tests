@@ -202,6 +202,11 @@ public class CdfStudioLocators {
                  "//*[contains(@data-cy,'plugin-endpoint-')]"));
   }
 
+  public static WebElement locatePluginEndpointInCanvas(String pluginTitle, String nodeType) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//*[@data-nodetype='" + nodeType + "' and contains(@id,'endpoint_" + pluginTitle + "')]"));
+  }
+
   public static WebElement locatePluginNodeInCanvas(String pluginName) {
     String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));

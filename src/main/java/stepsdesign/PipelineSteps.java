@@ -128,6 +128,17 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.establishConnection(fromPlugin, toPlugin);
   }
 
+  @Then("Connect plugin: {string} from node type: {string} endpoint with plugin: {string} to establish connection")
+  public void connectPluginsFromSpecificEndpointToEstablishConnection(String fromPlugin, String fromNodeType,
+                                                                      String toPlugin) {
+    CdfStudioActions.establishConnection(fromPlugin, fromNodeType, toPlugin);
+  }
+
+  @Then("Align plugin: {string} on canvas moving by x offset: {int} and y offset: {int}")
+  public void alignPluginOnCanvas(String pluginName, int xOffSet, int yOffSet) {
+    CdfStudioActions.movePluginNodeOnCanvasByOffset(pluginName, xOffSet, yOffSet);
+  }
+
   @When("Click on the Macro button of Property: {string} and set the value to: {string}")
   public void fillValueInMacroEnabledInputProperty(String property, String value) {
     CdfPluginPropertiesActions.clickMacroButtonOfProperty(property);
