@@ -202,6 +202,12 @@ public class CdfStudioLocators {
                  "//*[contains(@data-cy,'plugin-endpoint-')]"));
   }
 
+  public static WebElement locatePluginAlertOrErrorEndpointInCanvas(String nodeType, String pluginTitle) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//div[@title='" + pluginTitle + "']/ancestor::div[contains(@data-cy,'plugin-node-')]" +
+                 "//div[@data-nodetype='" + nodeType + "']"));
+  }
+
   public static WebElement locatePluginNodeInCanvas(String pluginName) {
     String xpath = "//div[contains(@class, 'node-name')][@title= '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));

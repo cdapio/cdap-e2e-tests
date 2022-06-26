@@ -338,6 +338,16 @@ public class CdfStudioActions {
   }
 
   /**
+   * @param nodeType   Type of the plugin alerts-errors nodes
+   * @param fromPlugin Title of the plugin from which connection needs to start
+   * @param toPlugin   Title of the plugin to connect to
+   */
+  public static void establishConnection(String nodeType, String fromPlugin, String toPlugin) {
+    ElementHelper.dragAndDrop(CdfStudioLocators.locatePluginAlertOrErrorEndpointInCanvas(nodeType, fromPlugin),
+                              CdfStudioLocators.locatePluginNodeInCanvas(toPlugin));
+  }
+
+  /**
    * @param fromPlugin Title of the plugin from which connection needs to start
    * @param toPlugin   Title of the plugin to connect to
    */
