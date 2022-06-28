@@ -128,6 +128,11 @@ public class PipelineSteps implements CdfHelper {
     CdfStudioActions.establishConnection(fromPlugin, toPlugin);
   }
 
+  @Then("Connect node type: {string} of plugin: {string} to plugin: {string}")
+  public void connectPluginsToEstablishConnection(String nodeType, String fromPlugin, String toPlugin) {
+    CdfStudioActions.establishConnection(nodeType, fromPlugin, toPlugin);
+  }
+
   @When("Click on the Macro button of Property: {string} and set the value to: {string}")
   public void fillValueInMacroEnabledInputProperty(String property, String value) {
     CdfPluginPropertiesActions.clickMacroButtonOfProperty(property);
