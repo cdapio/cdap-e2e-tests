@@ -88,7 +88,7 @@ try:
     if(len(sys.argv) > 1):
         testrunner_to_run : str = sys.argv[1]
         print("TestRunner to run : " + testrunner_to_run)
-        run_shell_command(f"mvn clean install -P e2e-tests -DRUNNER={testrunner_to_run}")
+        run_shell_command(f"mvn clean install -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
     else:
         run_shell_command("mvn clean install -P e2e-tests")
 except AssertionError as e:
