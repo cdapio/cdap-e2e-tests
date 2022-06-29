@@ -57,7 +57,11 @@ jobs:
           key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-${{ github.workflow }}
-      - name: Run tests
+      - name: Run required e2e tests
+        if: ${{ github.event.pull_request.merged == false}}
+        run: python3 e2e/src/main/scripts/run_e2e_test.py TestRunnerRequired.java
+      - name: Run all e2e tests if PR is merged
+        if: ${{ github.event.pull_request.merged == true}}
         run: python3 e2e/src/main/scripts/run_e2e_test.py
       - name: Upload report 
         uses: actions/upload-artifact@v2.2.4

@@ -45,7 +45,11 @@ jobs:
           key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-${{ github.workflow }}
-      - name: Run tests
+      - name: Run required e2e tests
+        if: ${{ github.event.pull_request.merged == false}}
+        run: python3 e2e/src/main/scripts/run_e2e_test.py TestRunnerRequired.java
+      - name: Run all e2e tests if PR is merged
+        if: ${{ github.event.pull_request.merged == true}}
         run: python3 e2e/src/main/scripts/run_e2e_test.py
       - name: Upload report 
         uses: actions/upload-artifact@v2.2.4
@@ -59,19 +63,12 @@ jobs:
         with:
           name: Debug files
           path: ./**/target/e2e-debug
-      - name: Deploy report
-        uses: tivv/actions-gh-pages@f75e94a6b37e2a747cb64139c6a2171454142288
+      - name: Upload reports to GCS
+        uses: google-github-actions/upload-cloud-storage@v0
         if: always()
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./plugin/target/cucumber-reports
-          destination_dir: >-
-            cucumber-reports/${{
-              github.event.workflow_run.pull_requests[0].base.ref
-              || github.event.workflow_run.head_branch
-            }}/${{
-              github.event.workflow_run.pull_requests[0].number || 'branch' }}
-          
+          path: ./plugin/target/cucumber-reports
+          destination: e2e-tests-cucumber-reports/${{ github.event.repository.name }}/${{ github.ref }}
       - name: github-status-action
         uses: Sibz/github-status-action@67af1f4042a5a790681aad83c44008ca6cfab83d
         if: always()
