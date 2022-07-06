@@ -39,10 +39,9 @@ if __name__ == "__main__":
     os.system("export JAVA_OPTS=-Xmx24G")
     run_shell_command(f"sandbox/{sandbox_dir}/bin/cdap sandbox start")
    
-
+    
     # Build the plugin
     os.chdir("plugin")
-
     module_to_build : str = sys.argv[1]
     print(f"Building plugin {module_to_build}")
     run_shell_command(f"mvn clean package -pl {module_to_build} -am -DskipTests")
@@ -70,19 +69,22 @@ if __name__ == "__main__":
     assert res.ok or print(res.text)
     res=requests.put(f"http://localhost:11015/v3/namespaces/default/artifacts/{plugin_name}/versions/{plugin_version}/properties", json=plugin_properties)
     assert res.ok or print(res.text)
-    # Run e2e tests
+   
+    #Building Framework
     os.chdir("../../../e2e")
     print("Preparing e2e framework")
     run_shell_command("mvn clean install")
+    os.chdir("../plugin")
+    
+    # Run e2e tests
     print("Running e2e integration tests")
     assertion_error = None
-    os.chdir(f"../plugin/{module_to_build}")
     try:
-        run_shell_command("mvn clean install -P e2e-tests")
+        run_shell_command(f"mvn verify -pl {module_to_build} -amd -P e2e-tests")
     except AssertionError as e:
         assertion_error = e
     finally:
-        os.chdir("../..")
+        os.chdir("..")
              
 cwd = os.getcwd()
 print("Copying sandbox logs to e2e-debug")
