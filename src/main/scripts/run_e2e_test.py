@@ -21,12 +21,18 @@ import xml.etree.ElementTree as ET
 import zipfile
 import shutil
 import sys
+import argparse
 
 def run_shell_command(cmd):
     process = subprocess.run(cmd.split(" "), stderr=subprocess.PIPE)
     if process.returncode != 0:
         print("Process completed with error: ", process.stderr)
     assert process.returncode == 0
+
+# Parse command line optional arguments
+parser=argparse.ArgumentParser()
+parser.add_argument('--testRunner', help='TestRunner class to execute tests')
+args=parser.parse_args()
 
 # Start CDAP sandbox
 print("Downloading CDAP sandbox")
@@ -85,8 +91,8 @@ run_shell_command("mvn clean install")
 print("Running e2e integration tests")
 os.chdir("../plugin")
 try:
-    if(len(sys.argv) > 1):
-        testrunner_to_run : str = sys.argv[1]
+    if args.testRunner:
+        testrunner_to_run = args.testRunner
         print("TestRunner to run : " + testrunner_to_run)
         run_shell_command(f"mvn clean install -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
     else:
