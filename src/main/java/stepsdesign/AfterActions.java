@@ -17,12 +17,16 @@
 package stepsdesign;
 
 
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.SeleniumDriver;
+import io.cdap.e2e.utils.SeleniumHelper;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.AfterStep;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+
+import java.io.IOException;
 
 /**
  * Represents after action
@@ -30,13 +34,16 @@ import org.openqa.selenium.WebDriver;
 public class AfterActions {
 
   @AfterStep
-  public static void takeScreenshot(Scenario scenario) {
-    try {
-      WebDriver driver = SeleniumDriver.getDriver();
-      byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-      scenario.embed(screenshotBytes, "image/png");
-    } catch (Exception e) {
-      scenario.write("Exception in capturing screenshot : " + e.getMessage() + " : " + e);
+  public static void takeScreenshot(Scenario scenario) throws IOException {
+    if (SeleniumHelper.readParameters(ConstantsUtil.SCREENSHOT_FOR_ALL_STEPS).equalsIgnoreCase("true")
+      || scenario.isFailed()) {
+      try {
+        WebDriver driver = SeleniumDriver.getDriver();
+        byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        scenario.embed(screenshotBytes, "image/png");
+      } catch (Exception e) {
+        scenario.write("Exception in capturing screenshot : " + e.getMessage() + " : " + e);
+      }
     }
   }
 }
