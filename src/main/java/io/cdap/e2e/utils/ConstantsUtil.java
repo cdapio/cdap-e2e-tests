@@ -55,6 +55,7 @@ public class ConstantsUtil {
   public static final String PREVIEW_TAB = "Preview";
   public static final String DOCUMENTATION_TAB = "Documentation";
   public static final String SCREENSHOT_FOR_ALL_STEPS = "screenshotForAllSteps";
+  public static final int MAX_RETRY_ATTEMPTS = 5;
   public static final String LOGS_SEPARATOR_MESSAGE = "---------------------------------------------------------" +
     "------------------------------MESSAGE----------------------------------------------------------------------" +
     "-----------------";
