@@ -32,6 +32,7 @@ def run_shell_command(cmd):
 # Parse command line optional arguments
 parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
+parser.add_argument('--module', help='Module for which tests need to be run')
 args=parser.parse_args()
 
 # Start CDAP sandbox
@@ -50,15 +51,28 @@ process = subprocess.Popen(sandbox_start_cmd, shell=True, env=my_env)
 process.communicate()
 assert process.returncode == 0
 
+module_to_build = ""
+if args.module:
+    module_to_build = args.module
+
 # Build the plugin
 os.chdir("plugin")
-print("Building plugin")
-run_shell_command("mvn clean package -DskipTests")
+if module_to_build:
+    print(f"Building plugin module: {module_to_build}")
+    run_shell_command(f"mvn clean package -pl {module_to_build} -am -DskipTests")
+else:
+    print("Building plugin")
+    run_shell_command("mvn clean package -DskipTests")
 
 # Get plugin artifact name and version from pom.xml.
 root = ET.parse('pom.xml').getroot()
-plugin_name = root.find('{http://maven.apache.org/POM/4.0.0}artifactId').text
 plugin_version = root.find('{http://maven.apache.org/POM/4.0.0}version').text
+if module_to_build:
+    os.chdir(f"{module_to_build}")
+    root = ET.parse('pom.xml').getroot()
+    plugin_name = root.find('{http://maven.apache.org/POM/4.0.0}artifactId').text
+else:
+    plugin_name = root.find('{http://maven.apache.org/POM/4.0.0}artifactId').text
 
 os.chdir("target")
 plugin_properties = {}
@@ -80,7 +94,10 @@ assert res.ok or print(res.text)
 res=requests.put(f"http://localhost:11015/v3/namespaces/default/artifacts/{plugin_name}/versions/{plugin_version}/properties", json=plugin_properties)
 assert res.ok or print(res.text)
 
-os.chdir("../..")
+if module_to_build:
+    os.chdir("../../..")
+else:
+    os.chdir("../..")
 print("cwd:", os.getcwd())
 print("ls:", os.listdir())
 
@@ -90,18 +107,33 @@ os.chdir("e2e")
 run_shell_command("mvn clean install")
 print("Running e2e integration tests")
 os.chdir("../plugin")
+
+testrunner_to_run = ""
+if args.testRunner:
+    testrunner_to_run = args.testRunner
+
 try:
-    if args.testRunner:
-        testrunner_to_run = args.testRunner
-        print("TestRunner to run : " + testrunner_to_run)
-        run_shell_command(f"mvn clean install -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
+    if module_to_build:
+        if testrunner_to_run:
+            print("TestRunner to run : " + testrunner_to_run)
+            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build} -DTEST_RUNNER={testrunner_to_run}")
+        else:
+            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build}")
     else:
-        run_shell_command("mvn clean install -P e2e-tests")
+        if testrunner_to_run:
+            print("TestRunner to run : " + testrunner_to_run)
+            run_shell_command(f"mvn clean verify -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
+        else:
+            run_shell_command("mvn clean verify -P e2e-tests")
 except AssertionError as e:
     raise e
 finally:
     os.chdir("..")
     cwd = os.getcwd()
     print("Copying sandbox logs to e2e-debug")
-    shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/data/logs", cwd+"/plugin/target/e2e-debug/sandbox/data/logs")
-    shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/logs", cwd+"/plugin/target/e2e-debug/sandbox/logs")
+    if module_to_build:
+        shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/data/logs", cwd+"/plugin/"+module_to_build+"/target/e2e-debug/sandbox/data/logs")
+        shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/logs", cwd+"/plugin/"+module_to_build+"/target/e2e-debug/sandbox/logs")
+    else:
+        shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/data/logs", cwd+"/plugin/target/e2e-debug/sandbox/data/logs")
+        shutil.copytree(cwd+"/sandbox/"+sandbox_dir+"/logs", cwd+"/plugin/target/e2e-debug/sandbox/logs")
