@@ -25,6 +25,7 @@ import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +112,24 @@ public class CdfStudioActions {
    * @param pluginName
    */
   public static void navigateToPluginPropertiesPage(String pluginName) {
-    ElementHelper.hoverOverElement(CdfStudioLocators.locatePluginNodeInCanvas(pluginName));
+    int attempts = 1;
+    while (attempts <= ConstantsUtil.MAX_RETRY_ATTEMPTS) {
+      try {
+        ElementHelper.hoverOverElement(CdfStudioLocators.locatePluginNodeInCanvas(pluginName));
+        WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.locatePluginPropertiesButton(pluginName),
+                                               ConstantsUtil.SMALL_TIMEOUT_SECONDS);
+        break;
+      } catch (TimeoutException e) {
+        /* Properties button is displayed on hover of the plugin node.
+        When Pipeline is created from wrangler connection, Plugin node is displayed in left corner first
+        and then aligned in the middle on canvas. In case if Hover action happens before plugin get aligned,
+        properties button gets hidden and timeout exception is thrown.*/
+        if (attempts == ConstantsUtil.MAX_RETRY_ATTEMPTS) {
+          throw e;
+        }
+      }
+      attempts++;
+    }
     ElementHelper.clickOnElement(CdfStudioLocators.locatePluginPropertiesButton(pluginName));
   }
 
@@ -256,7 +274,7 @@ public class CdfStudioActions {
    * Click on logs button in preview menu
    */
   public static void clickPreviewLogsButton() {
-    CdfStudioLocators.previewLogsButton.click();
+    ElementHelper.clickOnElement(CdfStudioLocators.previewLogsButton);
   }
 
   /**
