@@ -71,7 +71,7 @@ public class ConstantsUtil {
   /**
    * DEFAULT_TIMEOUT_SECONDS: To be used in external wait helpers defined in {@link WaitHelper}
    */
-  public static final int DEFAULT_TIMEOUT_SECONDS = 60;
+  public static final int DEFAULT_TIMEOUT_SECONDS = 180;
   /**
    * PAGE_LOAD_TIMEOUT_SECONDS: To be used as Selenium driver's default page load timeout
    */
@@ -83,7 +83,7 @@ public class ConstantsUtil {
   /**
    * PIPELINE_DEPLOY_TIMEOUT_SECONDS: To be used as a timeout for deploying the pipeline
    */
-  public static final int PIPELINE_DEPLOY_TIMEOUT_SECONDS = 60;
+  public static final int PIPELINE_DEPLOY_TIMEOUT_SECONDS = 120;
   /**
    * PIPELINE_PREVIEW_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Preview
    */
