@@ -80,4 +80,12 @@ public class PageHelper {
     ArrayList<String> listOfWindows = new ArrayList<>(SeleniumDriver.getDriver().getWindowHandles());
     SeleniumDriver.getDriver().switchTo().window(listOfWindows.get(0));
   }
+
+  /**
+   * Refresh current page
+   */
+  public static void refreshCurrentPage() {
+    logger.info("Refreshing current page");
+    SeleniumDriver.getDriver().navigate().refresh();
+  }
 }
