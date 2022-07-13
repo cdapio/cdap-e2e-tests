@@ -396,4 +396,13 @@ public class ElementHelper {
     scrollToElement(element);
     element.click();
   }
+
+  /**
+   * Count the number of elements having the same locator
+   *
+   * @param locator
+   */
+  public static int countNumberOfElements(By locator) {
+    return SeleniumDriver.getDriver().findElements(locator).size();
+  }
 }
