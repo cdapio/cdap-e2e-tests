@@ -1,4 +1,4 @@
-# Copyright © 2021 Cask Data, Inc.
+# Copyright © 2022 Cask Data, Inc.
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may not
 #  use this file except in compliance with the License. You may obtain a copy of
 #  the License at
@@ -80,3 +80,39 @@ jobs:
               github.event.workflow_run.pull_requests[0].number || 'branch'
             }}/advanced-reports/cucumber-html-reports/overview-features.html
           sha: ${{ github.event.workflow_run.head_sha }}
+
+  wait-for-e2e:
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+    needs: build
+    runs-on: k8-runner-e2e
+
+    steps:
+
+      - name: Wait for e2e.yml to complete successfully
+        if: ${{ github.event.workflow_run.head_branch == 'develop' }}
+        uses: lewagon/wait-on-check-action@e2558238c09778af25867eb5de5a3ce4bbae3dcd
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          check-name: 'e2e'
+          repo-token: ${{ github.token }}
+          wait-interval: 10
+          allowed-conclusions: success
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Get Maven Project Version
+        id: version
+        run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+  snapshot-release-workflow:
+    if: ${{ github.event.workflow_run.event == 'push' && endsWith(needs.wait-for-e2e.outputs.version, 'SNAPSHOT') }}
+    needs: wait-for-e2e
+    uses: ./.github/workflows/snapshot-release.yml
+    with:
+      ref: ${{ github.event.workflow_run.head_sha }}
