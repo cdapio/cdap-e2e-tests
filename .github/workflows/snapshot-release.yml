@@ -39,11 +39,6 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
       - name: Build with Maven
         run: mvn -B package --file pom.xml
         env:
@@ -53,7 +48,7 @@ jobs:
         id: version
         run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
 
-      - name: Set up Apache Maven Central
+      - name: Set up Maven Deploy Server in settings.xml
         uses: actions/setup-java@v1
         with: # running setup-java again overwrites the settings.xml
           java-version: 1.8
@@ -62,7 +57,7 @@ jobs:
           server-password: CDAP_OSSRH_PASSWORD
           gpg-passphrase: CDAP_GPG_PASSPHRASE
 
-      - name: Publish to Apache Maven Central
+      - name: Publish to Maven Snapshot Repository (OSSRH)
         if: ${{ endsWith(steps.version.outputs.version, 'SNAPSHOT') }}
         run: mvn -DskipTests clean deploy -P release-snapshot -Dgpg.passphrase=$CDAP_GPG_PASSPHRASE
         env:
