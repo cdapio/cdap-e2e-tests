@@ -21,7 +21,7 @@ on:
 jobs:
 
   release-job:
-    runs-on: k8s-runner-build
+    runs-on: cdapio-hub-k8-runner
 
     steps:
 
