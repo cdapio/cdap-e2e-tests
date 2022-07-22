@@ -35,7 +35,6 @@ jobs:
       ref: ${{ github.sha }}
       triggering_event: ${{ github.event_name }}
       head_commit_message: ${{ github.event.head_commit.message }}
-    secrets: inherit
 
   run-snapshot-release:
     if: ${{ github.event_name != 'pull_request' }}
