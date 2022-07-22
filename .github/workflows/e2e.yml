@@ -76,7 +76,7 @@ jobs:
         uses: Sibz/github-status-action@67af1f4042a5a790681aad83c44008ca6cfab83d
         if: always()
         with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
+          authToken: ${{ github.token }}
           state: success
           context: Cucumber report
           sha: ${{ inputs.ref }}
