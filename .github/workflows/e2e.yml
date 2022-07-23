@@ -86,7 +86,7 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
 
   run-snapshot-release:
-    if: ${{ github.event.workflow_run.event != 'pull_request' && endsWith(needs.build.outputs.version, 'SNAPSHOT') }}
+    if: ${{ github.event.workflow_run.event == 'push' && endsWith(needs.build.outputs.version, 'SNAPSHOT') }}
     needs: build
     uses: ./.github/workflows/snapshot-release.yml
     with:
