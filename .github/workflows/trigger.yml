@@ -15,7 +15,7 @@
 # Also it will have access to the proper GITHUB_SECRET
 
 name: Trigger build
-
+# testing PR
 on:
   push:
     branches: [ use-trigger-in-deploy ]
