@@ -22,6 +22,7 @@ import zipfile
 import shutil
 import sys
 import argparse
+import urllib.request
 
 def run_shell_command(cmd):
     process = subprocess.run(cmd.split(" "), stderr=subprocess.PIPE)
@@ -42,6 +43,12 @@ sandbox_dir = sandbox_url.split("/")[-1].split(".zip")[0]
 r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./sandbox")
+
+print("Installing gcs connector jar")
+gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.5.jar"
+gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.5.jar"
+urllib.request.urlretrieve(gcs_jar_url, gcs_jar_fname)
+
 print("Start the sandbox")
 run_shell_command(f"chmod +x sandbox/{sandbox_dir}/bin/cdap")
 my_env = os.environ.copy()
