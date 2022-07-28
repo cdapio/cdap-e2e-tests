@@ -37,14 +37,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
+          path: e2e
           ref: ${{ inputs.ref }}
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-        env:
-          MAVEN_OPTS: '-Xmx3200m'
-
       - name: Get Maven Project Version
+        working-directory: e2e
         id: version
         run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
 
@@ -65,6 +62,7 @@ jobs:
 
       - name: Publish to Maven Snapshot Repository (OSSRH)
         if: ${{ endsWith(steps.version.outputs.version, 'SNAPSHOT') }}
+        working-directory: e2e
         run: mvn -B -V -DskipTests clean deploy -P release -Dmaven.wagon.http.retryHandler.count=5 -Dmaven.wagon.httpconnectionManager.ttlSeconds=30
         env:
           CDAP_OSSRH_USERNAME: ${{ steps.secrets.outputs.CDAP_OSSRH_USERNAME }}
