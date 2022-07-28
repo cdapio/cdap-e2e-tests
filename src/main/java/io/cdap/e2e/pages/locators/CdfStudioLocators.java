@@ -148,7 +148,7 @@ public class CdfStudioLocators {
 
   public static WebElement locateSinkNodeInCanvas(String sinkPluginName) {
     return SeleniumDriver.getDriver().findElement(
-      By.xpath("//*[contains(@data-cy,'plugin-node-" + sink + "') and @data-type='batchsink']"));
+      By.xpath("//*[contains(@data-cy,'plugin-node-" + sinkPluginName + "') and @data-type='batchsink']"));
   }
 
   public static WebElement macroButton(String pluginProperty) {
