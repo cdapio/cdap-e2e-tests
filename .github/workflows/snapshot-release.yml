@@ -55,10 +55,8 @@ jobs:
 
       - name: Set up GPG conf
         run: |
-          echo "export GPG_TTY=/dev/tty" >> ~/.bashrc
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
-          source ~/.bashrc
 
       - name: Publish to Maven Snapshot Repository (OSSRH)
         if: ${{ endsWith(steps.version.outputs.version, 'SNAPSHOT') }}
