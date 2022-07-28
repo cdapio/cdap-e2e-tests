@@ -33,6 +33,7 @@ jobs:
             CDAP_OSSRH_USERNAME:cdapio-github-builds/CDAP_OSSRH_USERNAME
             CDAP_OSSRH_PASSWORD:cdapio-github-builds/CDAP_OSSRH_PASSWORD
             CDAP_GPG_PASSPHRASE:cdapio-github-builds/CDAP_GPG_PASSPHRASE
+            CDAP_GPG_PRIVATE_KEY:cdapio-github-builds/CDAP_GPG_PRIVATE_KEY
 
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -45,20 +46,17 @@ jobs:
         id: version
         run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
 
+      - name: Import GPG key
+        run: |
+          echo "$GPG_PRIVATE_KEY" > private.key
+          gpg --import --batch private.key
+        env:
+          GPG_PRIVATE_KEY: ${{ steps.secrets.outputs.CDAP_GPG_PRIVATE_KEY }}
+
       - name: Set up GPG conf
         run: |
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
-
-      - name: Set up Maven Deploy Server
-        uses: actions/setup-java@v1
-        with: # running setup-java again overwrites the settings.xml
-          java-version: 1.8
-          server-id: sonatype.snapshots
-          server-username: CDAP_OSSRH_USERNAME
-          server-password: CDAP_OSSRH_PASSWORD
-          gpg-passphrase: CDAP_GPG_PASSPHRASE
-          gpg-private-key: ${{ steps.secrets.outputs.CDAP_GPG_PRIVATE_KEY }}
 
       - name: Publish to Maven Snapshot Repository (OSSRH)
         if: ${{ endsWith(steps.version.outputs.version, 'SNAPSHOT') }}
