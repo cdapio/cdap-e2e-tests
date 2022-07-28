@@ -47,11 +47,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-${{ github.workflow }}
-      - name: Get Maven Project Version
-        id: version
-        run: |
-          cd e2e
-          echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
       - name: Run required e2e tests
         if: ${{ github.event.workflow_run.event != 'workflow_dispatch' && github.event.workflow_run.event != 'push' }}
         run: python3 e2e/src/main/scripts/run_e2e_test.py --testRunner TestRunnerRequired.java
@@ -86,8 +81,8 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
 
   run-snapshot-release:
-    if: ${{ github.event.workflow_run.event == 'push' && endsWith(needs.build.outputs.version, 'SNAPSHOT') }}
-    needs: build
+    if: ${{ github.event.workflow_run.event == 'push' }}
+#    needs: build TODO: once build is fixed
     uses: ./.github/workflows/snapshot-release.yml
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
