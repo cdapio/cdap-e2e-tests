@@ -49,10 +49,10 @@ jobs:
             ${{ runner.os }}-maven-${{ github.workflow }}
       - name: Run required e2e tests
         if: ${{ github.event.workflow_run.event != 'workflow_dispatch' && github.event.workflow_run.event != 'push' }}
-        run: python3 e2e/src/main/scripts/run_e2e_test.py --testRunner TestRunnerRequired.java
+        run: python3 e2e/src/main/scripts/run_e2e_test.py --testRunner TestRunnerRequired.java --framework yes
       - name: Run all e2e tests
         if: ${{ github.event.workflow_run.event == 'workflow_dispatch' || github.event.workflow_run.event == 'push' }}
-        run: python3 e2e/src/main/scripts/run_e2e_test.py
+        run: python3 e2e/src/main/scripts/run_e2e_test.py --framework yes
       - name: Upload report
         uses: actions/upload-artifact@v2.2.4
         if: always()
