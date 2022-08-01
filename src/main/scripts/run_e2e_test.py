@@ -34,6 +34,7 @@ def run_shell_command(cmd):
 parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
 parser.add_argument('--module', help='Module for which tests need to be run')
+parser.add_argument('--framework', help='Pass this param if workflow is triggered from e2e framework repo')
 args=parser.parse_args()
 
 # Start CDAP sandbox
@@ -109,11 +110,16 @@ print("cwd:", os.getcwd())
 print("ls:", os.listdir())
 
 # Run e2e tests
-print("Preparing e2e framework")
-os.chdir("e2e")
-run_shell_command("mvn clean install")
+if args.framework:
+    print("Preparing e2e framework")
+    os.chdir("e2e")
+    run_shell_command("mvn clean install")
+    os.chdir("../plugin")
+else:
+    os.chdir("plugin")
+    run_shell_command("mvn dependency:purge-local-repository -DmanualInclude=io.cdap.tests.e2e:cdap-e2e-framework")
+
 print("Running e2e integration tests")
-os.chdir("../plugin")
 
 testrunner_to_run = ""
 if args.testRunner:
