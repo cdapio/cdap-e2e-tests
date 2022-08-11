@@ -221,6 +221,11 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.verifyOutputSchemaMatchesExpectedSchema(expectedSchemaJsonArrayLocation);
   }
 
+  @Then("Change datatype of fields in output schema with : {string}")
+  public void changeDatatypeOfFieldsInOutputSchemaWith(String jsonChangeFieldList) {
+    CdfPluginPropertiesActions.changeDataTypesInOutputSchema(jsonChangeFieldList);
+  }
+
   @When("Click on the Get Schema button")
   public void clickOnGetSchemaButton() {
     CdfPluginPropertiesActions.clickGetSchemaButton();
@@ -486,6 +491,11 @@ public class PipelineSteps implements CdfHelper {
   @Then("Select dropdown plugin property: {string} with option value: {string}")
   public void selectDropdownPluginPropertyOptionValue(String pluginProperty, String option) {
     CdfPluginPropertiesActions.selectPluginPropertyDropdownOption(pluginProperty, option);
+  }
+
+  @Then("Enter key value pairs for plugin property: {string} with values from json: {string}")
+  public void enterKeyValuePairsForPluginPropertyWithValuesFromJson(String pluginProperty, String jsonKeyValuePairs) {
+    CdfPluginPropertiesActions.enterKeyValuePairsForProperty(pluginProperty, jsonKeyValuePairs);
   }
 
   @Then("Override Service account details if set in environment variables")

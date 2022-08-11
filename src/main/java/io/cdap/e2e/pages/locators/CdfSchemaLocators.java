@@ -51,4 +51,15 @@ public class CdfSchemaLocators {
   public static WebElement schemaActionType(String schemaAction) {
     return SeleniumDriver.getDriver().findElement(By.xpath("//li[@data-value='" + schemaAction + "']"));
   }
+
+  public static WebElement outputSchemaDataTypeDropdown(String fieldName) {
+    String xpath = "//*[@data-cy='schema-fields-list']//input[@value='" + fieldName + "']/parent::div" +
+      "//*[@data-cy='select-undefined']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static By outputSchemaDataTypeOption(String fieldName, String option) {
+    return By.xpath("//*[@data-cy='schema-fields-list']//input[@value='" + fieldName + "']/parent::div" +
+                      "//*[@data-cy='select-undefined']//*[@data-cy='option-" + option + "']");
+  }
 }

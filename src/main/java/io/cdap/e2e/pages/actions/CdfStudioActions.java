@@ -25,6 +25,7 @@ import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -471,7 +472,20 @@ public class CdfStudioActions {
    * Click on the Close button in status banner if displayed
    */
   public static void closeStatusBannerIfDisplayed() {
-    ElementHelper.clickIfDisplayed(CdfStudioLocators.statusBannerCloseButtonLocator);
+    int attempts = 1;
+    while (attempts <= ConstantsUtil.MAX_RETRY_ATTEMPTS) {
+      try {
+        ElementHelper.clickIfDisplayed(CdfStudioLocators.statusBannerCloseButtonLocator);
+        break;
+      } catch (ElementClickInterceptedException e) {
+        /* If attempt to click on close status banner happens before its loaded and stable
+        then click event throws Intercepted exception*/
+        if (attempts == ConstantsUtil.MAX_RETRY_ATTEMPTS) {
+          throw e;
+        }
+      }
+      attempts++;
+    }
   }
 
   /**
