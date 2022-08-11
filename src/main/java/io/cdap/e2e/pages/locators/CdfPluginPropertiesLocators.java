@@ -190,4 +190,19 @@ public class CdfPluginPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-undefined']//button")
   public static WebElement browseButton;
+
+  public static WebElement locatePropertyKey(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "']//*[@data-cy= '" + row + "']//*[@data-cy='key']/input";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locatePropertyValue(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "']//*[@data-cy= '" + row + "']//*[@data-cy='value']/input";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locatePropertyAddRowButton(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "']//*[@data-cy='" + row + "']//button[@data-cy='add-row']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
 }

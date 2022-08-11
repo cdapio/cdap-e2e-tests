@@ -114,6 +114,23 @@ public class CdfPluginPropertiesActions {
   }
 
   /**
+   * Change data type of fields in output schema
+   *
+   * @param jsonFieldList Property key in the Plugin Properties file whose value
+   *                              is the json array with field name and datatype
+   *                              ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   */
+  public static void changeDataTypesInOutputSchema(String jsonFieldList) {
+    Map<String, String> outputSchemaFieldList =
+      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(jsonFieldList));
+    for (Map.Entry<String, String> entry : outputSchemaFieldList.entrySet()) {
+      ElementHelper.clickOnElement(CdfSchemaLocators.outputSchemaDataTypeDropdown(entry.getKey()));
+      SeleniumDriver.getDriver()
+        .findElement(CdfSchemaLocators.outputSchemaDataTypeOption(entry.getKey(), entry.getValue())).click();
+    }
+  }
+
+  /**
    * Click on the Get Schema button inside Plugin's properties page
    */
   public static void clickGetSchemaButton() {
@@ -851,5 +868,36 @@ public class CdfPluginPropertiesActions {
    */
   public static void clickBrowseButton() {
     ElementHelper.clickOnElement(CdfPluginPropertiesLocators.browseButton);
+  }
+
+  /**
+   * Enter KeyValue Pairs For Property
+   *
+   * @param pluginProperty    @data-cy attribute value of Plugin Property.
+   *                          If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                          then its data-cy is fetched from it
+   *                          else pluginProperty is used as it is.
+   * @param jsonKeyValuePairs Actual json KeyValue Pairs string is fetched
+   *                          from {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} with jsonKeyValuePairs as key
+   */
+  public static void enterKeyValuePairsForProperty(String pluginProperty, String jsonKeyValuePairs) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+    Map<String, String> properties =
+      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(jsonKeyValuePairs));
+    int index = 0;
+    for (Map.Entry<String, String> entry : properties.entrySet()) {
+      if (index != 0) {
+        ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locatePropertyAddRowButton(
+          pluginPropertyDataCyAttribute, index - 1));
+      }
+      ElementHelper.sendKeys(CdfPluginPropertiesLocators.locatePropertyKey(
+        pluginPropertyDataCyAttribute, index), entry.getKey());
+      ElementHelper.sendKeys(CdfPluginPropertiesLocators.locatePropertyValue(
+        pluginPropertyDataCyAttribute, index), entry.getValue());
+      index++;
+    }
   }
 }
