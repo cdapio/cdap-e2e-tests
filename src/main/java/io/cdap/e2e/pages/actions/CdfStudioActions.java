@@ -476,6 +476,7 @@ public class CdfStudioActions {
     while (attempts <= ConstantsUtil.MAX_RETRY_ATTEMPTS) {
       try {
         ElementHelper.clickIfDisplayed(CdfStudioLocators.statusBannerCloseButtonLocator);
+        WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
         break;
       } catch (ElementClickInterceptedException e) {
         /* If attempt to click on close status banner happens before its loaded and stable
