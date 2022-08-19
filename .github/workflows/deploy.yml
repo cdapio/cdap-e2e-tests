@@ -9,7 +9,7 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-name: Maven Release Snapshot
+name: Maven Deploy
 
 on:
   workflow_call:
@@ -20,7 +20,7 @@ on:
 
 jobs:
 
-  release-job:
+  build-and-deploy:
     runs-on: cdapio-hub-k8-runner
 
     steps:
@@ -41,11 +41,6 @@ jobs:
           path: e2e
           ref: ${{ inputs.ref }}
 
-      - name: Get Maven Project Version
-        working-directory: e2e
-        id: version
-        run: echo "::set-output name=version::`mvn help:evaluate -Dexpression=project.version -q -DforceStdout`"
-
       - name: Import GPG key
         run: |
           echo "$GPG_PRIVATE_KEY" > private.key
@@ -58,8 +53,7 @@ jobs:
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
 
-      - name: Publish to Maven Snapshot Repository (OSSRH)
-        if: ${{ endsWith(steps.version.outputs.version, 'SNAPSHOT') }}
+      - name: Build and Deploy
         working-directory: e2e
         run: mvn -B -V -DskipTests clean deploy -P release -Dgpg.passphrase=$CDAP_GPG_PASSPHRASE -Dmaven.wagon.http.retryHandler.count=5 -Dmaven.wagon.httpconnectionManager.ttlSeconds=30
         env:
