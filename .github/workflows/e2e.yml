@@ -83,6 +83,6 @@ jobs:
   run-snapshot-release:
     if: ${{ github.event.workflow_run.event == 'push' }}
 #    needs: build TODO: once build is fixed
-    uses: ./.github/workflows/snapshot-release.yml
+    uses: ./.github/workflows/deploy.yml
     with:
       ref: ${{ github.event.workflow_run.head_sha }}
