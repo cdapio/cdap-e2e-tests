@@ -30,7 +30,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//div[contains(@class, 'left-top-section')]//select")
   public static WebElement dataPipelineTypeDropdown;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy=\"plugin-GCSFile-batchsource\"]")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-Source-group']//*[normalize-space(text())='Source']")
   public static WebElement source;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"plugin-GCSFile-batchsource\"]")
@@ -39,7 +39,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-BigQueryTable-batchsink']")
   public static WebElement bigQueryObject;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-Sink-group']//span[normalize-space(text())='Sink']")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='plugin-Sink-group']//*[normalize-space(text())='Sink']")
   public static WebElement sink;
 
   @FindBy(how = How.XPATH, using = "//*[contains(@class,'plugin-endpoint_SAP-ODP')]")
@@ -57,13 +57,13 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='pipeline-preview-btn']")
   public static WebElement previewButton;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='preview-top-run-btn']//div[normalize-space(text())='Run']")
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-top-run-btn']")
   public static WebElement runButton;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-active-btn']")
   public static WebElement previewActiveButton;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//div[contains(@class, 'pipeline-name')]")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//div[@role='button']")
   public static WebElement pipelineName;
 
   @FindBy(how = How.XPATH, using = "//*[@id=\"pipeline-name-input\"]")
@@ -72,7 +72,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//textarea[@data-cy='pipeline-description-input']")
   public static WebElement pipelineDescriptionTextarea;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//button[contains(@class, 'save-button')]")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//button[@data-cy='pipeline-metadata-ok-btn']")
   public static WebElement pipelineSave;
 
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
@@ -91,7 +91,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-configure-run-btn']")
   public static WebElement previewConfigRunButton;
 
-  @FindBy(how = How.XPATH, using = "//div[contains(@class,'log-viewer')]")
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='preview-logs']")
   public static WebElement previewLogsButton;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='valium-banner-hydrator']")
