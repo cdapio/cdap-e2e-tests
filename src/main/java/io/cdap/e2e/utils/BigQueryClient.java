@@ -91,6 +91,11 @@ public class BigQueryClient {
     return Optional.ofNullable(outputRowValue);
   }
 
+  public static TableResult getQueryResult(String query) throws InterruptedException, IOException {
+    QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(query).build();
+    return getBigQueryService().query(queryConfig);
+  }
+
   public static boolean verifyCmekKey(String tableName, String cmekKey) throws IOException {
     Table table = getBigQueryService().getTable(
       TableId.of(PluginPropertyUtils.pluginProp(ConstantsUtil.PROJECT_ID),
