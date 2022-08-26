@@ -126,11 +126,13 @@ public interface CdfHelper {
   }
 
   default void selectSourcePlugin(String pluginName) {
-    SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsource']")).click();
+    ElementHelper.clickOnElement(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsource']")));
   }
 
   default void selectSinkPlugin(String pluginName) {
-    SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsink']")).click();
+    ElementHelper.clickOnElement(
+      SeleniumDriver.getDriver().findElement(By.xpath("//*[@data-cy='plugin-" + pluginName + "-batchsink']")));
   }
 
   default void waitForSinkOnCanvas(String pluginName) {
