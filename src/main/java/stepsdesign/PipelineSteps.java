@@ -468,6 +468,11 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.enterValueInTextareaProperty(pluginProperty, value);
   }
 
+  @Then("Enter input plugin property: {string} with value: {string} for Credentials and Authorization related fields")
+  public void enterInputPluginPropertyWithValueForCredentials(String pluginProperty, String envVariableKey) {
+    CdfPluginPropertiesActions.enterValueInInputPropertyFromEnv(pluginProperty, envVariableKey);
+  }
+  
   @Then("Replace textarea plugin property: {string} with value: {string}")
   public void replaceTextareaPluginPropertyWithValue(String pluginProperty, String value) {
     CdfPluginPropertiesActions.replaceValueInTextareaProperty(pluginProperty, value);

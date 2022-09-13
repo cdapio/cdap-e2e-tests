@@ -473,12 +473,7 @@ public class CdfPluginPropertiesActions {
    *                       else value is entered in the input as it is.
    */
   public static void enterValueInInputProperty(String pluginProperty, String value) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = pluginProperty;
-    }
-
-    WebElement pluginPropertyInput = CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
@@ -501,12 +496,7 @@ public class CdfPluginPropertiesActions {
    *                       else input is replaced with the value as it is.
    */
   public static void replaceValueInInputProperty(String pluginProperty, String value) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = pluginProperty;
-    }
-
-    WebElement pluginPropertyInput = CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
@@ -898,6 +888,26 @@ public class CdfPluginPropertiesActions {
       ElementHelper.sendKeys(CdfPluginPropertiesLocators.locatePropertyValue(
         pluginPropertyDataCyAttribute, index), entry.getValue());
       index++;
+    }
+  }
+
+  /**
+   * Enter Credentials/Authorization values in the Plugin Property (input)
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param envVariableKey          If the value is present in the Environment variables then its value is fetched
+   */
+  public static void enterValueInInputPropertyFromEnv(String pluginProperty, String envVariableKey) {
+    String envVariableValue = System.getenv(PluginPropertyUtils.pluginProp(envVariableKey));
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+
+    if (envVariableValue != null) {
+      ElementHelper.sendKeys(pluginPropertyInput, envVariableValue);
+    } else {
+      enterValueInInputProperty(pluginProperty, envVariableKey);
     }
   }
 }

@@ -15,6 +15,7 @@
  */
 package io.cdap.e2e.utils;
 
+import io.cdap.e2e.pages.locators.CdfPluginPropertiesLocators;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -119,5 +120,23 @@ public class PluginPropertyUtils {
     hexValue[2] = hexValue[2].trim();
     int hexValue3 = Integer.parseInt(hexValue[2]);
     return String.format("#%02x%02x%02x", hexValue1, hexValue2, hexValue3);
+  }
+
+  /**
+   * Get Plugin Property input webelement
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @return
+   */
+  public static WebElement getInputPluginPropertyElement(String pluginProperty) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    if (pluginPropertyDataCyAttribute == null) {
+      pluginPropertyDataCyAttribute = pluginProperty;
+    }
+
+    return CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute);
   }
 }
