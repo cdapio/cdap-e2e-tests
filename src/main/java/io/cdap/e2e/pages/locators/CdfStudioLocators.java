@@ -63,7 +63,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='preview-active-btn']")
   public static WebElement previewActiveButton;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//div[@role='button']")
+  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']")
   public static WebElement pipelineName;
 
   @FindBy(how = How.XPATH, using = "//*[@id=\"pipeline-name-input\"]")
@@ -72,7 +72,7 @@ public class CdfStudioLocators {
   @FindBy(how = How.XPATH, using = "//textarea[@data-cy='pipeline-description-input']")
   public static WebElement pipelineDescriptionTextarea;
 
-  @FindBy(how = How.XPATH, using = "//div[@data-cy='pipeline-metadata']//button[@data-cy='pipeline-metadata-ok-btn']")
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='pipeline-metadata-ok-btn']")
   public static WebElement pipelineSave;
 
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
