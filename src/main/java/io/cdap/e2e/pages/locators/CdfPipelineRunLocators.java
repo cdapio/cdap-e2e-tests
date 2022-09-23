@@ -92,4 +92,12 @@ public class CdfPipelineRunLocators {
   /* TODO: Move this locator to CdfStudioLocators class */
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'saved successfully.')]")
   public static WebElement savedSuccessMessage;
+
+  @FindBy(how = How.XPATH, using = "//div[contains(@class,'pipeline-actions-btn')]")
+  public static WebElement pipelineActionsButton;
+
+  public static WebElement locatePipelineAction(String action) {
+    return SeleniumDriver.getDriver().findElement(
+      By.xpath("//div[contains(@class,'pipeline-actions-popper')]//li[text()='" + action + "']"));
+  }
 }
