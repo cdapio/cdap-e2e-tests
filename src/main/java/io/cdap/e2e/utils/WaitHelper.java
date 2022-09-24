@@ -255,4 +255,16 @@ public class WaitHelper {
       "with the timeout: " + timeoutInSeconds + " seconds");
     SeleniumDriver.getWaitDriver(timeoutInSeconds).until(elementToBeEnabled);
   }
+
+  /**
+   * Wait for text to be present in element's value attribute
+   *
+   * @param element WebElement to check text
+   * @param text    text to check in value attribute of the element
+   */
+  public static boolean waitForTextToBePresentInElementValue(WebElement element, String text) {
+    logger.info("Waiting for the element: " + element + " to contain value: " + text +
+                  " with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
+    return SeleniumDriver.getWaitDriver().until(ExpectedConditions.textToBePresentInElementValue(element, text));
+  }
 }

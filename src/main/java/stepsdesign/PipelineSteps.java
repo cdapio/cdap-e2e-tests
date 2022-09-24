@@ -619,4 +619,14 @@ public class PipelineSteps implements CdfHelper {
   public void movePlugin(String pluginName, int xOffset, int yOffset) {
     CdfStudioActions.movePlugin(pluginName, xOffset, yOffset);
   }
+
+  @Then("Open pipeline actions menu")
+  public void openPipelineActionsMenu() {
+    CdfPipelineRunAction.openPipelineActionsMenu();
+  }
+
+  @Then("Select pipeline action: {string}")
+  public void selectPipelineAction(String action) {
+    CdfPipelineRunAction.selectPipelineAction(action);
+  }
 }

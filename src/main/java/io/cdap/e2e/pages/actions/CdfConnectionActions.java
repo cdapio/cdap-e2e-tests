@@ -128,6 +128,7 @@ public class CdfConnectionActions {
   private static void selectConnectionDataRow(String dataRow) {
     waitTillConnectionDataLoadingCompletes (ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.sendKeys(CdfConnectionLocators.searchDirectoryInput, dataRow);
+    WaitHelper.waitForTextToBePresentInElementValue(CdfConnectionLocators.searchDirectoryInput, dataRow);
     int attempts = 0;
     while (attempts < 5) {
       try {

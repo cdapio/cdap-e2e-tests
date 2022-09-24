@@ -241,4 +241,20 @@ public class CdfPipelineRunAction {
       CdfPipelineRunLocators.locateRecordsInCountOnPluginNodeAsNonZero(pluginNodeId),
       timeoutInSeconds);
   }
+
+  /**
+   * Open the pipeline actions menu
+   */
+  public static void openPipelineActionsMenu() {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.pipelineActionsButton);
+  }
+
+  /**
+   * Select the action for pipeline
+   *
+   * @param action i.e. Duplicate / Export / Delete
+   */
+  public static void selectPipelineAction(String action) {
+    ElementHelper.clickOnElement(CdfPipelineRunLocators.locatePipelineAction(action));
+  }
 }
