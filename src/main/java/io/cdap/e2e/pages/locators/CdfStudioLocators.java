@@ -180,8 +180,7 @@ public class CdfStudioLocators {
 
   public static WebElement locatePluginNameInList(String pluginName, String  pluginGroupName) {
     String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group']" +
-      "//div[contains(@class, 'PluginNameContainer')]" + 
-      "[translate(normalize-space(text()), ' ', '') = '" + pluginName + "']";
+      "//div[contains(@class, 'PluginNameContainer')][normalize-space(text()) = '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 

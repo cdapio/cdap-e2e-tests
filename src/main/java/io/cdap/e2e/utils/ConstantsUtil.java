@@ -60,7 +60,7 @@ public class ConstantsUtil {
     "------------------------------MESSAGE----------------------------------------------------------------------" +
     "-----------------";
   /* TODO: Remove FIRST_PLUGIN_IN_LIST constant once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
-  public static final String FIRST_PLUGIN_IN_LIST = "BigQuery";
+  public static final String FIRST_PLUGIN_IN_LIST = "Big Query";
   /**
    * IMPLICIT_TIMEOUT_SECONDS: Selenium driver will wait and retry for the specified time before failing.
    * It should be on the lower side as actions anticipating larger waits should be handled with pre-defined explicit
