@@ -27,7 +27,7 @@ import org.openqa.selenium.support.How;
  */
 public class CdfStudioLocators {
 
-  @FindBy(how = How.XPATH, using = "//div[contains(@class, 'left-top-section')]//select")
+  @FindBy(how = How.XPATH, using = "//div[contains(@class, 'left-top-section')]//div")
   public static WebElement dataPipelineTypeDropdown;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy=\"plugin-GCSFile-batchsource\"]")
@@ -160,8 +160,14 @@ public class CdfStudioLocators {
   }
 
   public static WebElement locateDataPipelineTypeDropdownOption(String option) {
-    String xpath = "//div[contains(@class, 'left-top-section')]//select//option[contains(@label, '" + option + "')]";
+    String xpath = "//li[normalize-space(@data-value)='Data Pipeline - " + option + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static By locateDataPipelineTypeSelectedOption(String option) {
+    String xpath = "//div[contains(@class, 'left-top-section')]" +
+      "//input[normalize-space(@value)='Data Pipeline - " + option + "']";
+    return By.xpath(xpath);
   }
 
   public static WebElement locatePluginGroupExpanded(String pluginGroupName) {
@@ -180,7 +186,8 @@ public class CdfStudioLocators {
 
   public static WebElement locatePluginNameInList(String pluginName, String  pluginGroupName) {
     String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group']" +
-      "//div[contains(@class, 'plugin-name')][normalize-space(text()) = '" + pluginName + "']";
+      "//div[contains(@class, 'PluginNameContainer')][normalize-space(text()) = '" + pluginName + "' " +
+      "or translate(normalize-space(text()),' ','') = '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
