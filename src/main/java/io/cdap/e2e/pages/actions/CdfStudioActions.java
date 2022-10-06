@@ -51,7 +51,7 @@ public class CdfStudioActions {
     // ElementHelper.click() is avoided here as 'scrollToElement()' fails because of the 'Copy to Clipboard' chrome
     // notification. Refer: https://cdap.atlassian.net/browse/CDAP-18885 for screenshot
     CdfStudioLocators.locateDataPipelineTypeDropdownOption(option).click();
-    WaitHelper.waitForElementToBeSelected(CdfStudioLocators.locateDataPipelineTypeDropdownOption(option));
+    WaitHelper.waitForElementToBePresent(CdfStudioLocators.locateDataPipelineTypeSelectedOption(option));
   }
 
   /**
