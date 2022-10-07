@@ -309,7 +309,10 @@ public class CdfStudioActions {
    * Click on the Plugin group title: Sink
    */
   public static void clickSink() {
-    ElementHelper.clickOnElement(CdfStudioLocators.sink);
+    // Check if Sink is not already expanded
+    if (!ElementHelper.isElementDisplayed(CdfStudioLocators.bigQueryObject)) {
+      ElementHelper.clickOnElement(CdfStudioLocators.sink);
+    }
   }
 
   /**
