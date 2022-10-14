@@ -36,7 +36,7 @@ jobs:
             CDAP_GPG_PRIVATE_KEY:cdapio-github-builds/CDAP_GPG_PRIVATE_KEY
 
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: e2e
           ref: ${{ inputs.ref }}
