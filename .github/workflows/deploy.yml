@@ -41,6 +41,14 @@ jobs:
           path: e2e
           ref: ${{ inputs.ref }}
 
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-cdap-e2e-framework-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-cdap-e2e-framework
+
       - name: Import GPG key
         run: |
           echo "$GPG_PRIVATE_KEY" > private.key
