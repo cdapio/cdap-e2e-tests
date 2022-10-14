@@ -25,7 +25,7 @@ import org.openqa.selenium.support.How;
  * Represents Cdf Pipeline Run Page Locators
  */
 public class CdfPipelineRunLocators {
-  @FindBy(xpath = "//div[@data-cy='pipeline-run-btn']//*[contains(@class, 'icon-play')]")
+  @FindBy(xpath = "//button[@data-cy='pipeline-run-btn']")
   public static WebElement run;
 
   @FindBy(xpath = "//div[@data-cy='pipeline-configure-btn']//*[contains(@class, 'configure-icon')]")
