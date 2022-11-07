@@ -910,4 +910,24 @@ public class CdfPluginPropertiesActions {
       enterValueInInputProperty(pluginProperty, envVariableKey);
     }
   }
+
+  /**
+   * Enter Credentials/Authorization values in the Plugin Property (replace)
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   * @param envVariableKey If the value is present in the Environment variables then its value is fetched
+   */
+  public static void replaceValueInInputPropertyFromEnv(String pluginProperty, String envVariableKey) {
+    String envVariableValue = System.getenv(PluginPropertyUtils.pluginProp(envVariableKey));
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+
+    if (envVariableValue != null) {
+      ElementHelper.replaceElementValue(pluginPropertyInput, envVariableValue);
+    } else {
+      replaceValueInInputProperty(pluginProperty, envVariableKey);
+    }
+  }
 }
