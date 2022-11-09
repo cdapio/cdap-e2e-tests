@@ -28,8 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 
 /**
  * Represents SeleniumDriver
@@ -52,6 +54,12 @@ public class SeleniumDriver {
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--disable-dev-shm-usage");
     chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
+    // set default download directory
+    String downloadDir = Paths.get("target").toAbsolutePath().toString() + "/downloads";
+    HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+    chromePrefs.put("profile.default_content_settings.popups", 0);
+    chromePrefs.put("download.default_directory", downloadDir);
+    chromeOptions.setExperimentalOption("prefs", chromePrefs);
     chromeDriver = new ChromeDriver(chromeOptions);
     chromeDriver.manage().window().maximize();
     HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
