@@ -15,11 +15,12 @@
 name: Build e2e tests
 
 on:
-  workflow_run:
-    workflows:
-      - Trigger build
-    types:
-      - completed
+  push:
+    branches: [ develop, release/** ]
+  pull_request:
+    branches: [ develop, release/** ]
+    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -29,8 +30,6 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      # Pinned 1.0.0 version
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
       - uses: actions/checkout@v3
         with:
           repository: data-integrations/google-cloud
@@ -40,7 +39,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           path: e2e
-          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Cache
         uses: actions/cache@v3
         with:
@@ -49,10 +47,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-${{ github.workflow }}
       - name: Run required e2e tests
-        if: ${{ github.event.workflow_run.event != 'workflow_dispatch' && github.event.workflow_run.event != 'push' }}
+        if: ${{ github.event_name != 'workflow_dispatch' && github.event_name != 'push' }}
         run: python3 e2e/src/main/scripts/run_e2e_test.py --testRunner TestRunnerRequired.java --framework yes
       - name: Run all e2e tests
-        if: ${{ github.event.workflow_run.event == 'workflow_dispatch' || github.event.workflow_run.event == 'push' }}
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
         run: python3 e2e/src/main/scripts/run_e2e_test.py --framework yes
       - name: Upload report
         uses: actions/upload-artifact@v3
@@ -72,18 +70,10 @@ jobs:
         with:
           path: ./plugin/target/cucumber-reports
           destination: e2e-tests-cucumber-reports/${{ github.event.repository.name }}/${{ github.ref }}
-      - name: github-status-action
-        uses: Sibz/github-status-action@67af1f4042a5a790681aad83c44008ca6cfab83d
-        if: always()
-        with:
-          authToken: ${{ secrets.GITHUB_TOKEN }}
-          state: success
-          context: Cucumber report
-          sha: ${{ github.event.workflow_run.head_sha }}
 
   maven-deploy:
-    if: ${{ github.event.workflow_run.event == 'push' }}
+    if: ${{ github.event_name == 'push' }}
 #    needs: build TODO: once build is fixed
     uses: ./.github/workflows/deploy.yml
     with:
-      ref: ${{ github.event.workflow_run.head_sha }}
+      ref: ${{ github.sha }}
