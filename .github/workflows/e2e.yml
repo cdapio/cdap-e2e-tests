@@ -35,6 +35,7 @@ jobs:
         with:
           repository: data-integrations/google-cloud
           path: plugin
+          ref: release/0.21
       - name: Checkout e2e test repo
         uses: actions/checkout@v3
         with:
