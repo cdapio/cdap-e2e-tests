@@ -37,6 +37,7 @@ if __name__ == "__main__":
     print("Start the sandbox")
     run_shell_command(f"chmod +x sandbox/{sandbox_dir}/bin/cdap")
     os.system("export JAVA_OPTS=-Xmx24G")
+    os.system("export SPARK_COMPAT=spark3_2.12")
     run_shell_command(f"sandbox/{sandbox_dir}/bin/cdap sandbox start")
    
     

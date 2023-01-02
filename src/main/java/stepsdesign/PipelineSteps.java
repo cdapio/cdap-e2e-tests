@@ -513,6 +513,11 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.overrideServiceAccountDetailsIfProvided();
   }
 
+  @Then("Override Service account details in Wrangler connection page if set in environment variables")
+  public void overrideServiceAccountDetailsInWranglerConnectionPageIfSetInEnvVars() {
+    CdfPluginPropertiesActions.overrideServiceAccountDetailsInWranglerConnectionPageIfProvided();
+  }
+
   @Then("Click on the Browse button inside plugin properties")
   public void clickBrowseButtonInsidePluginProperties() {
     CdfPluginPropertiesActions.clickBrowseButton();
