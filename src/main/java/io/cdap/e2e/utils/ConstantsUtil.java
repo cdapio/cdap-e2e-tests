@@ -75,7 +75,7 @@ public class ConstantsUtil {
   /**
    * PAGE_LOAD_TIMEOUT_SECONDS: To be used as Selenium driver's default page load timeout
    */
-  public static final int PAGE_LOAD_TIMEOUT_SECONDS = 120;
+  public static final int PAGE_LOAD_TIMEOUT_SECONDS = 50;
   /**
    * SMALL_TIMEOUT_SECONDS: To be used as a small static wait (only if needed)
    */
