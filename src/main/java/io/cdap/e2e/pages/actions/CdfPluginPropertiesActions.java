@@ -415,6 +415,8 @@ public class CdfPluginPropertiesActions {
       index++;
     }
 
+    logger.info("Actual input schema: " + actualInputSchema + "  Output schema: " + outputSchema);
+
     Assert.assertTrue("Schema should match", actualInputSchema.equals(outputSchema));
   }
 
