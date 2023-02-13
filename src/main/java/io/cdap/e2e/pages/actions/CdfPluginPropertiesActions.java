@@ -415,6 +415,16 @@ public class CdfPluginPropertiesActions {
       index++;
     }
 
+    logger.info("Actual Input Schema: ");
+    for (String key : actualInputSchema.keySet()) {
+      logger.info(key + " " + actualInputSchema.get(key));
+    }
+
+    logger.info("Expected Output schema: ");
+    for (String key : outputSchema.keySet()) {
+      logger.info(key + " " + outputSchema.get(key));
+    }
+
     Assert.assertTrue("Schema should match", actualInputSchema.equals(outputSchema));
   }
 
