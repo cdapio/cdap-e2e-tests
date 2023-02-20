@@ -109,7 +109,12 @@ public class CdfPipelineRunAction {
    * Wait till the Pipeline's status changes (from Running) to either Succeeded, Failed or Stopped within the
    * Timeout: {@link ConstantsUtil#PIPELINE_RUN_TIMEOUT_SECONDS}
    */
-  public static void waitTillPipelineRunCompletes() {
+  public static void waitTillPipelineRunCompletes() throws InterruptedException {
+    do {
+      PageHelper.refreshCurrentPage();
+      Thread.sleep(1000 * 60);
+    } while (CdfPipelineRunAction.isRunning());
+
     SeleniumDriver.getWaitDriver(ConstantsUtil.PIPELINE_RUN_TIMEOUT_SECONDS).until(ExpectedConditions.or(
       ExpectedConditions.visibilityOf(CdfPipelineRunLocators.succeededStatus),
       ExpectedConditions.visibilityOf(CdfPipelineRunLocators.failedStatus),
