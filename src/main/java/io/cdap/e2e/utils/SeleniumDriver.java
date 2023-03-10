@@ -54,6 +54,7 @@ public class SeleniumDriver {
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--disable-dev-shm-usage");
     chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
+    chromeOptions.addArguments("--remote-allow-origins=*");
     // set default download directory
     String downloadDir = Paths.get("target").toAbsolutePath().toString() + "/downloads";
     HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
