@@ -61,6 +61,10 @@ process = subprocess.Popen(sandbox_start_cmd, shell=True, env=my_env)
 process.communicate()
 assert process.returncode == 0
 
+# Setting the task executor memory
+res = requests.put('http://localhost:11015/v3/preferences', headers= {'Content-Type': 'application/json'}, json={'task.executor.system.resources.memory': 4096})
+assert res.ok or print(res.text)
+
 module_to_build = ""
 if args.module:
     module_to_build = args.module
