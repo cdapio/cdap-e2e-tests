@@ -5,7 +5,7 @@ modules:
     artifact_name: 'postgresql'
     artifact_version: '9.2-1002-jdbc4'
   mssql-plugin:
-    url: https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/8.2.1.jre8/mssql-jdbc.8.2.1.jre8.jar
+    url: https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/8.2.1.jre8/mssql-jdbc-8.2.1.jre8.jar
     driver_prop: '[{"name":"sqlserver","type":"jdbc","className":"com.microsoft.sqlserver.jdbc.SQLServerDriver","description":"Plugin for Microsoft JDBC driver 8.2 for SQL Server"}]'
     artifact_name: 'mssql-jdbc'
     artifact_version: '8.2.1.jre8'
