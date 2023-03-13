@@ -5,10 +5,10 @@ modules:
     artifact_name: 'postgresql'
     artifact_version: '9.2-1002-jdbc4'
   mssql-plugin:
-    url: https://ida.fel.cvut.cz/maven/com/microsoft/sqlserver/sqljdbc42/6.0.8112/sqljdbc42-6.0.8112.jar
-    driver_prop: '[{"name":"sqlserver42","type":"jdbc","className":"com.microsoft.sqlserver.jdbc.SQLServerDriver","description":"Plugin for Microsoft JDBC driver 6.0 for SQL Server"}]'
-    artifact_name: 'sqljdbc42'
-    artifact_version: '6.0.8112'
+    url: https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/8.2.1.jre8/mssql-jdbc.8.2.1.jre8.jar
+    driver_prop: '[{"name":"sqlserver","type":"jdbc","className":"com.microsoft.sqlserver.jdbc.SQLServerDriver","description":"Plugin for Microsoft JDBC driver 8.2 for SQL Server"}]'
+    artifact_name: 'mssql-jdbc'
+    artifact_version: '8.2.1.jre8'
   mysql-plugin:
     url: https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.25/mysql-connector-java-8.0.25.jar
     driver_prop: '[{"name":"mysql","type":"jdbc","className":"com.mysql.jdbc.Driver","description":"Plugin for the MySQL JDBC driver"}]'
