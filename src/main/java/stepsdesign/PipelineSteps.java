@@ -639,4 +639,24 @@ public class PipelineSteps implements CdfHelper {
   public void selectPipelineAction(String action) {
     CdfPipelineRunAction.selectPipelineAction(action);
   }
+
+  @Then("Click on the Add Connection button")
+  public void clickOnAddConnectionButton() {
+    CdfConnectionActions.clickAddConnectionButton();
+  }
+
+  @Then("Click on the Test Connection button")
+  public void clickOnTestConnectionButton () {
+    CdfConnectionActions.clickTestConnectionButton();
+  }
+
+  @Then("Click on the Create button")
+  public void clickOnCreateButton () {
+    CdfConnectionActions.clickCreateButton();
+  }
+
+  @Then("Click on the  Browse Connection Button")
+  public void clickOnBrowseConnectionButton () {
+    CdfConnectionActions.clickBrowseConnectionButton();
+  }
 }
