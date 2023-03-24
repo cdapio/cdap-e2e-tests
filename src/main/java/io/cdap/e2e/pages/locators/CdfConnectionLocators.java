@@ -38,6 +38,18 @@ public class CdfConnectionLocators {
   @FindBy(how = How.XPATH, using = "//*[@data-cy='connection-browser-search']//input")
   public static WebElement searchDirectoryInput;
 
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Add Connection')]")
+  public static WebElement addConnectionButton;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='connection-test-button']")
+  public static WebElement connectionTestButton;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='connection-submit-button']")
+  public static WebElement createConnection;
+
+  @FindBy(how = How.XPATH, using = "//button[@data-cy='connection']")
+  public static WebElement browseConnection;
+
   public static WebElement locateSelectButtonOfConnectionDataRow(String dataName) {
     return SeleniumDriver.getDriver().findElement(
       By.xpath("//*[text()='" + dataName + "']/ancestor::a//span[text()='Select']/parent::button"));
@@ -82,5 +94,4 @@ public class CdfConnectionLocators {
       By.xpath("//*[@data-cy='connection-" + connectionType + "-" + connectionName + "']" +
                  "/parent::a/following-sibling::div//li[text()='" + action + "']"));
   }
-
 }

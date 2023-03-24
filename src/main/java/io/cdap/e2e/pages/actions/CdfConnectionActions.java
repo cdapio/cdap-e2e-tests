@@ -333,4 +333,32 @@ public class CdfConnectionActions {
       , !ElementHelper.isElementDisplayed(CdfConnectionLocators.locatorOfConnection(connectionType,
                                                                                     actualConnectionName), 5));
   }
+
+  /**
+   * Click on the Add Connection Button
+   */
+  public static void clickAddConnectionButton() {
+    ElementHelper.clickOnElement(CdfConnectionLocators.addConnectionButton);
+  }
+
+  /**
+   * Click on the Test Connection Button
+   */
+  public static void clickTestConnectionButton() {
+    ElementHelper.clickOnElement(CdfConnectionLocators.connectionTestButton);
+  }
+
+  /**
+   * Click on the Create Connection Button
+   */
+  public static void clickCreateButton() {
+    ElementHelper.clickOnElement(CdfConnectionLocators.createConnection);
+  }
+
+  /**
+   * Click on the Browse Connection Button
+   */
+  public static void clickBrowseConnectionButton() {
+    ElementHelper.clickOnElement(CdfConnectionLocators.browseConnection);
+  }
 }
