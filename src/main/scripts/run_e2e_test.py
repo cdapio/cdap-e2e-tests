@@ -40,7 +40,7 @@ args=parser.parse_args()
 
 # Start CDAP sandbox
 print("Downloading CDAP sandbox")
-sandbox_url = "https://github.com/cdapio/cdap-build/releases/download/v6.9.0-SNAPSHOT/cdap-sandbox-6.9.0-SNAPSHOT.zip"
+sandbox_url = "https://github.com/cdapio/cdap-build/releases/download/v6.9.1-SNAPSHOT/cdap-sandbox-6.9.1-SNAPSHOT.zip"
 sandbox_dir = sandbox_url.split("/")[-1].split(".zip")[0]
 r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
