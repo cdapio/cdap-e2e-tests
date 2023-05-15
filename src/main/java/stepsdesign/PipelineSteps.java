@@ -655,8 +655,8 @@ public class PipelineSteps implements CdfHelper {
     CdfConnectionActions.clickCreateButton();
   }
 
-  @Then("Click on the  Browse Connection Button")
-  public void clickOnBrowseConnectionButton () {
-    CdfConnectionActions.clickBrowseConnectionButton();
+  @Then("Verify the invalid connection error message: {string} on the footer")
+  public void verifyInvalidConnectionErrorMessage(String errorMessageLocation) {
+    CdfConnectionActions.verifyConnectionErrorMessage(errorMessageLocation);
   }
 }
