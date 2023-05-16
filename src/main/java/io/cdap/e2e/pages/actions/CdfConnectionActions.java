@@ -356,9 +356,14 @@ public class CdfConnectionActions {
   }
 
   /**
-   * Click on the Browse Connection Button
+   * Verify Connection Error message
+   *
+   * @param errorMessageLocation Expected Error message location
    */
-  public static void clickBrowseConnectionButton() {
-    ElementHelper.clickOnElement(CdfConnectionLocators.browseConnection);
+  public static void verifyConnectionErrorMessage(String errorMessageLocation) {
+    String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessageLocation);
+    WaitHelper.waitForElementToBeDisplayed(CdfConnectionLocators.locateConnectionFooterError);
+    AssertionHelper.verifyElementDisplayed(CdfConnectionLocators.locateConnectionFooterError);
+    AssertionHelper.verifyElementContainsText(CdfConnectionLocators.locateConnectionFooterError, expectedErrorMessage);
   }
 }
