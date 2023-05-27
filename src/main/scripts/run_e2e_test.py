@@ -46,6 +46,15 @@ r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./sandbox")
 
+# Download latest chrome version
+print("Downloading Chrome")
+chrome_url = f"https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+file_name = "chrome.deb"
+urllib.request.urlretrieve(chrome_url, file_name)
+subprocess.run(["sudo", "dpkg", "-i", file_name])
+subprocess.run(["sudo", "apt", "install", "-f", "-y"])
+
+
 print("Installing gcs connector jar")
 gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.5.jar"
 gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.5.jar"
