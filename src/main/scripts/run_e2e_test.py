@@ -51,9 +51,8 @@ print("Downloading Chrome")
 chrome_url = f"https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
 file_name = "chrome.deb"
 urllib.request.urlretrieve(chrome_url, file_name)
-subprocess.run(["sudo", "dpkg", "-i", file_name])
-subprocess.run(["sudo", "apt", "install", "-f", "-y"])
-
+run_shell_command("sudo dpkg -i chrome.deb")
+run_shell_command("sudo apt-get install -f")
 
 print("Installing gcs connector jar")
 gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.5.jar"
