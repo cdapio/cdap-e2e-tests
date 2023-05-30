@@ -40,7 +40,7 @@ args=parser.parse_args()
 
 # Start CDAP sandbox
 print("Downloading CDAP sandbox")
-sandbox_url = "https://github.com/cdapio/cdap-build/releases/download/v6.9.1-SNAPSHOT/cdap-sandbox-6.9.1-SNAPSHOT.zip"
+sandbox_url = "https://github.com/cdapio/cdap-build/releases/download/latest/cdap-sandbox-6.10.0-SNAPSHOT.zip"
 sandbox_dir = sandbox_url.split("/")[-1].split(".zip")[0]
 r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
@@ -59,6 +59,12 @@ sandbox_start_cmd = "sandbox/" + sandbox_dir + "/bin/cdap sandbox restart"
 process = subprocess.Popen(sandbox_start_cmd, shell=True, env=my_env)
 process.communicate()
 assert process.returncode == 0
+
+print("Checking if sandbox is accessible on UI")
+url = "http://localhost:11011"
+response = urllib.request.urlopen(url)
+text = response.read().decode('utf-8')
+print(text)
 
 # Setting the task executor memory
 res = requests.put('http://localhost:11015/v3/preferences', headers= {'Content-Type': 'application/json'}, json={'task.executor.system.resources.memory': 4096})
