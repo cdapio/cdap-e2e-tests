@@ -115,4 +115,13 @@ public class CdfBigQueryPropertiesLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='clusteringOrder']//*[@data-cy='key']/input")
   public static WebElement clusteringOrder;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='relationTableKey']//*[@data-cy='key']/input")
+  public static WebElement sinkTableKey;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='dedupeBy']//*[@data-cy='key']/input")
+  public static WebElement sinkDedupeKey;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-cy='dedupeBy']//*[@data-cy='value']")
+  public static WebElement dedupeFunctionName;
 }

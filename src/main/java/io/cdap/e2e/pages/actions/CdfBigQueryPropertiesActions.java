@@ -17,6 +17,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
+import io.cdap.e2e.pages.locators.CdfPluginPropertiesLocators;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 
@@ -128,5 +129,18 @@ public class CdfBigQueryPropertiesActions {
 
   public static void enterViewMaterializationDataset(String viewDataset) {
     ElementHelper.sendKeys(CdfBigQueryPropertiesLocators.viewMaterializationDataset, viewDataset);
+  }
+
+  public static void enterTableKey(String tableKey) {
+    ElementHelper.sendKeys(CdfBigQueryPropertiesLocators.sinkTableKey, tableKey);
+  }
+
+  public static void enterDedupeByKey(String dedupeKey) {
+    ElementHelper.sendKeys(CdfBigQueryPropertiesLocators.sinkDedupeKey, dedupeKey);
+  }
+
+  public static void selectDedupeByFunction(String function) {
+    ElementHelper.selectDropdownOption(CdfBigQueryPropertiesLocators.dedupeFunctionName,
+                                       CdfPluginPropertiesLocators.locateDropdownListItem(function));
   }
 }
