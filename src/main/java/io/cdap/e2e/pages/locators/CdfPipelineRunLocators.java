@@ -31,7 +31,8 @@ public class CdfPipelineRunLocators {
   @FindBy(xpath = "//div[@data-cy='pipeline-configure-btn']//*[contains(@class, 'configure-icon')]")
   public static WebElement configure;
 
-  @FindBy(xpath = "//div[contains(@class, 'pipeline-stop-btn')]//*[contains(@class, 'icon-stop')]")
+  @FindBy(xpath = "//div[contains(@class, 'pipeline-action-container pipeline-stop-container')]" +
+    "//*[contains(@class, 'icon-stop')]")
   public static WebElement stop;
 
   @FindBy(xpath = "//span[contains(@class, 'run-status-bubble')]//*[contains(@class, 'icon-circle')]")
