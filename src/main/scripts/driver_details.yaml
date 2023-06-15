@@ -19,3 +19,13 @@ modules:
     driver_prop: '[{"name":"oracle","type":"jdbc","className":"oracle.jdbc.driver.OracleDriver","description":"Plugin for the Oracle 12c JDBC driver"}]'
     artifact_name: 'ojdbc8'
     artifact_version: '12.2.0.1'
+  cloudsql-mysql:
+    url: https://repo1.maven.org/maven2/io/cdap/plugin/cloudsql-mysql-plugin/1.10.1/cloudsql-mysql-plugin-1.10.1.jar
+    driver_prop: '[{"name":"cloudsql-mysql","type":"jdbc","className":"com.mysql.jdbc.Driver","description":"Plugin for the CloudSQL MySQL JDBC driver"}]'
+    artifact_name: 'cloudsql-mysql-plugin'
+    artifact_version: '1.10.1'
+  cloudsql-postgresql:
+    url: https://repo1.maven.org/maven2/io/cdap/plugin/cloudsql-postgresql-plugin/1.10.1/cloudsql-postgresql-plugin-1.10.1.jar
+    driver_prop: '[{"name":"cloudsql-postgresql","type":"jdbc","className":"org.postgresql.Driver","description":"Plugin for the CloudSQL PostgreSQL JDBC driver"}]'
+    artifact_name: 'cloudsql-postgresql-plugin'
+    artifact_version: '1.10.1'
