@@ -265,4 +265,19 @@ public class CdfStudioLocators {
   @Deprecated
   @FindBy(how = How.XPATH, using = "//*[@data-cy='plugin-validation-error-msg']")
   public static WebElement pluginValidationErrorMsg;
+
+  @FindBy(how = How.XPATH, using = "//img[@id='resource-center-btn']")
+  public static WebElement addEntityButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@id='import-pipeline']")
+  public static WebElement importPipelineButton;
+
+  public static By fixAllButton()  {
+    return By.xpath("//button[@data-cy='fix-all-btn']");
+  }
+
+  public static WebElement importPipelineInputTag() {
+    return SeleniumDriver.getDriver().findElement(By.xpath
+      ("//input[@id='resource-center-import-pipeline']"));
+  }
 }
