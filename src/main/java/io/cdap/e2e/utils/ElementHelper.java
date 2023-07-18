@@ -16,6 +16,7 @@
 
 package io.cdap.e2e.utils;
 
+import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -119,6 +120,31 @@ public class ElementHelper {
    */
   public static void clickIfDisplayed(By locator) {
     clickIfDisplayed(locator, ConstantsUtil.SMALL_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Click on the WebElement if it was displayed within a small timeout: {@link ConstantsUtil#SMALL_TIMEOUT_SECONDS}
+   *
+   * If the next element which we are waiting for to be displayed is not displayed yet that means we were not able to
+   * click on the desired element, so we will retry to click on the element we wanted to click on.
+   *
+   * @param locatorToClick Locator of the WebElement we want to click on.
+   * @param timeOutInSeconds small timeout to wait before clicking.
+   * @param locatorToWaitFor Locator of the WebElement we want to be displayed next.
+   */
+  public static void clickIfDisplayed(By locatorToClick, long timeOutInSeconds, By locatorToWaitFor)
+    throws InterruptedException {
+    clickIfDisplayed(locatorToClick, timeOutInSeconds);
+
+    // If the next webElement is not displayed we will click on the desired element again.
+    if (!isElementDisplayed(locatorToWaitFor, timeOutInSeconds)) {
+      RetryUtils.retry(ConstantsUtil.SMALL_TIMEOUT_SECONDS, ConstantsUtil.MEDIUM_TIMEOUT_SECONDS, 2,
+        () -> {
+          logger.info("Retry : Click on " + locatorToClick);
+          clickIfDisplayed(locatorToClick);
+          return isElementDisplayed(locatorToWaitFor, timeOutInSeconds);
+        });
+    }
   }
 
   /**

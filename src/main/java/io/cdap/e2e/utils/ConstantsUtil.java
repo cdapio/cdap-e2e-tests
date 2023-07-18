@@ -34,6 +34,10 @@ public class ConstantsUtil {
   public static final String GPAZWRD = "gPassword";
   public static final String HDFUSERNAME = "hdfUsername";
   public static final String HDFPAZWRD = "hdfPassword";
+  public static final String CDFUSERNAME = "cdfUsername";
+  public static final String CDFPASSWORD = "cdfPassword";
+  public static final String TESTONCDF = "testOnCdf";
+  public static final String CDF_TEST_ACCOUNT_NAME = "CloudDataFution Automation";
   public static final String CDFURL = "cdfurl";
   public static final String WRANGLER_CONNECTIONS_URL = "cdfConnectionsUrl";
   public static final String REPLICATION_URL = "replicationUrl";
@@ -82,6 +86,10 @@ public class ConstantsUtil {
    */
   public static final int SMALL_TIMEOUT_SECONDS = 5;
   /**
+   * MEDIUM_TIMEOUT_SECONDS: To be used as a medium static wait (only if needed)
+   */
+  public static final int MEDIUM_TIMEOUT_SECONDS = 10;
+  /**
    * PIPELINE_DEPLOY_TIMEOUT_SECONDS: To be used as a timeout for deploying the pipeline
    */
   public static final int PIPELINE_DEPLOY_TIMEOUT_SECONDS = 120;
@@ -94,4 +102,6 @@ public class ConstantsUtil {
    * PIPELINE_RUN_TIMEOUT_SECONDS: To be used as a timeout for Pipeline Runs
    */
   public static final int PIPELINE_RUN_TIMEOUT_SECONDS = 900;
+
+  public static final int PIPELINE_REFRESH_TIMEOUT_SECONDS = 120;
 }

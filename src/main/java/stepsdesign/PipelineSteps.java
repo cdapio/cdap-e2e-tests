@@ -387,7 +387,7 @@ public class PipelineSteps implements CdfHelper {
   }
 
   @Then("Wait till pipeline is in running state")
-  public void waitTillPipelineIsInRunningState() {
+  public void waitTillPipelineIsInRunningState() throws Exception {
     CdfPipelineRunAction.waitTillPipelineRunCompletes();
   }
 
