@@ -47,8 +47,8 @@ z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./sandbox")
 
 print("Installing gcs connector jar")
-gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.5.jar"
-gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.5.jar"
+gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.9.jar"
+gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.9.jar"
 urllib.request.urlretrieve(gcs_jar_url, gcs_jar_fname)
 
 print("Start the sandbox")
