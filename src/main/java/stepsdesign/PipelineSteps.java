@@ -659,4 +659,60 @@ public class PipelineSteps implements CdfHelper {
   public void verifyInvalidConnectionErrorMessage(String errorMessageLocation) {
     CdfConnectionActions.verifyConnectionErrorMessage(errorMessageLocation);
   }
+
+  @Given("Open DataFusion Project with replication to configure replication job")
+  public void openDataFusionProjectWithReplicationToConfigureReplicationJob() throws IOException, InterruptedException {
+    openCdf();
+    CdfPluginPropertiesActions.openCdfWithReplication();
+  }
+
+  @When("Enter input plugin property: {string} with pipelineName")
+  public void enterInputPluginPropertyWithPipelineName(String pluginProperty) {
+    CdfPluginPropertiesActions.enterInputPropertyWithValue(pluginProperty);
+  }
+
+  @Then("Click on the {string} button in replication to navigate")
+  public void clickOnTheButtonInReplicationMode(String button) throws InterruptedException {
+    CdfPluginPropertiesActions.clickOnPageButton(button);
+  }
+
+  @When("Select Source plugin: {string} from the replication plugins list")
+  public void selectSourcePluginFromTheReplicationPluginsList(String pluginName) {
+    CdfPluginPropertiesActions.selectReplicationSourcePlugin(pluginName);
+  }
+
+  @Then("Deploy the replication pipeline")
+  public void deployTheReplicationPipeline() {
+    CdfPluginPropertiesActions.deployReplicationPipeline();
+  }
+
+  @Then("Run the replication Pipeline")
+  public void runTheReplicationPipeline() {
+    CdfPluginPropertiesActions.runTheReplicationPipeline();
+  }
+
+  @Then("Open the Advanced logs")
+  public void openTheAdvancedLogs() {
+    CdfPluginPropertiesActions.openAdvancedLogs();
+  }
+
+  @Then("Close the replication pipeline logs and stop the pipeline")
+  public void closeTheReplicationPipelineLogsAndStopThePipeline() {
+    CdfPluginPropertiesActions.closeTheReplicationPipelineLogsAndStopThePipeline();
+  }
+
+  @Then("Verify that the Plugin is displaying an error message: {string}")
+  public void verifyThatThePluginIsDisplayingAnErrorMessage(String errorMessage) {
+    CdfPluginPropertiesActions.verifyErrorMessage(errorMessage);
+  }
+
+  @Then("Wait till the Review Assessment page is loaded in replication")
+  public void waitTillTheReviewAssessmentPageIsLoadedInReplication() {
+    CdfPluginPropertiesActions.waitTillTheReviewAssessmentPageLoaded();
+  }
+
+  @Then("Wait till the Configure Advanced Properties page is loaded in replication")
+  public void waitTillTheConfigureAdvancedPropertiesPageIsLoadedInReplication() {
+    CdfPluginPropertiesActions.waitTillTheConfigureAdvancedPropertiesPageLoaded();
+  }
 }

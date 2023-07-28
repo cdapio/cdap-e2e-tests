@@ -27,12 +27,15 @@ import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +46,7 @@ import java.util.Map;
  */
 public class CdfPluginPropertiesActions {
   private static final Logger logger = LoggerFactory.getLogger(CdfPluginPropertiesActions.class);
+  private static String parentWindow = StringUtils.EMPTY;
 
   static {
     SeleniumHelper.getPropertiesLocators(CdfPluginPropertiesLocators.class);
@@ -986,5 +990,117 @@ public class CdfPluginPropertiesActions {
     } else {
       replaceValueInInputProperty(pluginProperty, envVariableKey);
     }
+  }
+
+  /**
+   * Click on the Page Navigation button inside Plugin's properties page
+   *
+   * @param button ButtonName
+   */
+  public static void clickOnPageButton(String button) {
+    WaitHelper.waitForElementToBeClickable(CdfPluginPropertiesLocators.locateButton(button),
+                                           ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locateButton(button));
+  }
+
+  /**
+   * Select Source Plugin from the Replication list
+   *
+   * @param pluginName PluginName
+   */
+  public static void selectReplicationSourcePlugin(String pluginName) {
+    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locateSourcePluginNameInList(pluginName));
+  }
+
+  /**
+   * Click on Deploy the Replication pipeline
+   */
+  public static void deployReplicationPipeline() {
+      ElementHelper.clickOnElement(CdfPluginPropertiesLocators.deployReplicationPipeline);
+    }
+
+  /**
+   * Start the replication pipeline
+   */
+  public static void startReplicationPipeline() {
+    ElementHelper.clickIfDisplayed(CdfPluginPropertiesLocators.start, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Start the replication pipeline and Check for the pipeline status is running
+   */
+  public static void runTheReplicationPipeline() {
+    startReplicationPipeline();
+    WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.running);
+  }
+
+  /**
+   * Open Advanced logs while pipeline is in running state
+   */
+  public static void openAdvancedLogs() {
+    CdfPluginPropertiesLocators.logs.click();
+    parentWindow = SeleniumDriver.getDriver().getWindowHandle();
+    ArrayList<String> tabs = new ArrayList(SeleniumDriver.getDriver().getWindowHandles());
+    SeleniumDriver.getDriver().switchTo().window(tabs.get(tabs.indexOf(parentWindow) + 1));
+    CdfPluginPropertiesLocators.advancedLogs.click();
+  }
+
+  /**
+   * Close the replication pipeline logs and stop the pipeline
+   */
+  public static void closeTheReplicationPipelineLogsAndStopThePipeline() {
+    SeleniumDriver.getDriver().switchTo().window(parentWindow);
+    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.stop);
+  }
+
+  /**
+   * Verify the Error message displayed on the header/top of the Plugin Properties page in replication using the Error
+   * message location in the .properties file {@link ConstantsUtil#DEFAULT_ERROR_PROPERTIES_FILE}
+   *
+   * @param errorMessage Expected error message location
+   */
+  public static void verifyErrorMessage(String errorMessage) {
+      String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessage);
+      WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.rowError);
+      AssertionHelper.verifyElementDisplayed(CdfPluginPropertiesLocators.rowError);
+      AssertionHelper.verifyElementContainsText(CdfPluginPropertiesLocators.rowError, expectedErrorMessage);
+  }
+
+  /**
+   * Check whether Review Assessment Page is loaded completely
+   */
+  public static void waitTillTheReviewAssessmentPageLoaded() {
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfPluginPropertiesLocators.reviewAssessment(),
+                                                     ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Check whether Configure Advanced Properties Page is loaded completely
+   */
+  public static void waitTillTheConfigureAdvancedPropertiesPageLoaded() {
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfPluginPropertiesLocators.configureProperties(),
+                                                     ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+  }
+
+  /**
+   * Enter value in the Plugin Property (input)
+   *
+   * @param pluginProperty @data-cy attribute value of Plugin Property.
+   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                       then its data-cy is fetched from it
+   *                       else pluginProperty is used as it is.
+   */
+  public static void enterInputPropertyWithValue(String pluginProperty) {
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    String pipelineName = "TestPipeline-" + RandomStringUtils.randomAlphanumeric(10);
+    ElementHelper.sendKeys(pluginPropertyInput, pipelineName);
+  }
+
+  /**
+   * Replace Cdf Url with Replication Url
+   */
+  public static void openCdfWithReplication() throws IOException {
+    SeleniumDriver.getDriver().get(SeleniumDriver.getDriver().getCurrentUrl().replace(
+    SeleniumHelper.readParameters(ConstantsUtil.CDFURL), SeleniumHelper.readParameters(ConstantsUtil.REPLICATION_URL)));
   }
 }
