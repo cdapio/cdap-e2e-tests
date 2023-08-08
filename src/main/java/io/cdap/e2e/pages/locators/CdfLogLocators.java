@@ -60,4 +60,9 @@ public class CdfLogLocators {
       "//following-sibling::div[@data-cy='log-message'][contains(normalize-space(.), \"" + logMessage + "\")]";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
+
+  public static WebElement locateLogLevel(String logLevel) {
+    String xpath = "//div[@data-cy='log-viewer-row']//div[normalize-space(text()) ='" + logLevel + "']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
 }
