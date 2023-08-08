@@ -732,4 +732,14 @@ public class PipelineSteps implements CdfHelper {
     pipelineName = "TestPipeline-" + RandomStringUtils.randomAlphanumeric(10);
     CdfStudioActions.fillPipelineNameAndSave(pipelineName);
   }
+
+  @Then("Click on the Add Button of the property: {string} with value:")
+  public void enterKeyPropertyWithValue(String pluginProperty, DataTable table) {
+    List<String> listOfValue = table.asList();
+    List<String> keyValue = new ArrayList<>();
+    for (String key : listOfValue) {
+      keyValue.add(PluginPropertyUtils.pluginProp(key));
+    }
+    CdfPluginPropertiesActions.clickAddButtonAndEnterPropertyValues(pluginProperty, keyValue);
+  }
 }

@@ -243,4 +243,19 @@ public class CdfPluginPropertiesLocators {
   public static By configureProperties() {
     return By.xpath("//h3[contains(text(), 'Configure advanced properties')]");
   }
+
+  public static WebElement locateValueAddButton(String pluginProperty, int index) {
+    List<WebElement> valueList = SeleniumDriver.getDriver().findElements(By.xpath
+      ("//*[@data-cy='" + pluginProperty + "']//input"));
+    return valueList.get(index);
+  }
+
+  public static WebElement locateKeyAddButton(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement
+      (By.xpath("//*[@data-cy='" + pluginProperty + "']//button[@data-cy='add-row']"));
+  }
+  public static WebElement locateRemoveKeyButton(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement
+      (By.xpath("//*[@data-cy='" + pluginProperty + "']//button[@data-cy='remove-row']"));
+  }
 }
