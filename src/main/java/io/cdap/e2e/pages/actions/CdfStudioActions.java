@@ -519,10 +519,9 @@ public class CdfStudioActions {
   }
 
   /**
-   * Clicks on the "Fix All" button if displayed (available in CDAP 6.10.0+).
+   * Clicks on the "Fix All" button if displayed.
    */
-
-  public static void clickOnFixAllButton() {
+  public static void clickOnFixAllButtonIfDisplayed() {
     ElementHelper.clickIfDisplayed(CdfStudioLocators.fixAllButton());
   }
 
@@ -531,9 +530,8 @@ public class CdfStudioActions {
    * @param filePath The path to the file containing the pipeline to be imported.
    **/
   public static void importPipeline(String filePath) throws URISyntaxException {
-    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.importPipelineButton,
-                                           ConstantsUtil.IMPLICIT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.importPipelineButton);
     FileImportUtil.uploadFile(CdfStudioLocators.importPipelineInputTag(), filePath);
-    clickOnFixAllButton();
+    clickOnFixAllButtonIfDisplayed();
   }
 }
