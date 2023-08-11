@@ -119,14 +119,14 @@ public class CdfConnectionActions {
 
   /**
    * Select data row for connection
-   *
+   * <p>
    * Based on the connection type - table with rows containing data (i.e.bucket, dataset, table, directory names etc.)
    * will be displayed.
    * To select data for the connection use this method with its name as parameter.
    * Example : For GCS pass actual bucket name as parameter.
    */
   private static void selectConnectionDataRow(String dataRow) {
-    waitTillConnectionDataLoadingCompletes (ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.sendKeys(CdfConnectionLocators.searchDirectoryInput, dataRow);
     WaitHelper.waitForTextToBePresentInElementValue(CdfConnectionLocators.searchDirectoryInput, dataRow);
     int attempts = 0;
@@ -146,14 +146,12 @@ public class CdfConnectionActions {
 
   /**
    * Select data for connection using name
-   *
+   * <p>
    * Example :
    * For GCS, table with bucket names will be displayed.
    * To select bucket for the connection use this method with bucket name as parameter.
-   *
    * Once bucket name is selected - in next table all directories inside bucket will be displayed.
    * To select directory use this method with directory name as parameter.
-   *
    *
    * @param dataName If dataName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a key
    *                 then actual dataName to select is fetched from it
@@ -169,7 +167,7 @@ public class CdfConnectionActions {
 
   /**
    * Select data rows for connection traversing through directories using provided path
-   *
+   * <p>
    * Example GCS dataPath: "testdata/GCS_CSV_TEST.csv"
    * First "testdata" directory inside bucket will be selected
    * and then in next datatable, file "GCS_CSV_TEST.csv" will be selected.
@@ -191,11 +189,11 @@ public class CdfConnectionActions {
 
   /**
    * Click SELECT button inside connection data row using name
-   *
+   * <p>
    * Example :
    * For BQ, table with dataset names will be displayed.
    * To click on SELECT button of dataset row use this method with dataset name as parameter.
-   *
+   * <p>
    * Once SELECT button is clicked, steps to select source/target BQ table will be skipped.
    *
    * @param dataName If dataName is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a key
@@ -331,7 +329,7 @@ public class CdfConnectionActions {
       ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     Assert.assertTrue("Connection " + connectionName + " should not be present"
       , !ElementHelper.isElementDisplayed(CdfConnectionLocators.locatorOfConnection(connectionType,
-                                                                                    actualConnectionName), 5));
+                                                                      actualConnectionName), 5));
   }
 
   /**

@@ -21,6 +21,7 @@ import io.cdap.e2e.pages.locators.CdfStudioLocators;
 import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
+import io.cdap.e2e.utils.FileImportUtil;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
@@ -30,6 +31,8 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.URISyntaxException;
 
 /**
  * Represents Cdf Studio Page Actions
@@ -280,6 +283,7 @@ public class CdfStudioActions {
 
   /**
    * Verify the Pipeline Preview Run's status in logs
+   *
    * @param status
    */
   public static void verifyPipelinePreviewStatusInLogs(String status) {
@@ -498,11 +502,36 @@ public class CdfStudioActions {
 
   /**
    * Click on the element and move.
+   *
    * @param pluginName plugin title.
-   * @param xOffset horizontal move offset.
-   * @param yOffset vertical move offset.
+   * @param xOffset    horizontal move offset.
+   * @param yOffset    vertical move offset.
    */
   public static void movePlugin(String pluginName, int xOffset, int yOffset) {
     ElementHelper.dragAndDropByOffset(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), xOffset, yOffset);
+  }
+
+  /**
+   * Click on the Upload Button
+   */
+  public static void clickOnAddEntityButton() {
+    ElementHelper.clickOnElement(CdfStudioLocators.addEntityButton);
+  }
+
+  /**
+   * Clicks on the "Fix All" button if displayed.
+   */
+  public static void clickOnFixAllButtonIfDisplayed() {
+    ElementHelper.clickIfDisplayed(CdfStudioLocators.fixAllButton());
+  }
+
+  /**
+   * Imports a pipeline from the specified file path.
+   * @param filePath The path to the file containing the pipeline to be imported.
+   **/
+  public static void importPipeline(String filePath) throws URISyntaxException {
+    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.importPipelineButton);
+    FileImportUtil.uploadFile(CdfStudioLocators.importPipelineInputTag(), filePath);
+    clickOnFixAllButtonIfDisplayed();
   }
 }

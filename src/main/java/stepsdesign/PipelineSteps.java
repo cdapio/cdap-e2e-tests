@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -714,5 +715,21 @@ public class PipelineSteps implements CdfHelper {
   @Then("Wait till the Configure Advanced Properties page is loaded in replication")
   public void waitTillTheConfigureAdvancedPropertiesPageIsLoadedInReplication() {
     CdfPluginPropertiesActions.waitTillTheConfigureAdvancedPropertiesPageLoaded();
+  }
+
+  @Then("Click on the Plus Green Button to import the pipelines")
+  public void clickOnPlusGreenButton () {
+    CdfStudioActions.clickOnAddEntityButton();
+  }
+
+  @Then("Select the file for importing the pipeline for the plugin {string}")
+  public void selectFileForImport(String path) throws URISyntaxException {
+    CdfStudioActions.importPipeline(PluginPropertyUtils.pluginProp(path));
+  }
+
+  @Then("Rename the pipeline")
+  public void renameThePipeline() {
+    pipelineName = "TestPipeline-" + RandomStringUtils.randomAlphanumeric(10);
+    CdfStudioActions.fillPipelineNameAndSave(pipelineName);
   }
 }
