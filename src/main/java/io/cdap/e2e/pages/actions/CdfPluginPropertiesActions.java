@@ -1103,4 +1103,23 @@ public class CdfPluginPropertiesActions {
     SeleniumDriver.getDriver().get(SeleniumDriver.getDriver().getCurrentUrl().replace(
     SeleniumHelper.readParameters(ConstantsUtil.CDFURL), SeleniumHelper.readParameters(ConstantsUtil.REPLICATION_URL)));
   }
+
+  /**
+   * Clicks the add button for a given plugin property and enters a list of property values.
+   *
+   * @param pluginProperty The name of the plugin property for which values need to be added.
+   * @param listOfValues   The list of property values to be entered.
+   */
+  public static void clickAddButtonAndEnterPropertyValues(String pluginProperty, List<String> listOfValues) {
+    int totalList = listOfValues.size();
+
+    // Click the "Add" button for the plugin property.
+    for (int keyIndex = 0; keyIndex < totalList - 1; keyIndex++) {
+      CdfPluginPropertiesLocators.locateKeyAddButton(pluginProperty).click();
+    }
+    for (int valueIndex = 0; valueIndex < totalList; valueIndex++) {
+      ElementHelper.sendKeys(CdfPluginPropertiesLocators.locateValueAddButton(pluginProperty, valueIndex),
+                             listOfValues.get(valueIndex));
+    }
+  }
 }
