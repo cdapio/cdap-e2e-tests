@@ -170,6 +170,10 @@ public class PipelineSteps implements CdfHelper {
     CdfPluginPropertiesActions.verifyRequiredPropertyHasNoValueErrorMessage(property);
     CdfPluginPropertiesActions.verifyPluginPropertyInlineErrorMessageColor(property);
   }
+  @Then("Press ESC key to close the joiner fields dropdown")
+  public void pressESCKeyToCloseTheUniqueFieldsDropdown() {
+    CdfPluginPropertiesActions.pressEscapeKey();
+  }
 
   @Then("Verify mandatory property error for below listed properties:")
   public void verifyMandatoryPropertyErrorForListOfProperties(DataTable table) {

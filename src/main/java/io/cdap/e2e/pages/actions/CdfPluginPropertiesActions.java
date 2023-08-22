@@ -31,7 +31,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +47,7 @@ import java.util.Map;
  * Represents Cdf Plugin's Properties page Actions
  */
 public class CdfPluginPropertiesActions {
+
   private static final Logger logger = LoggerFactory.getLogger(CdfPluginPropertiesActions.class);
   private static String parentWindow = StringUtils.EMPTY;
 
@@ -56,13 +59,13 @@ public class CdfPluginPropertiesActions {
   /**
    * Click Macro (M) button of Plugin Property
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    */
   public static void clickMacroButtonOfProperty(String pluginProperty) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
@@ -72,40 +75,42 @@ public class CdfPluginPropertiesActions {
   /**
    * Fill value in the Macro enabled Plugin Property (input)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    * @param argument
    */
   public static void fillValueInMacroEnabledInputProperty(String pluginProperty, String argument) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
     ElementHelper.replaceElementValue(
-      CdfPluginPropertiesLocators.locateMacroInputOfProperty(pluginPropertyDataCyAttribute), "${" + argument + "}");
+        CdfPluginPropertiesLocators.locateMacroInputOfProperty(pluginPropertyDataCyAttribute),
+        "${" + argument + "}");
   }
 
   /**
    * Fill value in the Macro enabled Plugin Property (textarea)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    * @param argument
    */
-  public static void fillValueInMacroEnabledTextareaProperty(String pluginProperty, String argument) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void fillValueInMacroEnabledTextareaProperty(String pluginProperty,
+      String argument) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
     ElementHelper.selectAllTextAndClear(CdfPluginPropertiesLocators
-      .locateMacroTextareaOfProperty(pluginPropertyDataCyAttribute));
+        .locateMacroTextareaOfProperty(pluginPropertyDataCyAttribute));
     ElementHelper.sendKeysToTextarea(
-      CdfPluginPropertiesLocators.locateMacroTextareaOfProperty(pluginPropertyDataCyAttribute),
-      "${" + argument + "}");
+        CdfPluginPropertiesLocators.locateMacroTextareaOfProperty(pluginPropertyDataCyAttribute),
+        "${" + argument + "}");
   }
 
   /**
@@ -319,8 +324,10 @@ public class CdfPluginPropertiesActions {
    * @param fieldType
    * @return
    */
-  public static Boolean scrollDownInOutputSchemaUntilFieldEntry(String fieldName, String fieldType) {
-    By locator = CdfPluginPropertiesLocators.locatorOfOutputSchemaFieldTypeEntry(fieldName, fieldType);
+  public static Boolean scrollDownInOutputSchemaUntilFieldEntry(String fieldName,
+      String fieldType) {
+    By locator = CdfPluginPropertiesLocators.locatorOfOutputSchemaFieldTypeEntry(fieldName,
+        fieldType);
     boolean isFieldTypeEntryPresent = WaitHelper.waitForElementToBeOptionallyPresent(locator, 1);
     int totalSchemaRowsInit = CdfPluginPropertiesLocators.outputSchemaRows.size();
     int totalSchemaRowsUpdated;
@@ -331,7 +338,7 @@ public class CdfPluginPropertiesActions {
     // Output Schema fields are populated.
     while (!isFieldTypeEntryPresent) {
       ElementHelper.scrollToElementUsingJsExecutor(
-        CdfPluginPropertiesLocators.locateOutputSchemaRow(totalSchemaRowsInit - 1));
+          CdfPluginPropertiesLocators.locateOutputSchemaRow(totalSchemaRowsInit - 1));
 
       isFieldTypeEntryPresent = WaitHelper.waitForElementToBeOptionallyPresent(locator, 1);
       totalSchemaRowsUpdated = CdfPluginPropertiesLocators.outputSchemaRows.size();
@@ -349,12 +356,12 @@ public class CdfPluginPropertiesActions {
   /**
    * Verify if the generated Output Schema matches the expected Schema
    *
-   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
-   *                        ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected
+   *                        Schema ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
    */
   public static void verifyOutputSchemaMatchesExpectedSchema(String schemaJsonArray) {
     Map<String, String> expectedOutputSchema =
-      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
+        JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
 
     expectedOutputSchema.forEach((key, value) -> {
       boolean isFieldTypeEntryPresent = scrollDownInOutputSchemaUntilFieldEntry(key, value);
@@ -365,21 +372,23 @@ public class CdfPluginPropertiesActions {
     });
 
     Assert.assertTrue("Schema displayed on UI should match with the expected Schema",
-      getOutputSchema().equals(expectedOutputSchema));
+        getOutputSchema().equals(expectedOutputSchema));
   }
 
   /**
    * Verify Output Schema for the Expected Schema of the Hierarchical Field
    *
    * @param fieldName       Hierarchical Field
-   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
-   *                        ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected
+   *                        Schema ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
    */
-  public static void verifyOutputSchemaForHierarchicalField(String fieldName, String schemaJsonArray) {
+  public static void verifyOutputSchemaForHierarchicalField(String fieldName,
+      String schemaJsonArray) {
     CdfPluginPropertiesLocators.locateExpandButtonOfSchemaRow(fieldName).click();
 
     boolean isFieldOfArrayType = WaitHelper.waitForElementToBeOptionallyPresent(
-      CdfPluginPropertiesLocators.locatorOfExpandButtonOfRecordFieldInsideSchemaRow(fieldName), 2);
+        CdfPluginPropertiesLocators.locatorOfExpandButtonOfRecordFieldInsideSchemaRow(fieldName),
+        2);
     if (isFieldOfArrayType) {
       CdfPluginPropertiesLocators.locateExpandButtonOfRecordFieldInsideSchemaRow(fieldName).click();
     }
@@ -390,18 +399,19 @@ public class CdfPluginPropertiesActions {
   /**
    * Verify if the Expected Schema is present in the generated Output Schema
    *
-   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected Schema
-   *                        ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
+   * @param schemaJsonArray Property key in the Plugin Properties file whose value is the Expected
+   *                        Schema ({@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE})
    */
   public static void verifyIfExpectedSchemaFieldsArePresent(String schemaJsonArray) {
     Map<String, String> expectedOutputSchema =
-      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
+        JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(schemaJsonArray));
     Boolean isFieldTypeEntryPresent = false;
 
     for (Map.Entry<String, String> entry : expectedOutputSchema.entrySet()) {
-      isFieldTypeEntryPresent = scrollDownInOutputSchemaUntilFieldEntry(entry.getKey(), entry.getValue());
+      isFieldTypeEntryPresent = scrollDownInOutputSchemaUntilFieldEntry(entry.getKey(),
+          entry.getValue());
       Assert.assertTrue("Unable to find <Field name: Field type>: " +
-        entry.getKey() + ": " + entry.getValue(), isFieldTypeEntryPresent);
+          entry.getKey() + ": " + entry.getValue(), isFieldTypeEntryPresent);
     }
   }
 
@@ -415,7 +425,7 @@ public class CdfPluginPropertiesActions {
     int index = 0;
     for (WebElement element : CdfSchemaLocators.inputSchemaColumnNames) {
       actualInputSchema.put(element.getAttribute("value"),
-        CdfSchemaLocators.inputSchemaDataTypes.get(index).getAttribute("title"));
+          CdfSchemaLocators.inputSchemaDataTypes.get(index).getAttribute("title"));
       index++;
     }
 
@@ -442,7 +452,8 @@ public class CdfPluginPropertiesActions {
   }
 
   /**
-   * Verify 'Output Records' table columns in the Preview tab to check if it matches the Output Schema fields
+   * Verify 'Output Records' table columns in the Preview tab to check if it matches the Output
+   * Schema fields
    *
    * @param listOfFieldsInOutputSchema List of Output Schema fields
    */
@@ -455,11 +466,12 @@ public class CdfPluginPropertiesActions {
     }
 
     Assert.assertTrue("Schema column list should match the preview column list",
-      previewTableColumnList.equals(listOfFieldsInOutputSchema));
+        previewTableColumnList.equals(listOfFieldsInOutputSchema));
   }
 
   /**
-   * Verify 'Input Records' table columns in the Preview tab to check if it matches the Input Schema fields
+   * Verify 'Input Records' table columns in the Preview tab to check if it matches the Input Schema
+   * fields
    *
    * @param listOfFieldsInInputSchema List of Input Schema fields
    */
@@ -472,22 +484,22 @@ public class CdfPluginPropertiesActions {
     }
 
     Assert.assertTrue("Schema column list should match the preview column list",
-      previewTableColumnList.equals(listOfFieldsInInputSchema));
+        previewTableColumnList.equals(listOfFieldsInInputSchema));
   }
 
   /**
    * Enter value in the Plugin Property (input)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param value          If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a key
-   *                       then its value is fetched from it
-   *                       else value is entered in the input as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param value          If value is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a key then its
+   *                       value is fetched from it else value is entered in the input as it is.
    */
   public static void enterValueInInputProperty(String pluginProperty, String value) {
-    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(
+        pluginProperty);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
@@ -501,16 +513,17 @@ public class CdfPluginPropertiesActions {
   /**
    * Replace value in the Plugin Property (input)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param value          If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then value to replace is fetched from it
-   *                       else input is replaced with the value as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param value          If value is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then value to
+   *                       replace is fetched from it else input is replaced with the value as it
+   *                       is.
    */
   public static void replaceValueInInputProperty(String pluginProperty, String value) {
-    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(
+        pluginProperty);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
@@ -524,22 +537,22 @@ public class CdfPluginPropertiesActions {
   /**
    * Enter value in the Plugin Property (textarea)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param value          If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then value to enter is fetched from it
-   *                       else value is entered in textarea as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param value          If value is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then value to
+   *                       enter is fetched from it else value is entered in textarea as it is.
    */
   public static void enterValueInTextareaProperty(String pluginProperty, String value) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
     WebElement pluginPropertyTextarea = CdfPluginPropertiesLocators
-      .locatePropertyTextArea(pluginPropertyDataCyAttribute);
+        .locatePropertyTextArea(pluginPropertyDataCyAttribute);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
@@ -553,22 +566,23 @@ public class CdfPluginPropertiesActions {
   /**
    * Replace value in the Plugin Property (textarea)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param value          If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then value to replace is fetched from it
-   *                       else textarea is replaced with value as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param value          If value is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then value to
+   *                       replace is fetched from it else textarea is replaced with value as it
+   *                       is.
    */
   public static void replaceValueInTextareaProperty(String pluginProperty, String value) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
     WebElement pluginPropertyTextarea = CdfPluginPropertiesLocators
-      .locatePropertyTextArea(pluginPropertyDataCyAttribute);
+        .locatePropertyTextArea(pluginPropertyDataCyAttribute);
     ElementHelper.selectAllTextAndClear(pluginPropertyTextarea);
 
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
@@ -583,50 +597,53 @@ public class CdfPluginPropertiesActions {
   /**
    * Click plugin property button
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    */
   public static void clickPluginPropertyButton(String pluginProperty) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
-    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locatePropertyButton(pluginPropertyDataCyAttribute));
+    ElementHelper.clickOnElement(
+        CdfPluginPropertiesLocators.locatePropertyButton(pluginPropertyDataCyAttribute));
   }
 
   /**
    * Click plugin property element
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    */
   public static void clickPluginPropertyElement(String pluginProperty) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
-    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locatePropertyElement(pluginPropertyDataCyAttribute));
+    ElementHelper.clickOnElement(
+        CdfPluginPropertiesLocators.locatePropertyElement(pluginPropertyDataCyAttribute));
   }
 
   /**
    * Select Plugin property radio button with passed value
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param value          If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then value to select is fetched from it
-   *                       else radio button with value passed as param is selected.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param value          If value is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then value to
+   *                       select is fetched from it else radio button with value passed as param is
+   *                       selected.
    */
   public static void selectPluginPropertyRadioButton(String pluginProperty, String value) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
@@ -634,27 +651,29 @@ public class CdfPluginPropertiesActions {
     String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
     if (valueFromPluginPropertiesFile == null) {
       ElementHelper.selectRadioButton(CdfPluginPropertiesLocators
-        .locatePropertyRadioButton(pluginPropertyDataCyAttribute, value));
+          .locatePropertyRadioButton(pluginPropertyDataCyAttribute, value));
       return;
     }
 
-    ElementHelper.selectRadioButton(CdfPluginPropertiesLocators.locatePropertyRadioButton(pluginPropertyDataCyAttribute,
-      valueFromPluginPropertiesFile));
+    ElementHelper.selectRadioButton(
+        CdfPluginPropertiesLocators.locatePropertyRadioButton(pluginPropertyDataCyAttribute,
+            valueFromPluginPropertiesFile));
   }
 
   /**
    * Select Plugin property dropdown option
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param option         If option is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then option to select is fetched from it
-   *                       else dropdown item is selected with option passed as param.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param option         If option is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then option
+   *                       to select is fetched from it else dropdown item is selected with option
+   *                       passed as param.
    */
   public static void selectPluginPropertyDropdownOption(String pluginProperty, String option) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
@@ -662,28 +681,30 @@ public class CdfPluginPropertiesActions {
     String optionFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(option);
     if (optionFromPluginPropertiesFile == null) {
       ElementHelper.selectDropdownOption(CdfPluginPropertiesLocators
-          .locatePropertyElement(pluginPropertyDataCyAttribute),
-        CdfPluginPropertiesLocators.locateDropdownListItem(option));
+              .locatePropertyElement(pluginPropertyDataCyAttribute),
+          CdfPluginPropertiesLocators.locateDropdownListItem(option));
       return;
     }
 
-    ElementHelper.selectDropdownOption(CdfPluginPropertiesLocators.locatePropertyElement(pluginPropertyDataCyAttribute),
-      CdfPluginPropertiesLocators.locateDropdownListItem(
-        optionFromPluginPropertiesFile));
+    ElementHelper.selectDropdownOption(
+        CdfPluginPropertiesLocators.locatePropertyElement(pluginPropertyDataCyAttribute),
+        CdfPluginPropertiesLocators.locateDropdownListItem(
+            optionFromPluginPropertiesFile));
   }
 
   /**
-   * Override default value of auto-detect with service account file path or json set in environment variable.
-   *
+   * Override default value of auto-detect with service account file path or json set in environment
+   * variable.
+   * <p>
    * Set values in below environment variable to override service account details
-   * SERVICE_ACCOUNT_TYPE = FilePath or JSON
-   * SERVICE_ACCOUNT_FILE_PATH = file path of json file
+   * SERVICE_ACCOUNT_TYPE = FilePath or JSON SERVICE_ACCOUNT_FILE_PATH = file path of json file
    * SERVICE_ACCOUNT_JSON = service account json
    */
   public static void overrideServiceAccountDetailsIfProvided() {
     String serviceAccountType = System.getenv("SERVICE_ACCOUNT_TYPE");
-    logger.debug("ServiceAccount type set in environment variable 'SERVICE_ACCOUNT_TYPE' with value: "
-                   + serviceAccountType);
+    logger.debug(
+        "ServiceAccount type set in environment variable 'SERVICE_ACCOUNT_TYPE' with value: "
+            + serviceAccountType);
     if (serviceAccountType != null) {
       // Overriding service account details using file path.
       overrideServiceAccountDetailsUsingFilePath();
@@ -693,32 +714,35 @@ public class CdfPluginPropertiesActions {
         String serviceAccountJSON = System.getenv("SERVICE_ACCOUNT_JSON");
         if (serviceAccountJSON == null) {
           logger.error("ServiceAccount override failed - " +
-                         "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
+              "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
           return;
         }
         CdfPluginPropertiesActions.selectPluginPropertyRadioButton("serviceAccountType", "JSON");
-        CdfPluginPropertiesActions.enterValueInInputProperty("serviceAccountJSON", serviceAccountJSON);
+        CdfPluginPropertiesActions.enterValueInInputProperty("serviceAccountJSON",
+            serviceAccountJSON);
         logger.info("ServiceAccount JSON entered from environment variable : SERVICE_ACCOUNT_JSON");
         return;
       }
-      logger.error("ServiceAccount override failed - ServiceAccount type set in environment variable " +
-                     "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
-                     "Value should be either 'FilePath' or 'JSON'");
+      logger.error(
+          "ServiceAccount override failed - ServiceAccount type set in environment variable " +
+              "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
+              "Value should be either 'FilePath' or 'JSON'");
     }
   }
 
   /**
-   * Override default value of auto-detect with service account file path or json set in environment variable.
-   *
-   * Set values in below environment variable to override service account details in Wrangler connection page
-   * SERVICE_ACCOUNT_TYPE = FilePath or JSON
-   * SERVICE_ACCOUNT_FILE_PATH = file path of json file
-   * SERVICE_ACCOUNT_JSON = service account json
+   * Override default value of auto-detect with service account file path or json set in environment
+   * variable.
+   * <p>
+   * Set values in below environment variable to override service account details in Wrangler
+   * connection page SERVICE_ACCOUNT_TYPE = FilePath or JSON SERVICE_ACCOUNT_FILE_PATH = file path
+   * of json file SERVICE_ACCOUNT_JSON = service account json
    */
   public static void overrideServiceAccountDetailsInWranglerConnectionPageIfProvided() {
     String serviceAccountType = System.getenv("SERVICE_ACCOUNT_TYPE");
-    logger.debug("ServiceAccount type set in environment variable 'SERVICE_ACCOUNT_TYPE' with value: "
-                   + serviceAccountType);
+    logger.debug(
+        "ServiceAccount type set in environment variable 'SERVICE_ACCOUNT_TYPE' with value: "
+            + serviceAccountType);
     if (serviceAccountType != null) {
       // Overriding service account details using file path.
       overrideServiceAccountDetailsUsingFilePath();
@@ -728,23 +752,24 @@ public class CdfPluginPropertiesActions {
         String serviceAccountJSON = System.getenv("SERVICE_ACCOUNT_JSON");
         if (serviceAccountJSON == null) {
           logger.error("ServiceAccount override failed - " +
-                         "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
+              "Environment variable SERVICE_ACCOUNT_JSON is not set with JSON");
           return;
         }
         CdfPluginPropertiesActions.selectPluginPropertyRadioButton("serviceAccountType", "JSON");
-        CdfPluginPropertiesActions.enterValueInTextareaProperty("serviceAccountJSON", serviceAccountJSON);
+        CdfPluginPropertiesActions.enterValueInTextareaProperty("serviceAccountJSON",
+            serviceAccountJSON);
         logger.info("ServiceAccount JSON entered from environment variable : SERVICE_ACCOUNT_JSON");
         return;
       }
-      logger.error("ServiceAccount override failed - ServiceAccount type set in environment variable " +
-                     "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
-                     "Value should be either 'FilePath' or 'JSON'");
+      logger.error(
+          "ServiceAccount override failed - ServiceAccount type set in environment variable " +
+              "'SERVICE_ACCOUNT_TYPE' with invalid value: " + serviceAccountType + ". " +
+              "Value should be either 'FilePath' or 'JSON'");
     }
   }
 
   /**
    * Override default value of auto-detect with service account file path.
-   *
    */
   public static void overrideServiceAccountDetailsUsingFilePath() {
     String serviceAccountType = System.getenv("SERVICE_ACCOUNT_TYPE");
@@ -752,13 +777,14 @@ public class CdfPluginPropertiesActions {
       String serviceAccountFilePath = System.getenv("SERVICE_ACCOUNT_FILE_PATH");
       if (serviceAccountFilePath == null) {
         logger.error("ServiceAccount override failed - " +
-                       "Environment variable SERVICE_ACCOUNT_FILE_PATH is not set with filepath");
+            "Environment variable SERVICE_ACCOUNT_FILE_PATH is not set with filepath");
         return;
       }
       if (!serviceAccountFilePath.equalsIgnoreCase("auto-detect")) {
-        CdfPluginPropertiesActions.replaceValueInInputProperty("serviceFilePath", serviceAccountFilePath);
+        CdfPluginPropertiesActions.replaceValueInInputProperty("serviceFilePath",
+            serviceAccountFilePath);
         logger.info("ServiceAccount FilePath entered from environment variable with value: "
-                      + serviceAccountFilePath);
+            + serviceAccountFilePath);
       }
       return;
     }
@@ -767,16 +793,16 @@ public class CdfPluginPropertiesActions {
   /**
    * Verify plugin property contains text
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param text           If text is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then text to VERIFY is fetched from it
-   *                       else text param is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param text           If text is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then text to
+   *                       VERIFY is fetched from it else text param is used as it is.
    */
   public static void verifyPluginPropertyContainsText(String pluginProperty, String text) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
@@ -784,120 +810,134 @@ public class CdfPluginPropertiesActions {
     String textFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(text);
     if (textFromPluginPropertiesFile == null) {
       AssertionHelper.verifyElementContainsText(SeleniumDriver.getDriver().findElement(
-        CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)), text);
+              CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)),
+          text);
       return;
     }
 
     AssertionHelper.verifyElementContainsText(SeleniumDriver.getDriver().findElement(
-      CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)),
-                                              textFromPluginPropertiesFile);
+            CdfPluginPropertiesLocators.locatorOfPropertyElementText(pluginPropertyDataCyAttribute)),
+        textFromPluginPropertiesFile);
   }
 
   /**
    * Verify input plugin property contains value
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param expectedValue  If expectedValue is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then expectedValue to verify is fetched from it
-   *                       else expectedValue param is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param expectedValue  If expectedValue is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then
+   *                       expectedValue to verify is fetched from it else expectedValue param is
+   *                       used as it is.
    */
-  public static void verifyInputPluginPropertyContainsValue(String pluginProperty, String expectedValue) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void verifyInputPluginPropertyContainsValue(String pluginProperty,
+      String expectedValue) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
     String actualValue = ElementHelper
-      .getElementAttribute(CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute), "value");
+        .getElementAttribute(
+            CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute),
+            "value");
 
     String expectedValueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedValue);
     if (expectedValueFromPluginPropertiesFile == null) {
       Assert.assertEquals("Verify value displayed in Input plugin property "
-                            + pluginPropertyDataCyAttribute, expectedValue, actualValue);
+          + pluginPropertyDataCyAttribute, expectedValue, actualValue);
       return;
     }
 
     Assert.assertEquals("Verify value displayed in Input plugin property "
-                          + pluginPropertyDataCyAttribute, expectedValueFromPluginPropertiesFile, actualValue);
+        + pluginPropertyDataCyAttribute, expectedValueFromPluginPropertiesFile, actualValue);
   }
 
   /**
    * Verify dropdown plugin property is selected with list option
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param expectedOption If expectedOption is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then expectedOption to verify is fetched from it
-   *                       else expectedOption param is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param expectedOption If expectedOption is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then
+   *                       expectedOption to verify is fetched from it else expectedOption param is
+   *                       used as it is.
    */
-  public static void verifyDropdownPluginPropertySelectedWithOption(String pluginProperty, String expectedOption) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void verifyDropdownPluginPropertySelectedWithOption(String pluginProperty,
+      String expectedOption) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
     String actualOption = ElementHelper.getElementAttribute(
-      CdfPluginPropertiesLocators.locatePropertyDropdownSelectedItem(pluginPropertyDataCyAttribute), "value");
+        CdfPluginPropertiesLocators.locatePropertyDropdownSelectedItem(
+            pluginPropertyDataCyAttribute), "value");
 
     String expectedOptionFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedOption);
     if (expectedOptionFromPluginPropertiesFile == null) {
       Assert.assertEquals("Verify Option selected in dropdown plugin property "
-                            + pluginPropertyDataCyAttribute, expectedOption, actualOption);
+          + pluginPropertyDataCyAttribute, expectedOption, actualOption);
       return;
     }
 
     Assert.assertEquals("Verify Option selected in dropdown plugin property "
-                          + pluginPropertyDataCyAttribute, expectedOptionFromPluginPropertiesFile, actualOption);
+        + pluginPropertyDataCyAttribute, expectedOptionFromPluginPropertiesFile, actualOption);
   }
 
   /**
    * Verify toggle plugin property's current toggled state
    *
-   * @param pluginProperty       @data-cy attribute value of Plugin Property.
-   *                             If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                             then its data-cy is fetched from it
-   *                             else pluginProperty is used as it is.
+   * @param pluginProperty       @data-cy attribute value of Plugin Property. If pluginProperty is
+   *                             present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
+   *                             then its data-cy is fetched from it else pluginProperty is used as
+   *                             it is.
    * @param expectedToggledState If expectedToggledState is present in
-   *                             {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                             then expectedToggledState to verify is fetched from it
-   *                             else expectedToggledState param is used as it is.
+   *                             {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then
+   *                             expectedToggledState to verify is fetched from it else
+   *                             expectedToggledState param is used as it is.
    */
-  public static void verifyPluginPropertyToggleState(String pluginProperty, String expectedToggledState) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void verifyPluginPropertyToggleState(String pluginProperty,
+      String expectedToggledState) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
 
-    String expectedToggledStateFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(expectedToggledState);
+    String expectedToggledStateFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(
+        expectedToggledState);
     if (expectedToggledStateFromPluginPropertiesFile == null) {
       AssertionHelper.verifyElementContainsText
-        (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute), expectedToggledState);
+          (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute),
+              expectedToggledState);
       return;
     }
 
     AssertionHelper.verifyElementContainsText
-      (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute),
-       expectedToggledStateFromPluginPropertiesFile);
+        (CdfPluginPropertiesLocators.locatePropertyToggle(pluginPropertyDataCyAttribute),
+            expectedToggledStateFromPluginPropertiesFile);
   }
 
   /**
    * Verify radio button plugin property is selected with expected value
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param expectedValue  If expectedValue is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key
-   *                       then expectedValue to verify is fetched from it
-   *                       else expectedValue param is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param expectedValue  If expectedValue is present in
+   *                       {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as key then
+   *                       expectedValue to verify is fetched from it else expectedValue param is
+   *                       used as it is.
    */
-  public static void verifyRadioButtonPluginPropertySelectedValue(String pluginProperty, String expectedValue) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void verifyRadioButtonPluginPropertySelectedValue(String pluginProperty,
+      String expectedValue) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
@@ -908,10 +948,11 @@ public class CdfPluginPropertiesActions {
     }
 
     boolean isElementDisplayed = ElementHelper.isElementDisplayed(
-      CdfPluginPropertiesLocators.locatorOfSelectedPropertyRadioButton(pluginPropertyDataCyAttribute
-        , expectedValueFromPluginPropertiesFile), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+        CdfPluginPropertiesLocators.locatorOfSelectedPropertyRadioButton(
+            pluginPropertyDataCyAttribute
+            , expectedValueFromPluginPropertiesFile), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     Assert.assertTrue("Verify radio button " + pluginPropertyDataCyAttribute + " is selected with "
-                        + expectedValueFromPluginPropertiesFile, isElementDisplayed);
+        + expectedValueFromPluginPropertiesFile, isElementDisplayed);
   }
 
   /**
@@ -924,30 +965,32 @@ public class CdfPluginPropertiesActions {
   /**
    * Enter KeyValue Pairs For Property
    *
-   * @param pluginProperty    @data-cy attribute value of Plugin Property.
-   *                          If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                          then its data-cy is fetched from it
-   *                          else pluginProperty is used as it is.
-   * @param jsonKeyValuePairs Actual json KeyValue Pairs string is fetched
-   *                          from {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} with jsonKeyValuePairs as key
+   * @param pluginProperty    @data-cy attribute value of Plugin Property. If pluginProperty is
+   *                          present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then
+   *                          its data-cy is fetched from it else pluginProperty is used as it is.
+   * @param jsonKeyValuePairs Actual json KeyValue Pairs string is fetched from
+   *                          {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} with
+   *                          jsonKeyValuePairs as key
    */
-  public static void enterKeyValuePairsForProperty(String pluginProperty, String jsonKeyValuePairs) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(pluginProperty);
+  public static void enterKeyValuePairsForProperty(String pluginProperty,
+      String jsonKeyValuePairs) {
+    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+        pluginProperty);
     if (pluginPropertyDataCyAttribute == null) {
       pluginPropertyDataCyAttribute = pluginProperty;
     }
     Map<String, String> properties =
-      JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(jsonKeyValuePairs));
+        JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(jsonKeyValuePairs));
     int index = 0;
     for (Map.Entry<String, String> entry : properties.entrySet()) {
       if (index != 0) {
         ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locatePropertyAddRowButton(
-          pluginPropertyDataCyAttribute, index - 1));
+            pluginPropertyDataCyAttribute, index - 1));
       }
       ElementHelper.sendKeys(CdfPluginPropertiesLocators.locatePropertyKey(
-        pluginPropertyDataCyAttribute, index), entry.getKey());
+          pluginPropertyDataCyAttribute, index), entry.getKey());
       ElementHelper.sendKeys(CdfPluginPropertiesLocators.locatePropertyValue(
-        pluginPropertyDataCyAttribute, index), entry.getValue());
+          pluginPropertyDataCyAttribute, index), entry.getValue());
       index++;
     }
   }
@@ -955,15 +998,17 @@ public class CdfPluginPropertiesActions {
   /**
    * Enter Credentials/Authorization values in the Plugin Property (input)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param envVariableKey          If the value is present in the Environment variables then its value is fetched
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param envVariableKey If the value is present in the Environment variables then its value is
+   *                       fetched
    */
-  public static void enterValueInInputPropertyFromEnv(String pluginProperty, String envVariableKey) {
+  public static void enterValueInInputPropertyFromEnv(String pluginProperty,
+      String envVariableKey) {
     String envVariableValue = System.getenv(PluginPropertyUtils.pluginProp(envVariableKey));
-    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(
+        pluginProperty);
 
     if (envVariableValue != null) {
       ElementHelper.sendKeys(pluginPropertyInput, envVariableValue);
@@ -975,15 +1020,17 @@ public class CdfPluginPropertiesActions {
   /**
    * Enter Credentials/Authorization values in the Plugin Property (replace)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
-   * @param envVariableKey If the value is present in the Environment variables then its value is fetched
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
+   * @param envVariableKey If the value is present in the Environment variables then its value is
+   *                       fetched
    */
-  public static void replaceValueInInputPropertyFromEnv(String pluginProperty, String envVariableKey) {
+  public static void replaceValueInInputPropertyFromEnv(String pluginProperty,
+      String envVariableKey) {
     String envVariableValue = System.getenv(PluginPropertyUtils.pluginProp(envVariableKey));
-    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(
+        pluginProperty);
 
     if (envVariableValue != null) {
       ElementHelper.replaceElementValue(pluginPropertyInput, envVariableValue);
@@ -999,7 +1046,7 @@ public class CdfPluginPropertiesActions {
    */
   public static void clickOnPageButton(String button) {
     WaitHelper.waitForElementToBeClickable(CdfPluginPropertiesLocators.locateButton(button),
-                                           ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locateButton(button));
   }
 
@@ -1009,21 +1056,23 @@ public class CdfPluginPropertiesActions {
    * @param pluginName PluginName
    */
   public static void selectReplicationSourcePlugin(String pluginName) {
-    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.locateSourcePluginNameInList(pluginName));
+    ElementHelper.clickOnElement(
+        CdfPluginPropertiesLocators.locateSourcePluginNameInList(pluginName));
   }
 
   /**
    * Click on Deploy the Replication pipeline
    */
   public static void deployReplicationPipeline() {
-      ElementHelper.clickOnElement(CdfPluginPropertiesLocators.deployReplicationPipeline);
-    }
+    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.deployReplicationPipeline);
+  }
 
   /**
    * Start the replication pipeline
    */
   public static void startReplicationPipeline() {
-    ElementHelper.clickIfDisplayed(CdfPluginPropertiesLocators.start, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    ElementHelper.clickIfDisplayed(CdfPluginPropertiesLocators.start,
+        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
@@ -1054,16 +1103,18 @@ public class CdfPluginPropertiesActions {
   }
 
   /**
-   * Verify the Error message displayed on the header/top of the Plugin Properties page in replication using the Error
-   * message location in the .properties file {@link ConstantsUtil#DEFAULT_ERROR_PROPERTIES_FILE}
+   * Verify the Error message displayed on the header/top of the Plugin Properties page in
+   * replication using the Error message location in the .properties file
+   * {@link ConstantsUtil#DEFAULT_ERROR_PROPERTIES_FILE}
    *
    * @param errorMessage Expected error message location
    */
   public static void verifyErrorMessage(String errorMessage) {
-      String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessage);
-      WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.rowError);
-      AssertionHelper.verifyElementDisplayed(CdfPluginPropertiesLocators.rowError);
-      AssertionHelper.verifyElementContainsText(CdfPluginPropertiesLocators.rowError, expectedErrorMessage);
+    String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.rowError);
+    AssertionHelper.verifyElementDisplayed(CdfPluginPropertiesLocators.rowError);
+    AssertionHelper.verifyElementContainsText(CdfPluginPropertiesLocators.rowError,
+        expectedErrorMessage);
   }
 
   /**
@@ -1071,29 +1122,38 @@ public class CdfPluginPropertiesActions {
    */
   public static void waitTillTheReviewAssessmentPageLoaded() {
     WaitHelper.waitForElementToBeOptionallyDisplayed(CdfPluginPropertiesLocators.reviewAssessment(),
-                                                     ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
    * Check whether Configure Advanced Properties Page is loaded completely
    */
   public static void waitTillTheConfigureAdvancedPropertiesPageLoaded() {
-    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfPluginPropertiesLocators.configureProperties(),
-                                                     ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeOptionallyDisplayed(
+        CdfPluginPropertiesLocators.configureProperties(),
+        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
    * Enter value in the Plugin Property (input)
    *
-   * @param pluginProperty @data-cy attribute value of Plugin Property.
-   *                       If pluginProperty is present in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE}
-   *                       then its data-cy is fetched from it
-   *                       else pluginProperty is used as it is.
+   * @param pluginProperty @data-cy attribute value of Plugin Property. If pluginProperty is present
+   *                       in {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy
+   *                       is fetched from it else pluginProperty is used as it is.
    */
   public static void enterInputPropertyWithValue(String pluginProperty) {
-    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(pluginProperty);
+    WebElement pluginPropertyInput = PluginPropertyUtils.getInputPluginPropertyElement(
+        pluginProperty);
     String pipelineName = "TestPipeline-" + RandomStringUtils.randomAlphanumeric(10);
     ElementHelper.sendKeys(pluginPropertyInput, pipelineName);
+  }
+
+  /**
+   * Escape to next user action after selecting value in  multi select drop down
+   */
+  public static void pressEscapeKey() {
+    Actions act = new Actions(SeleniumDriver.getDriver());
+    act.sendKeys(Keys.ESCAPE).perform();
   }
 
   /**
@@ -1101,7 +1161,8 @@ public class CdfPluginPropertiesActions {
    */
   public static void openCdfWithReplication() throws IOException {
     SeleniumDriver.getDriver().get(SeleniumDriver.getDriver().getCurrentUrl().replace(
-    SeleniumHelper.readParameters(ConstantsUtil.CDFURL), SeleniumHelper.readParameters(ConstantsUtil.REPLICATION_URL)));
+        SeleniumHelper.readParameters(ConstantsUtil.CDFURL),
+        SeleniumHelper.readParameters(ConstantsUtil.REPLICATION_URL)));
   }
 
   /**
@@ -1110,7 +1171,8 @@ public class CdfPluginPropertiesActions {
    * @param pluginProperty The name of the plugin property for which values need to be added.
    * @param listOfValues   The list of property values to be entered.
    */
-  public static void clickAddButtonAndEnterPropertyValues(String pluginProperty, List<String> listOfValues) {
+  public static void clickAddButtonAndEnterPropertyValues(String pluginProperty,
+      List<String> listOfValues) {
     int totalList = listOfValues.size();
 
     // Click the "Add" button for the plugin property.
@@ -1118,8 +1180,9 @@ public class CdfPluginPropertiesActions {
       CdfPluginPropertiesLocators.locateKeyAddButton(pluginProperty).click();
     }
     for (int valueIndex = 0; valueIndex < totalList; valueIndex++) {
-      ElementHelper.sendKeys(CdfPluginPropertiesLocators.locateValueAddButton(pluginProperty, valueIndex),
-                             listOfValues.get(valueIndex));
+      ElementHelper.sendKeys(
+          CdfPluginPropertiesLocators.locateValueAddButton(pluginProperty, valueIndex),
+          listOfValues.get(valueIndex));
     }
   }
 }

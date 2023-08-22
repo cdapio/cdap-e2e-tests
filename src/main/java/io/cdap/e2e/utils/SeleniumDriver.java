@@ -67,9 +67,9 @@ public class SeleniumDriver {
     url = executor.getAddressOfRemoteServer();
     waitDriver = new WebDriverWait(chromeDriver, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     chromeDriver.manage().timeouts()
-      .implicitlyWait(Duration.of(ConstantsUtil.IMPLICIT_TIMEOUT_SECONDS, ChronoUnit.SECONDS));
+        .implicitlyWait(Duration.of(ConstantsUtil.IMPLICIT_TIMEOUT_SECONDS, ChronoUnit.SECONDS));
     chromeDriver.manage().timeouts()
-      .pageLoadTimeout(Duration.of(ConstantsUtil.PAGE_LOAD_TIMEOUT_SECONDS, ChronoUnit.SECONDS));
+        .pageLoadTimeout(Duration.of(ConstantsUtil.PAGE_LOAD_TIMEOUT_SECONDS, ChronoUnit.SECONDS));
     String window = chromeDriver.getWindowHandle();
     SessionId session = chromeDriver.getSessionId();
     logger.info("Session iD:" + session);
@@ -113,8 +113,8 @@ public class SeleniumDriver {
   }
 
   /**
-   * @deprecated Use {@link WaitHelper#waitForPageToLoad()}
-   * Small static wait has been used here because of https://cdap.atlassian.net/browse/CDAP-18862
+   * @deprecated Use {@link WaitHelper#waitForPageToLoad()} Small static wait has been used here
+   * because of https://cdap.atlassian.net/browse/CDAP-18862
    */
   @Deprecated
   public static void waitForPageToLoad() {
