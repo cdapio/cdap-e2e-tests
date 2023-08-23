@@ -1,4 +1,4 @@
-# Copyright © 2021 Cask Data, Inc.
+# Copyright © 2023 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -36,6 +36,7 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
 parser.add_argument('--module', help='Module for which tests need to be run')
 parser.add_argument('--framework', help='Pass this param if workflow is triggered from e2e framework repo')
+parser.add_argument('--mvnProfile', help='Maven build profiles')
 args=parser.parse_args()
 
 # Start CDAP sandbox
@@ -144,19 +145,23 @@ testrunner_to_run = ""
 if args.testRunner:
     testrunner_to_run = args.testRunner
 
+testprofile_to_run = "e2e-tests"
+if args.mvnProfile:
+    testprofile_to_run = args.mvnProfile
+
 try:
     if module_to_build:
         if testrunner_to_run:
             print("TestRunner to run : " + testrunner_to_run)
-            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build} -DTEST_RUNNER={testrunner_to_run}")
+            run_shell_command(f"mvn verify -P {testprofile_to_run} -pl {module_to_build} -DTEST_RUNNER={testrunner_to_run}")
         else:
-            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build}")
+            run_shell_command(f"mvn verify -P {testprofile_to_run} -pl {module_to_build}")
     else:
         if testrunner_to_run:
             print("TestRunner to run : " + testrunner_to_run)
-            run_shell_command(f"mvn clean verify -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
+            run_shell_command(f"mvn clean verify -P {testprofile_to_run} -DTEST_RUNNER={testrunner_to_run}")
         else:
-            run_shell_command("mvn clean verify -P e2e-tests")
+            run_shell_command(f"mvn clean verify -P {testprofile_to_run}")
 except AssertionError as e:
     raise e
 finally:
