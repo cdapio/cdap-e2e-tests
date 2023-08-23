@@ -327,7 +327,7 @@ the License.-->
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
-      <version>1.10.3</version>
+      <version>1.10.11</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
