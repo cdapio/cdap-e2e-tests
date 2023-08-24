@@ -258,4 +258,9 @@ public class CdfPluginPropertiesLocators {
     return SeleniumDriver.getDriver().findElement
       (By.xpath("//*[@data-cy='" + pluginProperty + "']//button[@data-cy='remove-row']"));
   }
+
+  public static WebElement selectReplicationTable(String tableName) {
+    String path = "//div[contains(text(),'" + tableName + "')]" + "/preceding-sibling::div/span";
+    return SeleniumDriver.getDriver().findElement(By.xpath(path));
+  }
 }
