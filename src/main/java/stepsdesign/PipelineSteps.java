@@ -742,4 +742,9 @@ public class PipelineSteps implements CdfHelper {
     }
     CdfPluginPropertiesActions.clickAddButtonAndEnterPropertyValues(pluginProperty, keyValue);
   }
+
+  @Then("Press Escape Key")
+  public void pressESCKey() {
+    CdfPluginPropertiesActions.pressEscapeKey();
+  }
 }

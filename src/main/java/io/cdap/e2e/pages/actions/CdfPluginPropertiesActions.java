@@ -31,7 +31,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1121,5 +1123,15 @@ public class CdfPluginPropertiesActions {
       ElementHelper.sendKeys(CdfPluginPropertiesLocators.locateValueAddButton(pluginProperty, valueIndex),
                              listOfValues.get(valueIndex));
     }
+  }
+
+  /**
+   * Escape after selecting a multi-select dropdown value
+   */
+  public static void pressEscapeKey() {
+    logger.info("Press Escape Key");
+    Actions act = new Actions(SeleniumDriver.getDriver());
+    act.sendKeys(new CharSequence[]{Keys.ESCAPE}).perform();
+
   }
 }
