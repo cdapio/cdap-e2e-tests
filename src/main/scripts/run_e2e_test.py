@@ -36,7 +36,8 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
 parser.add_argument('--module', help='Module for which tests need to be run')
 parser.add_argument('--framework', help='Pass this param if workflow is triggered from e2e framework repo')
-parser.add_argument('--mvnProfile', help='Maven build profiles')
+parser.add_argument('--mvnTestRunProfiles', help='Maven build profiles to run the e2e tests')
+parser.add_argument('--mvnProjectBuildProfiles', help='Maven project build profiles')
 args=parser.parse_args()
 
 # Start CDAP sandbox
@@ -73,10 +74,16 @@ if args.module:
 os.chdir("plugin")
 if module_to_build:
     print(f"Building plugin module: {module_to_build}")
-    run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests")
+    if args.mvnProjectBuildProfiles:
+        run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests -P {args.mvnProjectBuildProfiles}")
+    else:
+        run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests")
 else:
     print("Building plugin")
-    run_shell_command("mvn clean package -DskipTests")
+    if args.mvnProjectBuildProfiles:
+        run_shell_command(f"mvn clean package -DskipTests -P {args.mvnProjectBuildProfiles}")
+    else:
+        run_shell_command("mvn clean package -DskipTests")
 
 # Get plugin artifact name and version from pom.xml.
 root = ET.parse('pom.xml').getroot()
@@ -146,8 +153,8 @@ if args.testRunner:
     testrunner_to_run = args.testRunner
 
 testprofile_to_run = "e2e-tests"
-if args.mvnProfile:
-    testprofile_to_run = args.mvnProfile
+if args.mvnTestRunProfiles:
+    testprofile_to_run = args.mvnTestRunProfiles
 
 try:
     if module_to_build:
