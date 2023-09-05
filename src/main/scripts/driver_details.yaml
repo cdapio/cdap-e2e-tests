@@ -29,4 +29,13 @@ modules:
     driver_prop: '[{"name":"cloudsql-postgresql","type":"jdbc","className":"org.postgresql.Driver","description":"Plugin for the CloudSQL PostgreSQL JDBC driver"}]'
     artifact_name: 'cloudsql-postgresql-plugin'
     artifact_version: '1.0.16-jar-with-driver-and-dependencies'
-
+  sqlserver-delta-plugins:
+    url: https://repo1.maven.org/maven2/com/microsoft/sqlserver/mssql-jdbc/9.4.0.jre8/mssql-jdbc-9.4.0.jre8.jar
+    driver_prop: '[{"name":"sqlserver","type":"jdbc","className":"com.microsoft.sqlserver.jdbc.SQLServerDriver","description":"Plugin for Microsoft SQL Server JDBC driver"}]'
+    artifact_name: 'mssql-jdbc'
+    artifact_version: '9.4.0.jre8'
+  mysql-delta-plugins:
+    url: https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.25/mysql-connector-java-8.0.25.jar
+    driver_prop: '[{"name":"mysql","type":"jdbc","className":"com.mysql.jdbc.Driver","description":"Plugin for the MySQL JDBC driver"}]'
+    artifact_name: 'mysql-connector-java'
+    artifact_version: '8.0.25'
