@@ -64,6 +64,7 @@ public class ConstantsUtil {
   public static final String LOGS_SEPARATOR_MESSAGE = "---------------------------------------------------------" +
     "------------------------------MESSAGE----------------------------------------------------------------------" +
     "-----------------";
+  public static final String RESET_VALIDATION_SUCCESS_MESSAGE = "validationResetSuccessMessage";
   /* TODO: Remove FIRST_PLUGIN_IN_LIST constant once https://cdap.atlassian.net/browse/CDAP-18862 is fixed */
   public static final String FIRST_PLUGIN_IN_LIST = "BigQuery";
   /**
