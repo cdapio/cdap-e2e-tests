@@ -150,4 +150,26 @@ public class CdfSysAdminLocators {
     String xpath = "//div[@title='" + profileName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
+
+  @FindBy(how = How.XPATH, using = "//*[contains(@class,'namespaces')]")
+  public static WebElement openNamespace;
+
+  @FindBy(how = How.XPATH, using = "//*[contains(@class,'system-profiles')]")
+  public static WebElement openSystemComputeProfile;
+
+  public static WebElement locatePropertyKeyNew(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "" + row + "']//input[@placeholder='key']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locatePropertyValueNew(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "" + row + "']//input[@placeholder='value']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
+
+  public static WebElement locatePropertyAddRowButtonNew(String pluginProperty, int row) {
+    String xpath = "//*[@data-cy='" + pluginProperty + "" + row + "']//span//button[@type='submit' and " +
+      "@class='btn add-row-btn btn-link']";
+    return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
+  }
 }
