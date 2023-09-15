@@ -1142,6 +1142,25 @@ public class CdfPluginPropertiesActions {
     logger.info("Press Escape Key");
     Actions act = new Actions(SeleniumDriver.getDriver());
     act.sendKeys(new CharSequence[]{Keys.ESCAPE}).perform();
+  }
 
+  public static void enterKeyInDedupe(String pluginProperty, String value) {
+    WebElement pluginPropertyInput = CdfPluginPropertiesLocators.deDupeKey(pluginProperty);
+    String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
+    if (valueFromPluginPropertiesFile == null) {
+      ElementHelper.sendKeys(pluginPropertyInput, value);
+      return;
+    }
+    ElementHelper.sendKeys(pluginPropertyInput, valueFromPluginPropertiesFile);
+  }
+
+  public static void enterValueInTableKey(String pluginProperty, String value) {
+    WebElement pluginPropertyInput = CdfPluginPropertiesLocators.locateTableKey(pluginProperty);
+    String valueFromPluginPropertiesFile = PluginPropertyUtils.pluginProp(value);
+    if (valueFromPluginPropertiesFile == null) {
+      ElementHelper.sendKeys(pluginPropertyInput, value);
+      return;
+    }
+    ElementHelper.sendKeys(pluginPropertyInput, valueFromPluginPropertiesFile);
   }
 }
