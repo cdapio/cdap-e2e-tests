@@ -1,0 +1,7 @@
+# Note - Before adding the artifact name check the list of available packages in the Hub using:
+# https://hub.cdap.io/v2/packages.json
+
+plugins:
+  multidatabase-table-plugins:
+    artifact_name: 'plugin-multi-table-plugins'
+    artifact_version: '1.4.0'

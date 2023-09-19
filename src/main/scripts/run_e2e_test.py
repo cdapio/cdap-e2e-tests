@@ -65,6 +65,15 @@ assert process.returncode == 0
 res = requests.put('http://localhost:11015/v3/preferences', headers= {'Content-Type': 'application/json'}, json={'task.executor.system.resources.memory': 4096})
 assert res.ok or print(res.text)
 
+# Upload required plugins from CDAP HUb
+plugin_details_file = open(os.path.join('e2e', 'src', 'main', 'scripts', 'required_plugins.yaml'))
+plugin_details = yaml.load(plugin_details_file, Loader=yaml.FullLoader)
+
+for plugin, details in plugin_details['plugins'].items():
+    artifact_name = details.get('artifact_name')
+    artifact_version = details.get('artifact_version')
+    subprocess.run(["python", "upload_required_plugins.py", artifact_name, artifact_version])
+
 module_to_build = ""
 if args.module:
     module_to_build = args.module
