@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -658,5 +659,92 @@ public class PipelineSteps implements CdfHelper {
   @Then("Verify the invalid connection error message: {string} on the footer")
   public void verifyInvalidConnectionErrorMessage(String errorMessageLocation) {
     CdfConnectionActions.verifyConnectionErrorMessage(errorMessageLocation);
+  }
+
+  @Given("Open DataFusion Project with replication to configure replication job")
+  public void openDataFusionProjectWithReplicationToConfigureReplicationJob() throws IOException, InterruptedException {
+    openCdf();
+    CdfPluginPropertiesActions.openCdfWithReplication();
+  }
+
+  @When("Enter input plugin property: {string} with pipelineName")
+  public void enterInputPluginPropertyWithPipelineName(String pluginProperty) {
+    CdfPluginPropertiesActions.enterInputPropertyWithValue(pluginProperty);
+  }
+
+  @Then("Click on the {string} button in replication to navigate")
+  public void clickOnTheButtonInReplicationMode(String button) throws InterruptedException {
+    CdfPluginPropertiesActions.clickOnPageButton(button);
+  }
+
+  @When("Select Source plugin: {string} from the replication plugins list")
+  public void selectSourcePluginFromTheReplicationPluginsList(String pluginName) {
+    CdfPluginPropertiesActions.selectReplicationSourcePlugin(pluginName);
+  }
+
+  @Then("Deploy the replication pipeline")
+  public void deployTheReplicationPipeline() {
+    CdfPluginPropertiesActions.deployReplicationPipeline();
+  }
+
+  @Then("Run the replication Pipeline")
+  public void runTheReplicationPipeline() {
+    CdfPluginPropertiesActions.runTheReplicationPipeline();
+  }
+
+  @Then("Open the Advanced logs")
+  public void openTheAdvancedLogs() {
+    CdfPluginPropertiesActions.openAdvancedLogs();
+  }
+
+  @Then("Close the replication pipeline logs and stop the pipeline")
+  public void closeTheReplicationPipelineLogsAndStopThePipeline() {
+    CdfPluginPropertiesActions.closeTheReplicationPipelineLogsAndStopThePipeline();
+  }
+
+  @Then("Verify that the Plugin is displaying an error message: {string}")
+  public void verifyThatThePluginIsDisplayingAnErrorMessage(String errorMessage) {
+    CdfPluginPropertiesActions.verifyErrorMessage(errorMessage);
+  }
+
+  @Then("Wait till the Review Assessment page is loaded in replication")
+  public void waitTillTheReviewAssessmentPageIsLoadedInReplication() {
+    CdfPluginPropertiesActions.waitTillTheReviewAssessmentPageLoaded();
+  }
+
+  @Then("Wait till the Configure Advanced Properties page is loaded in replication")
+  public void waitTillTheConfigureAdvancedPropertiesPageIsLoadedInReplication() {
+    CdfPluginPropertiesActions.waitTillTheConfigureAdvancedPropertiesPageLoaded();
+  }
+
+  @Then("Click on the Plus Green Button to import the pipelines")
+  public void clickOnPlusGreenButton () {
+    CdfStudioActions.clickOnAddEntityButton();
+  }
+
+  @Then("Select the file for importing the pipeline for the plugin {string}")
+  public void selectFileForImport(String path) throws URISyntaxException {
+    CdfStudioActions.importPipeline(PluginPropertyUtils.pluginProp(path));
+  }
+
+  @Then("Rename the pipeline")
+  public void renameThePipeline() {
+    pipelineName = "TestPipeline-" + RandomStringUtils.randomAlphanumeric(10);
+    CdfStudioActions.fillPipelineNameAndSave(pipelineName);
+  }
+
+  @Then("Click on the Add Button of the property: {string} with value:")
+  public void enterKeyPropertyWithValue(String pluginProperty, DataTable table) {
+    List<String> listOfValue = table.asList();
+    List<String> keyValue = new ArrayList<>();
+    for (String key : listOfValue) {
+      keyValue.add(PluginPropertyUtils.pluginProp(key));
+    }
+    CdfPluginPropertiesActions.clickAddButtonAndEnterPropertyValues(pluginProperty, keyValue);
+  }
+
+  @Then("Press Escape Key")
+  public void pressESCKey() {
+    CdfPluginPropertiesActions.pressEscapeKey();
   }
 }

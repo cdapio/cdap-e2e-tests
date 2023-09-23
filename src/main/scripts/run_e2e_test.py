@@ -1,4 +1,4 @@
-# Copyright © 2021 Cask Data, Inc.
+# Copyright © 2023 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -36,6 +36,8 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
 parser.add_argument('--module', help='Module for which tests need to be run')
 parser.add_argument('--framework', help='Pass this param if workflow is triggered from e2e framework repo')
+parser.add_argument('--mvnTestRunProfiles', help='Maven build profiles to run the e2e tests')
+parser.add_argument('--mvnProjectBuildProfiles', help='Maven project build profiles')
 args=parser.parse_args()
 
 # Start CDAP sandbox
@@ -47,8 +49,8 @@ z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall("./sandbox")
 
 print("Installing gcs connector jar")
-gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.5.jar"
-gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.5.jar"
+gcs_jar_url = "https://storage.googleapis.com/hadoop-lib/gcs/gcs-connector-hadoop2-2.2.16.jar"
+gcs_jar_fname = f"sandbox/{sandbox_dir}/lib/gcs-connector-hadoop2-2.2.9.jar"
 urllib.request.urlretrieve(gcs_jar_url, gcs_jar_fname)
 
 print("Start the sandbox")
@@ -72,10 +74,16 @@ if args.module:
 os.chdir("plugin")
 if module_to_build:
     print(f"Building plugin module: {module_to_build}")
-    run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests")
+    if args.mvnProjectBuildProfiles:
+        run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests -P {args.mvnProjectBuildProfiles}")
+    else:
+        run_shell_command(f"mvn clean install -pl {module_to_build} -am -DskipTests")
 else:
     print("Building plugin")
-    run_shell_command("mvn clean package -DskipTests")
+    if args.mvnProjectBuildProfiles:
+        run_shell_command(f"mvn clean package -DskipTests -P {args.mvnProjectBuildProfiles}")
+    else:
+        run_shell_command("mvn clean package -DskipTests")
 
 # Get plugin artifact name and version from pom.xml.
 root = ET.parse('pom.xml').getroot()
@@ -144,19 +152,23 @@ testrunner_to_run = ""
 if args.testRunner:
     testrunner_to_run = args.testRunner
 
+testprofile_to_run = "e2e-tests"
+if args.mvnTestRunProfiles:
+    testprofile_to_run = args.mvnTestRunProfiles
+
 try:
     if module_to_build:
         if testrunner_to_run:
             print("TestRunner to run : " + testrunner_to_run)
-            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build} -DTEST_RUNNER={testrunner_to_run}")
+            run_shell_command(f"mvn verify -P {testprofile_to_run} -pl {module_to_build} -DTEST_RUNNER={testrunner_to_run}")
         else:
-            run_shell_command(f"mvn verify -P e2e-tests -pl {module_to_build}")
+            run_shell_command(f"mvn verify -P {testprofile_to_run} -pl {module_to_build}")
     else:
         if testrunner_to_run:
             print("TestRunner to run : " + testrunner_to_run)
-            run_shell_command(f"mvn clean verify -P e2e-tests -DTEST_RUNNER={testrunner_to_run}")
+            run_shell_command(f"mvn clean verify -P {testprofile_to_run} -DTEST_RUNNER={testrunner_to_run}")
         else:
-            run_shell_command("mvn clean verify -P e2e-tests")
+            run_shell_command(f"mvn clean verify -P {testprofile_to_run}")
 except AssertionError as e:
     raise e
 finally:
