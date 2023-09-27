@@ -30,10 +30,13 @@ actions = response_data["actions"][0]
 plugin_details = actions["arguments"]
 
 # Get the required details from specs.
-plugin_name = plugin_details[0]["value"]
-plugin_version = plugin_details[1]["value"]
-plugin_config = plugin_details[3]["value"]
-plugin_jar = plugin_details[4]["value"]
+plugin_details_dictionary = {
+    item['name']: item['value'] for item in plugin_details
+}
+plugin_name = plugin_details_dictionary['name']
+plugin_version = plugin_details_dictionary['version']
+plugin_config = plugin_details_dictionary['config']
+plugin_jar = plugin_details_dictionary['jar']
 
 # Get the Jar content of the Plugin from the Hub and upload the content to CDAP namespace.
 jar_file = requests.get(f"https://hub.cdap.io/v2/packages/{package_name}/{plugin_version}/{plugin_jar}")
