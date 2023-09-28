@@ -339,5 +339,4 @@ public class CdfSysAdminActions {
     AssertionHelper.verifyElementDisplayed(CdfSysAdminLocators.
         locateProfileTitle(PluginPropertyUtils.pluginProp(profileTitle)));
   }
-
 }

@@ -17,7 +17,6 @@ package stepsdesign;
 
 import io.cdap.e2e.pages.actions.CdfSysAdminActions;
 import io.cdap.e2e.utils.CdfHelper;
-import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cucumber.java.en.Then;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,3 +148,4 @@ public class SysadminSteps implements CdfHelper {
     CdfSysAdminActions.verifyProvisionerPresentComputeProfile(profile);
   }
 }
+
