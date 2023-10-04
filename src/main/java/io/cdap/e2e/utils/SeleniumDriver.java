@@ -16,9 +16,9 @@
 
 package io.cdap.e2e.utils;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.SessionId;
@@ -45,7 +45,7 @@ public class SeleniumDriver {
   private static ChromeDriver chromeDriver;
 
   SeleniumDriver() throws IOException {
-    WebDriverManager.chromedriver().setup();
+    ChromeDriverService service = new ChromeDriverService.Builder().build();
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--disable-setuid-sandbox");
@@ -60,7 +60,7 @@ public class SeleniumDriver {
     chromePrefs.put("profile.default_content_settings.popups", 0);
     chromePrefs.put("download.default_directory", downloadDir);
     chromeOptions.setExperimentalOption("prefs", chromePrefs);
-    chromeDriver = new ChromeDriver(chromeOptions);
+    chromeDriver = new ChromeDriver(service, chromeOptions);
     chromeDriver.manage().window().maximize();
     HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
     url = executor.getAddressOfRemoteServer();
