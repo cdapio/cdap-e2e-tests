@@ -19,6 +19,7 @@ package io.cdap.e2e.utils;
 import io.cdap.e2e.pages.actions.CdfGcsActions;
 import io.cdap.e2e.pages.actions.CdfLogActions;
 import io.cdap.e2e.pages.actions.CdfPipelineRunAction;
+import io.cdap.e2e.pages.actions.CdfSignInActions;
 import io.cdap.e2e.pages.actions.CdfStudioActions;
 import io.cdap.e2e.pages.actions.HdfSignInActions;
 import io.cdap.e2e.pages.locators.CdfGCSLocators;
@@ -51,6 +52,13 @@ public interface CdfHelper {
 
     if (Boolean.parseBoolean(SeleniumHelper.readParameters(ConstantsUtil.TESTONHDF)) && !HdfSignInActions.logged()) {
       HdfSignInActions.login();
+      PageHelper.acceptAlertIfPresent();
+      WaitHelper.waitForPageToLoad();
+    }
+
+    if (Boolean.parseBoolean(SeleniumHelper.readParameters(ConstantsUtil.TESTONCDF)) && !CdfSignInActions.
+      isUserLoggedInCDF()) {
+      CdfSignInActions.login();
       PageHelper.acceptAlertIfPresent();
       WaitHelper.waitForPageToLoad();
     }

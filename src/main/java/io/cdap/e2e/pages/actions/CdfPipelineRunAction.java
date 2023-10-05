@@ -21,6 +21,7 @@ import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PageHelper;
+import io.cdap.e2e.utils.RetryUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
@@ -86,6 +87,15 @@ public class CdfPipelineRunAction {
   }
 
   /**
+   * Check if the pipeline is in Starting Status
+   *
+   * @return Boolean
+   */
+  public static Boolean isStarting() {
+    return validatePipelineExpectedStatus(CdfPipelineRunLocators.startingStatus);
+  }
+
+  /**
    * Check if the pipeline is in Provisioning Status
    *
    * @return Boolean
@@ -107,14 +117,18 @@ public class CdfPipelineRunAction {
 
   /**
    * Wait till the Pipeline's status changes (from Running) to either Succeeded, Failed or Stopped within the
-   * Timeout: {@link ConstantsUtil#PIPELINE_RUN_TIMEOUT_SECONDS}
+   * Timeout: {@link ConstantsUtil#IMPLICIT_TIMEOUT_SECONDS}
    */
-  public static void waitTillPipelineRunCompletes() {
-    SeleniumDriver.getWaitDriver(ConstantsUtil.PIPELINE_RUN_TIMEOUT_SECONDS).until(ExpectedConditions.or(
-      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.succeededStatus),
-      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.failedStatus),
-      ExpectedConditions.visibilityOf(CdfPipelineRunLocators.stoppedStatus)
-    ));
+  public static void waitTillPipelineRunCompletes() throws InterruptedException {
+    // Adding a page refresh in case tests are running on CDF to update the pipeline status.
+      RetryUtils.retry(ConstantsUtil.PIPELINE_REFRESH_TIMEOUT_SECONDS, ConstantsUtil.PIPELINE_RUN_TIMEOUT_SECONDS,
+        10, () -> {
+        PageHelper.refreshCurrentPage();
+        return !(isRunning());
+        }
+      );
+
+    waitTillPipelineRunCompletes(ConstantsUtil.IMPLICIT_TIMEOUT_SECONDS);
   }
 
   /**
