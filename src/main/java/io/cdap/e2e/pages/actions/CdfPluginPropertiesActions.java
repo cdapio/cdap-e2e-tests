@@ -141,10 +141,12 @@ public class CdfPluginPropertiesActions {
    */
   public static void clickGetSchemaButton() {
     ElementHelper.clickOnElement(CdfPluginPropertiesLocators.getSchemaButton);
-    WaitHelper.waitForElementToBeOptionallyDisplayed(
-      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnGetSchemaButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
-    WaitHelper.waitForElementToBeHidden(
-      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnGetSchemaButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+      WaitHelper.waitForElementToBeNotClickableOptionally(CdfPluginPropertiesLocators.getSchemaButton);
+//    https://cdap.atlassian.net/browse/PLUGIN-1693
+//    WaitHelper.waitForElementToBeOptionallyDisplayed(
+//      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnGetSchemaButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+//    WaitHelper.waitForElementToBeHidden(
+//      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnGetSchemaButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.getSchemaButton);
   }
 
@@ -152,11 +154,13 @@ public class CdfPluginPropertiesActions {
    * Click on the Validate button inside Plugin's properties page
    */
   public static void clickValidateButton() {
-    ElementHelper.clickOnElement(CdfPluginPropertiesLocators.validateButton);
-    WaitHelper.waitForElementToBeOptionallyDisplayed(
-      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnValidateButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
-    WaitHelper.waitForElementToBeHidden(
-      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnValidateButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+      ElementHelper.clickOnElement(CdfPluginPropertiesLocators.validateButton);
+      WaitHelper.waitForElementToBeNotClickableOptionally(CdfPluginPropertiesLocators.validateButton);
+//    https://cdap.atlassian.net/browse/PLUGIN-1693
+//    WaitHelper.waitForElementToBeOptionallyDisplayed(
+//      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnValidateButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+//    WaitHelper.waitForElementToBeHidden(
+//      CdfPluginPropertiesLocators.locatorOfLoadingSpinnerOnValidateButton(), ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     WaitHelper.waitForElementToBeDisplayed(CdfPluginPropertiesLocators.validateButton);
   }
 
