@@ -56,7 +56,7 @@ public class WaitHelper {
    */
   public static void waitForPageToLoad() {
     logger.info("Waiting for the page to load " +
-      "with the default page load timeout: " + ConstantsUtil.PAGE_LOAD_TIMEOUT_SECONDS);
+        "with the default page load timeout: " + ConstantsUtil.PAGE_LOAD_TIMEOUT_SECONDS);
     waitForPageToLoad(ConstantsUtil.PAGE_LOAD_TIMEOUT_SECONDS);
   }
 
@@ -68,7 +68,7 @@ public class WaitHelper {
    */
   public static WebElement waitForElementToBePresent(By locator) {
     logger.info("Waiting for the element: " + locator + " to be present " +
-      "with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
+        "with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
     return SeleniumDriver.getWaitDriver().until(ExpectedConditions.presenceOfElementLocated(locator));
   }
 
@@ -80,7 +80,7 @@ public class WaitHelper {
    */
   public static boolean waitForElementToBeOptionallyPresent(By locator, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + locator + " to be optionally present " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     boolean flag = false;
 
     try {
@@ -102,7 +102,7 @@ public class WaitHelper {
    */
   public static WebElement waitForElementToBeDisplayed(WebElement element, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + element + " to be displayed " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     return SeleniumDriver.getWaitDriver(timeoutInSeconds).until(ExpectedConditions.visibilityOf(element));
   }
 
@@ -124,11 +124,11 @@ public class WaitHelper {
    */
   public static boolean waitForElementToBeOptionallyDisplayed(By locator, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + locator.toString() + " to be optionally displayed " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
 
     try {
       SeleniumDriver.getWaitDriver(timeoutInSeconds)
-        .until(ExpectedConditions.visibilityOf(SeleniumDriver.getDriver().findElement(locator)));
+          .until(ExpectedConditions.visibilityOf(SeleniumDriver.getDriver().findElement(locator)));
       return true;
     } catch (NoSuchElementException e) {
       logger.info("Element is not displayed");
@@ -148,7 +148,7 @@ public class WaitHelper {
    */
   public static WebElement waitForElementToBeClickable(WebElement element, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + element + " to be clickable " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     return SeleniumDriver.getWaitDriver(timeoutInSeconds).until(ExpectedConditions.elementToBeClickable(element));
   }
 
@@ -170,7 +170,7 @@ public class WaitHelper {
    */
   public static void waitForElementToBeHidden(WebElement element, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + element + " to be hidden " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     try {
       SeleniumDriver.getWaitDriver(timeoutInSeconds).until(ExpectedConditions.invisibilityOf(element));
     } catch (NoSuchElementException e) {
@@ -195,10 +195,10 @@ public class WaitHelper {
    */
   public static void waitForElementToBeHidden(By locator, long timeoutInSeconds) {
     logger.info("Waiting for the element: " + locator + " to be hidden " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     try {
       SeleniumDriver.getWaitDriver(timeoutInSeconds)
-        .until(ExpectedConditions.invisibilityOf(SeleniumDriver.getDriver().findElement(locator)));
+          .until(ExpectedConditions.invisibilityOf(SeleniumDriver.getDriver().findElement(locator)));
     } catch (NoSuchElementException e) {
       logger.info("Element is not displayed");
     }
@@ -212,7 +212,7 @@ public class WaitHelper {
    */
   public static boolean waitForElementToBeSelected(WebElement element) {
     logger.info("Waiting for the element: " + element + " to be selected " +
-      "with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
+        "with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
     return SeleniumDriver.getWaitDriver().until(ExpectedConditions.elementSelectionStateToBe(element, true));
   }
 
@@ -252,7 +252,7 @@ public class WaitHelper {
     };
 
     logger.info("Waiting for the element: " + element + " to be enabled " +
-      "with the timeout: " + timeoutInSeconds + " seconds");
+        "with the timeout: " + timeoutInSeconds + " seconds");
     SeleniumDriver.getWaitDriver(timeoutInSeconds).until(elementToBeEnabled);
   }
 
@@ -264,7 +264,23 @@ public class WaitHelper {
    */
   public static boolean waitForTextToBePresentInElementValue(WebElement element, String text) {
     logger.info("Waiting for the element: " + element + " to contain value: " + text +
-                  " with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
+        " with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
     return SeleniumDriver.getWaitDriver().until(ExpectedConditions.textToBePresentInElementValue(element, text));
+  }
+
+  /**
+   * Wait for the element to be click-disabled
+   *
+   * @param element WebElement to check whether click is disabled for temporary time
+   */
+  public static boolean waitForElementToBeNotClickableOptionally(WebElement element) {
+    logger.info("Waiting for the element: " + element + " not to be clickable ");
+    try {
+      SeleniumDriver.getWaitDriver().until(ExpectedConditions.elementToBeClickable(element));
+      return false;
+    } catch (StaleElementReferenceException e) {
+      logger.info("Element is not clickable");
+      return true;
+    }
   }
 }
