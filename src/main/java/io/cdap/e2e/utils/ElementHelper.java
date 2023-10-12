@@ -431,4 +431,14 @@ public class ElementHelper {
   public static int countNumberOfElements(By locator) {
     return SeleniumDriver.getDriver().findElements(locator).size();
   }
+
+  /**
+   * Check for the element to be Optionally disabled
+   *
+   * @param element WebElement to check whether element is disabled
+   */
+  public static boolean elementToBeOptionallyDisabled(WebElement element) {
+    logger.info("The element: " + element + " is disabled ");
+    return !element.isEnabled();
+  }
 }
