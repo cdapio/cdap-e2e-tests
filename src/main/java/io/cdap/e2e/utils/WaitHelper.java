@@ -267,4 +267,20 @@ public class WaitHelper {
                   " with the Default timeout: " + ConstantsUtil.DEFAULT_TIMEOUT_SECONDS + " seconds");
     return SeleniumDriver.getWaitDriver().until(ExpectedConditions.textToBePresentInElementValue(element, text));
   }
+
+  /**
+   * Wait for the element to be click-disabled
+   *
+   * @param element WebElement to check whether click is disabled for temporary time
+   */
+  public static boolean waitForElementToBeNotClickableOptionally(WebElement element) {
+    logger.info("Waiting for the element: " + element + " not to be clickable ");
+    try {
+      SeleniumDriver.getWaitDriver().until(ExpectedConditions.elementToBeClickable(element));
+      return false;
+    } catch (StaleElementReferenceException e) {
+      logger.info("Element is not clickable");
+      return true;
+    }
+  }
 }
