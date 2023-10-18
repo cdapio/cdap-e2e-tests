@@ -747,4 +747,14 @@ public class PipelineSteps implements CdfHelper {
   public void pressESCKey() {
     CdfPluginPropertiesActions.pressEscapeKey();
   }
+
+  @Then("Enter key for plugin property: {string} with values: {string}")
+  public void enterKeyForPluginPropertyWithValue(String pluginProperty, String value) {
+    CdfPluginPropertiesActions.enterKeyInDedupe(pluginProperty, value);
+  }
+
+  @Then("Enter Value for plugin property table key : {string} with values: {string}")
+  public void enterValueInTableKey(String pluginProperty, String value) {
+    CdfPluginPropertiesActions.enterValueInTableKey(pluginProperty, value);
+  }
 }

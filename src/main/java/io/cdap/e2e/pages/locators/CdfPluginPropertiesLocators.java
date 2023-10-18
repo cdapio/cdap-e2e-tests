@@ -263,4 +263,16 @@ public class CdfPluginPropertiesLocators {
     String path = "//div[contains(text(),'" + tableName + "')]" + "/preceding-sibling::div/span";
     return SeleniumDriver.getDriver().findElement(By.xpath(path));
   }
+
+  public static WebElement deDupeValue() {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//div[@data-cy='value']"));
+  }
+
+  public static WebElement locateTableKey(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement
+            (By.xpath("//*[@data-cy='" + pluginProperty + "']//input")); }
+
+  public static WebElement deDupeKey(String pluginProperty) {
+    return SeleniumDriver.getDriver().findElement(By.xpath
+            ("//*[@data-cy='" + pluginProperty + "']//input[@placeholder='Key']")); }
 }
