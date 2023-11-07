@@ -23,7 +23,9 @@ import zipfile
 import shutil
 
 def run_shell_command(cmd):
-    process = subprocess.run(cmd.split(" "))
+    process = subprocess.run(cmd.split(" "), stderr=subprocess.PIPE)
+    if process.returncode != 0:
+        print("Process completed with error: ", process.stderr)
     assert process.returncode == 0
 
 if __name__ == "__main__":
