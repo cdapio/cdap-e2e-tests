@@ -31,6 +31,8 @@ def run_shell_command(cmd):
         print("Process completed with error: ", process.stderr)
     assert process.returncode == 0
 
+# Adding a change to test if Advanced cucumber reports are not getting generated due to a change merged in google-cloud.
+
 # Parse command line optional arguments
 parser=argparse.ArgumentParser()
 parser.add_argument('--testRunner', help='TestRunner class to execute tests')
