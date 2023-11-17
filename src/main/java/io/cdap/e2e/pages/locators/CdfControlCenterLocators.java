@@ -165,7 +165,7 @@ public class CdfControlCenterLocators {
   @FindBy(how = How.XPATH, using = "//i[normalize-space()='No tags found. Click to add a new business tag.']")
   public static WebElement tagCounDecreasetIconDatasetEntity;
 
-  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Search results for \"testingTag\", " +
+  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Search results for \"testingtag\", " +
     "filtered by Datasets, Applications')]")
   public static WebElement searchedTagDisplayedMessage;
 }
