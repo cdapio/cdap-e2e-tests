@@ -17,7 +17,7 @@ package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfControlCenterLocators;
 import io.cdap.e2e.pages.locators.CdfPluginPropertiesLocators;
-import io.cdap.e2e.utils.ConstantsUtil;
+import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
@@ -37,12 +37,8 @@ import stepsdesign.PipelineSteps;
 public class CdfControlCenterActions {
 
   private static final Logger logger = LoggerFactory.getLogger(CdfControlCenterActions.class);
-  public static CdfControlCenterLocators cdfNameSpaceAdminLocators;
-
-  static {
-    cdfNameSpaceAdminLocators = SeleniumHelper.getPropertiesLocators(
-      CdfControlCenterLocators.class);
-  }
+  public static CdfControlCenterLocators cdfControlCenterLocators =
+    SeleniumHelper.getPropertiesLocators(CdfControlCenterLocators.class);
 
   /**
    * Click on the Hamburger menu icon.
@@ -239,8 +235,13 @@ public class CdfControlCenterActions {
   /**
    * Click on the Dataset Artifact Message Displayed.
    */
-  public static void clickOnDatasetApplicationArtifactsMessage() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.datasetApplicationsArtifactsMessage);
+  public static void clickOnDatasetApplicationArtifactsMessage(String allEntitiesDisplayedMessage) {
+    String allEntitiesDisplayedExpectedMessage = PluginPropertyUtils.pluginProp(allEntitiesDisplayedMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              allEntitiesDisplayedExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + allEntitiesDisplayedExpectedMessage);
   }
 
   /**
@@ -297,29 +298,49 @@ public class CdfControlCenterActions {
   /**
    * Check for the displayed message when sorted by Newest.
    */
-  public static void clickOnNewestOptionMessage() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.newestOptionMessage);
+  public static void clickOnNewestOptionMessage(String newFilterMessage) {
+    String newestOptionExpectedMessage = PluginPropertyUtils.pluginProp(newFilterMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              newestOptionExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + newestOptionExpectedMessage);
   }
 
   /**
    * Check for the displayed message when sorted by Oldest.
    */
-  public static void clickOnOldestOptionMessage() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.oldestOptionMessage);
+  public static void clickOnOldestOptionMessage(String oldestFilterMessage) {
+    String oldestOptionExpectedMessage = PluginPropertyUtils.pluginProp(oldestFilterMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              oldestOptionExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + oldestOptionExpectedMessage);
   }
 
   /**
    * Check for the displayed message when sorted by Z To A.
    */
-  public static void clickOnZToAOptionMessage() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.zToAOptionMessage);
+  public static void clickOnZToAOptionMessage(String zToAFilterMessage) {
+    String zToAOptionExpectedMessage = PluginPropertyUtils.pluginProp(zToAFilterMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              zToAOptionExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + zToAOptionExpectedMessage);
   }
 
   /**
    * Check for the displayed message when sorted by A To Z.
    */
-  public static void clickOnAToZOptionMessage() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.aToZOptionMessage);
+  public static void clickOnAToZOptionMessage(String aToZFilterMessage) {
+    String aToZOptionExpectedMessage = PluginPropertyUtils.pluginProp(aToZFilterMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              aToZOptionExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + aToZOptionExpectedMessage);
   }
 
   /**
@@ -373,14 +394,19 @@ public class CdfControlCenterActions {
   /**
    * Check for the count when user removes the tag.
    */
-  public static void tagCountDecreasesDataset() {
-    ElementHelper.clickOnElement(CdfControlCenterLocators.tagCounDecreaseIconDatasetEntityMessage);
+  public static void tagCountDecreasesDataset(String tagCountDecreaseMessage) {
+    String tagCountDecreaseExpectedMessage = PluginPropertyUtils.pluginProp(tagCountDecreaseMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.tagCounDecreaseIconDatasetEntityMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.tagCounDecreaseIconDatasetEntityMessage,
+                                              tagCountDecreaseExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.tagCounDecreaseIconDatasetEntityMessage
+                  + " contains text: " + tagCountDecreaseExpectedMessage);
   }
 
   /**
    * Click on Search tab in control center.
    */
-  public static void clickOnSearchTagControlCenter(String searchedText) {
+  public static void enterTextInSearchBarInControlCenter(String searchedText) {
     ElementHelper.sendKeys(CdfControlCenterLocators.searchTabControlCenter, searchedText);
     ElementHelper.clickOnElement(CdfControlCenterLocators.searchTabControlCenter);
   }
@@ -388,8 +414,14 @@ public class CdfControlCenterActions {
   /**
    * Search for the added tag in control center.
    */
-  public static void searchedTagDisplayedMessage() {
-    ElementHelper.isElementDisplayed(CdfControlCenterLocators.searchedTagShowsDisplayedMessage); }
+  public static void searchedTagDisplayedMessage(String searchedTagDisplayedMessage) {
+    String searchedTagDisplayedExpectedMessage = PluginPropertyUtils.pluginProp(searchedTagDisplayedMessage);
+    WaitHelper.waitForElementToBeDisplayed(CdfControlCenterLocators.filterOptionMessage);
+    AssertionHelper.verifyElementContainsText(CdfControlCenterLocators.filterOptionMessage,
+                                              searchedTagDisplayedExpectedMessage);
+    logger.info("Verifying that the element: " + CdfControlCenterLocators.filterOptionMessage + " contains text: "
+                  + searchedTagDisplayedExpectedMessage);
+  }
 
   /**
    * Press Enter Key.
@@ -397,6 +429,6 @@ public class CdfControlCenterActions {
   public static void pressEnterKey() {
     logger.info("Press Enter Key");
     Actions act = new Actions(SeleniumDriver.getDriver());
-    act.sendKeys(new CharSequence[]{Keys.ENTER}).perform();
+    act.sendKeys(Keys.ENTER).perform();
   }
-  }
+}

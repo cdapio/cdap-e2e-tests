@@ -28,10 +28,10 @@ import org.openqa.selenium.support.How;
 
 public class CdfControlCenterLocators {
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='navbar-hamburger-icon']")
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='navbar-hamburger-icon']")
   public static WebElement hamburgerMenu;
 
-  @FindBy(how = How.XPATH, using = "//*[@data-cy='navbar-control-center-link']")
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='navbar-control-center-link']")
   public static WebElement controlCenterMenu;
 
   @FindBy(how = How.XPATH, using = "//*[@data-cy='feature-heading'][//div[contains(text(),'Control Center')]]")
@@ -40,40 +40,24 @@ public class CdfControlCenterLocators {
   @FindBy(how = How.XPATH, using = "//*[@id='create-pipeline-link']")
   public static WebElement createButtonControlCenter;
 
-  @FindBy(how = How.XPATH, using = "//span[@class='entity-type'][//span[contains(text(),'Data Pipeline')]]")
+  @FindBy(how = How.XPATH, using = "//div[@class='entity-card-header datapipeline']")
   public static WebElement dataPipelineControlCenter;
 
   @FindBy(how = How.XPATH, using = "//div[@class='just-added-entities-list']//button[@class='btn btn-link']" +
     "//*[@class='icon-svg icon-trash']")
   public static WebElement deleteIconControlCenter;
 
-  public static By clickOnDeleteButton() {
-    return By.xpath("//button[@class='btn btn-primary'][//button[@data-cy='Delete']]");
-  }
-
-  public static By clickOnTruncateButton() {
-    return By.xpath("//div//button[@data-cy='Truncate']");
-  }
-
   @FindBy(how = How.XPATH, using = "//div[@class='empty-message-container']")
   public static WebElement pipelineDeletedMessage;
 
-  @FindBy(how = How.XPATH, using = "//input[@class='search-input form-control'][@placeholder='Search']")
+  @FindBy(how = How.XPATH, using = "//input[@class='search-input form-control']")
   public static WebElement searchTabControlCenter;
 
   @FindBy(how = How.XPATH, using = "//div[@class='just-added-entities-list']//button[@class='btn btn-link']" +
     "//*['icon-svg icon-wrench']")
   public static WebElement setPreferencesIcon;
 
-  public static WebElement keyInputField() {
-    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@placeholder='key']"));
-  }
-
-  public static WebElement valueInputField() {
-    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@placeholder='value']"));
-  }
-
-  @FindBy(how = How.XPATH, using = "//button[@data-cy='save-prefs-btn']")
+  @FindBy(how = How.XPATH, using = "//button[@data-testid='save-prefs-btn']")
   public static WebElement saveAndCloseButton;
 
   @FindBy(how = How.XPATH, using = "//div[@class='just-added-entities-list']" +
@@ -99,7 +83,7 @@ public class CdfControlCenterLocators {
   @FindBy(how = How.XPATH, using = "//a[@class='link-to-detail']")
   public static WebElement viewDetailsTabDatasetEntity;
 
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Dataset')]")
+  @FindBy(how = How.XPATH, using = "//*[@class='icon-svg icon-datasets']")
   public static WebElement navigateOnViewDetailsPageDatasetEntity;
 
   @FindBy(how = How.XPATH, using = "//a[contains(text(),'Back')]")
@@ -107,13 +91,6 @@ public class CdfControlCenterLocators {
 
   @FindBy(how = How.XPATH, using = "//*[@class='icon-svg icon-close']")
   public static WebElement closeTabDatasetEntity;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Displaying all entities, sorted by Newest')]")
-  public static WebElement datasetApplicationsArtifactsMessage;
-
-  public static By locateDropdownListItem(String option) {
-    return By.xpath("//input[@data-cy='" + option + "']");
-  }
 
   @FindBy(how = How.XPATH, using = "//a[contains(text(),'Schema')]")
   public static WebElement schemaTabDatasetEntity;
@@ -127,31 +104,14 @@ public class CdfControlCenterLocators {
   @FindBy(how = How.XPATH, using = "//div[@class='program-tab clearfix']")
   public static WebElement programsTabDatasetEntityPage;
 
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Displaying Applications, Datasets, sorted by Newest')]")
-  public static WebElement newestOptionMessage;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Displaying Applications, Datasets, sorted by Oldest')]")
-  public static WebElement oldestOptionMessage;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Displaying Applications, Datasets, sorted by Z - A')]")
-  public static WebElement zToAOptionMessage;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Displaying Applications, Datasets, sorted by A - Z')]")
-  public static WebElement aToZOptionMessage;
+  @FindBy(how = How.XPATH, using = "//div[@class='list-view-header subtitle']")
+  public static WebElement filterOptionMessage;
 
   @FindBy(how = How.XPATH, using = "//div[@id='filter-tooltip-target-id']")
   public static WebElement sortDropdown;
 
-  public static WebElement selectSortDropdownValue(String option) {
-    return SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(text(),'" + option + "')]"));
-  }
-
   @FindBy(how = How.XPATH, using = "//span[@data-testid='tag-plus-button']")
   public static WebElement addTagIconDatasetEntity;
-
-  public static WebElement enterAddTagIconDatasetEntityValue() {
-    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@data-testid='tag-input']"));
-  }
 
   @FindBy(how = How.XPATH, using = "//*[contains(text(),'Tags (1)')]")
   public static WebElement tagCountIconIncreaseDatasetEntity;
@@ -159,9 +119,35 @@ public class CdfControlCenterLocators {
   @FindBy(how = How.XPATH, using = "//span[@class='tag-content']//*[@class='icon-svg icon-close']")
   public static WebElement closeTagIconDatasetEntity;
 
-  @FindBy(how = How.XPATH, using = "//i[normalize-space()='No tags found. Click to add a new business tag.']")
+  @FindBy(how = How.XPATH, using = "//div[@class='tags-holder']")
   public static WebElement tagCounDecreaseIconDatasetEntityMessage;
 
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Search results for \"testingtag\", filtered by Appli')]")
-  public static WebElement searchedTagShowsDisplayedMessage;
+  public static By clickOnDeleteButton() {
+    return By.xpath("//button[@class='btn btn-primary'][//button[@data-testid='Delete']]");
+  }
+
+  public static By clickOnTruncateButton() {
+    return By.xpath("//div//button[@data-testid='Truncate']");
+  }
+
+  public static WebElement keyInputField() {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@class='form-control key-input']"));
+  }
+
+  public static WebElement valueInputField() {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@class='form-control value-input']"));
+  }
+
+  public static By locateDropdownListItem(String option) {
+    return By.xpath
+      ("//input[@data-testid='" + option + "']");
+  }
+
+  public static WebElement selectSortDropdownValue(String option) {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//*[contains(text(),'" + option + "')]"));
+  }
+
+  public static WebElement enterAddTagIconDatasetEntityValue() {
+    return SeleniumDriver.getDriver().findElement(By.xpath("//input[@data-testid='tag-input']"));
+  }
 }

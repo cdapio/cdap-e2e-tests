@@ -36,12 +36,12 @@ public class ControlCenterSteps implements CdfHelper {
 
   @Then("Enter the text in search tab {string} in control center")
   public static void openSearchControlCenter(String value) {
-    CdfControlCenterActions.clickOnSearchTagControlCenter(value);
+    CdfControlCenterActions.enterTextInSearchBarInControlCenter(value);
   }
 
-  @Then("Verify the searched tag is displayed successfully on control center page")
-  public static void searchedTagDisplayedMessage() {
-    CdfControlCenterActions.searchedTagDisplayedMessage();
+  @Then("Verify the searched tag is displayed successfully on control center page: {string}")
+  public static void searchedTagDisplayedMessage(String searchedTagDisplayedMessage) {
+    CdfControlCenterActions.searchedTagDisplayedMessage(searchedTagDisplayedMessage);
   }
 
   @Then("Click on Control Center link from the hamburger menu")
@@ -154,9 +154,9 @@ public class ControlCenterSteps implements CdfHelper {
     CdfControlCenterActions.selectFilterDropdownOption(pluginProperty, option);
   }
 
-  @Then("Verify the all entities message is displayed with the filter selection")
-  public void displayFilterDatasetApplicationArtifactsMessage() {
-    CdfControlCenterActions.clickOnDatasetApplicationArtifactsMessage();
+  @Then("Verify the all entities message is displayed with the filter selection: {string}")
+  public void displayFilterDatasetApplicationArtifactsMessage(String allEntitiesDisplayedMessage) {
+    CdfControlCenterActions.clickOnDatasetApplicationArtifactsMessage(allEntitiesDisplayedMessage);
   }
 
   @Then("Click on the schema link of the dataset entity details page")
@@ -185,24 +185,24 @@ public class ControlCenterSteps implements CdfHelper {
     CdfControlCenterActions.selectSortDropdownOptionValue(option);
   }
 
-  @Then("Verify the entities are sorted by the newest option")
-  public void clickOnNewestOptionMessage() {
-    CdfControlCenterActions.clickOnNewestOptionMessage();
+  @Then("Verify the entities are sorted by the newest option: {string}")
+  public void clickOnNewestOptionMessage(String newFilterMessage) {
+    CdfControlCenterActions.clickOnNewestOptionMessage(newFilterMessage);
   }
 
-  @Then("Verify the entities are sorted by the oldest option")
-  public void clickOnOldestOptionMessage() {
-    CdfControlCenterActions.clickOnOldestOptionMessage();
+  @Then("Verify the entities are sorted by the oldest option: {string}")
+  public void clickOnOldestOptionMessage(String oldestFilterMessage) {
+    CdfControlCenterActions.clickOnOldestOptionMessage(oldestFilterMessage);
   }
 
-  @Then("Verify the entities are sorted by the Z to A option")
-  public void clickOnZToAOptionMessage() {
-    CdfControlCenterActions.clickOnZToAOptionMessage();
+  @Then("Verify the entities are sorted by the Z to A option: {string}")
+  public void clickOnZToAOptionMessage(String zToAFilterMessage) {
+    CdfControlCenterActions.clickOnZToAOptionMessage(zToAFilterMessage);
   }
 
-  @Then("Verify the entities are sorted by the A to Z option")
-  public void clickOnAToZOptionMessage() {
-    CdfControlCenterActions.clickOnAToZOptionMessage();
+  @Then("Verify the entities are sorted by the A to Z option: {string}")
+  public void clickOnAToZOptionMessage(String aToZFilterMessage) {
+    CdfControlCenterActions.clickOnAToZOptionMessage(aToZFilterMessage);
   }
 
   @Then("Click on the plus button to add the tag for a dataset entity")
@@ -221,10 +221,13 @@ public class ControlCenterSteps implements CdfHelper {
     CdfControlCenterActions.tagCountIncreasesDataset();
   }
 
-  @Then("Click on the close icon of tag added and verify the tag count decreases")
+  @Then("Click on the close icon of tag added")
   public void clickOnCloseIconAndTagCountDecreases() {
-    CdfControlCenterActions.clickOnCloseIcon(); {
-    CdfControlCenterActions.tagCountDecreasesDataset();
-    }
+    CdfControlCenterActions.clickOnCloseIcon();
+  }
+
+  @Then("Verify the tag count of dataset entity decreases message: {string}")
+  public void tagCountDecreasesDataset(String tagCountDecreaseMessage) {
+    CdfControlCenterActions.tagCountDecreasesDataset(tagCountDecreaseMessage);
   }
 }
