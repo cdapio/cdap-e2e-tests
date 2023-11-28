@@ -102,10 +102,10 @@ public class CdfNameSpaceAdminActions {
    *                           keyValuePair as key
    */
   public static void enterKeyValuePreferences(String preferenceProperty, String keyValuePair) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+    String dataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
         preferenceProperty);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = preferenceProperty;
+    if (dataCyAttribute == null) {
+      dataCyAttribute = preferenceProperty;
     }
     Map<String, String> properties =
         JsonUtils.convertKeyValueJsonArrayToMap(PluginPropertyUtils.pluginProp(keyValuePair));
@@ -113,12 +113,12 @@ public class CdfNameSpaceAdminActions {
     for (Map.Entry<String, String> entry : properties.entrySet()) {
       if (index != 0) {
         ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.locateAddRowButtonProperty(
-            pluginPropertyDataCyAttribute, index - 1));
+            dataCyAttribute, index - 1));
       }
       ElementHelper.sendKeys(CdfNameSpaceAdminLocators.locateKeyProperty(
-          pluginPropertyDataCyAttribute, index), entry.getKey());
+          dataCyAttribute, index), entry.getKey());
       ElementHelper.sendKeys(CdfNameSpaceAdminLocators.locateValueProperty(
-          pluginPropertyDataCyAttribute, index), entry.getValue());
+          dataCyAttribute, index), entry.getValue());
       index++;
     }
   }
@@ -131,13 +131,13 @@ public class CdfNameSpaceAdminActions {
    *                        fetched from it else Provisioner is used as it is.
    */
   public static void selectProvisioner(String provisionerName) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+    String dataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
         provisionerName);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = provisionerName;
+    if (dataCyAttribute == null) {
+      dataCyAttribute = provisionerName;
     }
     ElementHelper.clickOnElement(
-        CdfNameSpaceAdminLocators.locateProvisionerInList(pluginPropertyDataCyAttribute));
+        CdfNameSpaceAdminLocators.locateProvisionerInList(dataCyAttribute));
   }
 
   /**
@@ -180,13 +180,13 @@ public class CdfNameSpaceAdminActions {
    *                   fetched from it else type of action is used as it is.
    */
   public static void clickCreateButtonComputeProfile(String buttonType) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
+    String dataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
         buttonType);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = buttonType;
+    if (dataCyAttribute == null) {
+      dataCyAttribute = buttonType;
     }
     ElementHelper.clickOnElement(
-        CdfNameSpaceAdminLocators.locateButtonType(pluginPropertyDataCyAttribute));
+        CdfNameSpaceAdminLocators.locateButtonType(dataCyAttribute));
   }
 
   /**
