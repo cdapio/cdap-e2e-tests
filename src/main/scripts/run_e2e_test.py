@@ -74,7 +74,7 @@ plugin_details = yaml.load(plugin_details_file, Loader=yaml.FullLoader)
 for plugin, details in plugin_details['plugins'].items():
     artifact_name = details.get('artifact_name')
     artifact_version = details.get('artifact_version')
-    subprocess.run(["python", "upload_required_plugins.py", artifact_name, artifact_version])
+    subprocess.run(["python3.8", os.path.join('e2e', 'src', 'main', 'scripts', 'upload_required_plugins.py'), artifact_name, artifact_version])
 
 module_to_build = ""
 if args.module:

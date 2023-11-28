@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright © 2023 Cask Data, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -60,7 +61,7 @@ filter_expression = jq.compile('.properties')
 filtered_data = filter_expression.input(data).all()
 data_to_upload = json.dumps(filtered_data[0])
 
-# Uploading the Json content.
+# Uploading the Json content
 res = requests.put(
     f"http://localhost:11015/v3/namespaces/default/artifacts/{plugin_name}/versions/{plugin_version}/properties",
     headers = {
