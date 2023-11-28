@@ -22,10 +22,15 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.BucketInfo;
+import com.google.cloud.storage.BucketInfo.LifecycleRule;
+import com.google.cloud.storage.BucketInfo.LifecycleRule.LifecycleAction;
+import com.google.cloud.storage.BucketInfo.LifecycleRule.LifecycleCondition;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.Storage.BucketField;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 
+import com.google.common.collect.ImmutableList;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -93,4 +98,18 @@ public class StorageClient {
       Files.readAllBytes(Paths.get(StorageClient.class.getResource("/" + filePath).toURI())));
   }
 
+  /**
+   * @param bucketName , required random Bucket name to create in GCS.
+   * @param ageInDays  Age has to be pass in days.
+   */
+  public static Bucket createBucketwithLifeCycle(String bucketName, int ageInDays) throws IOException {
+    return getStorageService().create(BucketInfo.of(bucketName)).toBuilder()
+        .setLifecycleRules(
+            ImmutableList.of(
+                new LifecycleRule(
+                    LifecycleAction.newAbortIncompleteMPUploadAction(),
+                    LifecycleCondition.newBuilder().setAge(ageInDays).build()))).build().update();
+  }
+
 }
+
