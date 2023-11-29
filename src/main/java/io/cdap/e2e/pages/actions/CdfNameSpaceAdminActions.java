@@ -16,6 +16,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.CdfNameSpaceAdminLocators;
+import io.cdap.e2e.pages.locators.CdfSysAdminLocators;
 import io.cdap.e2e.utils.AssertionHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
@@ -53,10 +54,6 @@ public class CdfNameSpaceAdminActions {
     ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.hamburgerMenu);
   }
 
-  public static void clickOnEditPreference() {
-    ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.editPreferencesButton);
-  }
-
   public static void switchToNameSpace(String nameSpaceName) {
     ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.switchNameSpace(nameSpaceName));
   }
@@ -71,23 +68,6 @@ public class CdfNameSpaceAdminActions {
 
   public static void addNamespaceFromHamburgerMenu() {
     ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.addNamespace);
-  }
-
-  /**
-   * Click on Save and Close button to save preference
-   */
-  public static void clickOnSavePreference() {
-    ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.clickSaveClose);
-  }
-
-  public static void selectHamburgerMenuList(String listName) {
-    String pluginPropertyDataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
-        listName);
-    if (pluginPropertyDataCyAttribute == null) {
-      pluginPropertyDataCyAttribute = listName;
-    }
-    ElementHelper.clickOnElement(
-        CdfNameSpaceAdminLocators.locateMenuLink(pluginPropertyDataCyAttribute));
   }
 
   /**
@@ -123,121 +103,6 @@ public class CdfNameSpaceAdminActions {
     }
   }
 
-  /**
-   * Select on the type of Provisioner from list for Compute Profile in system admin
-   *
-   * @param provisionerName @data-cy attribute value of Provisioner. If Provisioner is present in
-   *                        {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy is
-   *                        fetched from it else Provisioner is used as it is.
-   */
-  public static void selectProvisioner(String provisionerName) {
-    String dataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
-        provisionerName);
-    if (dataCyAttribute == null) {
-      dataCyAttribute = provisionerName;
-    }
-    ElementHelper.clickOnElement(
-        CdfNameSpaceAdminLocators.locateProvisionerInList(dataCyAttribute));
-  }
-
-  /**
-   * Click on the Close button in compute profile properties page
-   */
-  public static void clickCloseButton() {
-    ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.closeButton);
-  }
-
-  /**
-   * Click on Delete to delete preference
-   */
-  public static void deletePreference() {
-    ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.clickDelete);
-  }
-
-  /**
-   * Click on Reset button to reset preference
-   */
-  public static void clickOnResetPreference() {
-    ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.clickReset);
-  }
-
-  /**
-   * Verify if the added Preferences reset is successful
-   */
-  public static void verifyIfResetValidatedSuccessfully() {
-    WaitHelper.waitForElementToBeDisplayed(CdfNameSpaceAdminLocators.resetSuccessMsg);
-    String expectedMessage = PluginPropertyUtils.errorProp(
-        ConstantsUtil.RESET_VALIDATION_SUCCESS_MESSAGE);
-    AssertionHelper.verifyElementContainsText(
-        CdfNameSpaceAdminLocators.resetSuccessMsg, expectedMessage);
-  }
-
-  /**
-   * Click on type of button to create Compute Profile in system admin
-   *
-   * @param buttonType @data-cy attribute value of button. If type of action is present in
-   *                   {@link ConstantsUtil#DEFAULT_DATACY_ATTRIBUTES_FILE} then its data-cy is
-   *                   fetched from it else type of action is used as it is.
-   */
-  public static void clickCreateButtonComputeProfile(String buttonType) {
-    String dataCyAttribute = PluginPropertyUtils.getPluginPropertyDataCyAttribute(
-        buttonType);
-    if (dataCyAttribute == null) {
-      dataCyAttribute = buttonType;
-    }
-    ElementHelper.clickOnElement(
-        CdfNameSpaceAdminLocators.locateButtonType(dataCyAttribute));
-  }
-
-  /**
-   * Verify Error message displayed on the footer/at the bottom of Compute Profile Properties page
-   * using the Error message location in the .properties file
-   * {@link ConstantsUtil#DEFAULT_ERROR_PROPERTIES_FILE}
-   *
-   * @param errorMessageLocation Expected error message location
-   */
-  public static void verifyErrorMessageOnFooter(String errorMessageLocation) {
-    String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessageLocation);
-    AssertionHelper.verifyElementContainsText(CdfNameSpaceAdminLocators.errorMessageOnFooter,
-        expectedErrorMessage);
-  }
-
-  /**
-   * Enter NamespaceName value in Add namespace
-   *
-   * @param value If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a
-   *              key then its value is fetched from it else value is entered in the input as it
-   *              is.
-   */
-  public static void enterNamespaceName(String value) {
-    ElementHelper.sendKeys(CdfNameSpaceAdminLocators.namespaceName,
-        PluginPropertyUtils.pluginProp(value));
-  }
-
-  /**
-   * Enter NamespaceDescription value in Add namespace
-   *
-   * @param value If value is present in {@link ConstantsUtil#DEFAULT_PLUGIN_PROPERTIES_FILE} as a
-   *              key then its value is fetched from it else value is entered in the input as it
-   *              is.
-   */
-  public static void enterNamespaceDescription(String value) {
-    ElementHelper.sendKeys(CdfNameSpaceAdminLocators.namespaceDescription,
-        PluginPropertyUtils.pluginProp(value));
-  }
-
-  /**
-   * Verify Error message displayed on the dialog box using the Error message location in the
-   * .properties file {@link ConstantsUtil#DEFAULT_ERROR_PROPERTIES_FILE}
-   *
-   * @param errorMessageLocation Expected error message location
-   */
-  public static void verifyFailedErrorMessageOnDialogBox(String errorMessageLocation) {
-    String expectedErrorMessage = PluginPropertyUtils.errorProp(errorMessageLocation);
-    AssertionHelper.verifyElementContainsText(CdfNameSpaceAdminLocators.failMessage,
-        expectedErrorMessage);
-  }
-
   public static void switchToNewNameSpace() {
     ElementHelper.clickOnElement(CdfNameSpaceAdminLocators.switchToNameSpaceButton);
   }
@@ -250,24 +115,5 @@ public class CdfNameSpaceAdminActions {
 
   public static void verifyElementIsDisplayed() {
     ElementHelper.isElementDisplayed(CdfNameSpaceAdminLocators.pageHeaderNameSpaceAdmin);
-  }
-
-  /**
-   * Check whether Create Profile Properties Page is loaded
-   */
-  public static void verifyCreateProfilePageLoaded() {
-    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfNameSpaceAdminLocators.profilePropertiesPage(),
-        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
-  }
-
-  /**
-   * Check whether Profile created is present in System Compute Profile tab
-   *
-   * @param profileTitle any specific title created
-   */
-  public static void verifyProvisionerPresentComputeProfile(String profileTitle) {
-    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfNameSpaceAdminLocators.
-            locateProfileTitle(PluginPropertyUtils.pluginProp(profileTitle)),
-        ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 }

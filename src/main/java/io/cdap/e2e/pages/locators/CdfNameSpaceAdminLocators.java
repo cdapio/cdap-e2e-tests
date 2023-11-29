@@ -75,12 +75,6 @@ public class CdfNameSpaceAdminLocators {
   @FindBy(how = How.XPATH, using = "//div[contains(text(),'Add Namespace')]")
   public static WebElement addNamespace;
 
-  @FindBy(how = How.XPATH, using = "//input[@placeholder='Namespace name']")
-  public static WebElement namespaceName;
-
-  @FindBy(how = How.XPATH, using = "//input[@placeholder='Namespace description' and @type='text']")
-  public static WebElement namespaceDescription;
-
   @FindBy(how = How.XPATH, using = "//button[@data-cy='wizard-next-btn']")
   public static WebElement clickOnNextButton;
 
@@ -133,9 +127,6 @@ public class CdfNameSpaceAdminLocators {
   @FindBy(how = How.XPATH, using = "//span[@id='setpreferences-fd']")
   public static WebElement setPreferencesfromMainMenu;
 
-  @FindBy(how = How.XPATH, using = "//button[@data-testid='save-prefs-btn']")
-  public static WebElement clickSaveClose;
-
   @FindBy(how = How.XPATH, using = "//span[contains(text(),'Upload Driver')]")
   public static WebElement uploadDriverTab;
 
@@ -154,29 +145,8 @@ public class CdfNameSpaceAdminLocators {
   @FindBy(how = How.XPATH, using = "//span[contains(text(),'Import')]")
   public static WebElement importConnectionTab;
 
-  @FindBy(how = How.XPATH, using = "//span[contains(text(),'Edit')]")
-  public static WebElement editPreferencesButton;
-
   @FindBy(how = How.XPATH, using = "//span[contains(text(),'Create Profile')]")
   public static WebElement createProfileInNamespaceAdmin;
-
-  @FindBy(how = How.XPATH, using = "//*[contains(text(),'Close')]")
-  public static WebElement closeButton;
-
-  @FindBy(how = How.XPATH, using = "//span//button[@type='submit' and @class='btn remove-row-btn btn-link']")
-  public static WebElement clickDelete;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(@class,'reset')]")
-  public static WebElement clickReset;
-
-  @FindBy(how = How.XPATH, using = "//span[contains(@class,'success reset-success')]")
-  public static WebElement resetSuccessMsg;
-
-  @FindBy(how = How.XPATH, using = "//div[contains(@class, 'error-section text-danger')]")
-  public static WebElement errorMessageOnFooter;
-
-  @FindBy(how = How.XPATH, using = "//div[contains(@class, 'card-action-feedback DANGER')]")
-  public static WebElement failMessage;
 
   @FindBy(how = How.XPATH, using = "//a[contains(text(),\"Switch to\")]")
   public static WebElement switchToNameSpaceButton;
