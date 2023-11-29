@@ -52,19 +52,19 @@ public class CdfNameSpaceAdminLocators {
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
-  public static WebElement locateKeyProperty(String pluginProperty, int row) {
-    String xpath = "//*[@data-cy='" + pluginProperty + "" + row + "']//input[@placeholder='key']";
+  public static WebElement locateKeyProperty(String keyProperty, int row) {
+    String xpath = "//*[@data-cy='" + keyProperty + "" + row + "']//input[@placeholder='key']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
-  public static WebElement locateValueProperty(String pluginProperty, int row) {
-    String xpath = "//*[@data-cy='" + pluginProperty + "" + row + "']//input[@placeholder='value']";
+  public static WebElement locateValueProperty(String valueProperty, int row) {
+    String xpath = "//*[@data-cy='" + valueProperty + "" + row + "']//input[@placeholder='value']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
-  public static WebElement locateAddRowButtonProperty(String pluginProperty, int row) {
+  public static WebElement locateAddRowButtonProperty(String addRowProperty, int row) {
     String xpath =
-        "//*[@data-cy='" + pluginProperty + "" + row + "']//span"
+        "//*[@data-cy='" + addRowProperty + "" + row + "']//span"
             + "//button[@type='submit' and @class='btn add-row-btn btn-link']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }

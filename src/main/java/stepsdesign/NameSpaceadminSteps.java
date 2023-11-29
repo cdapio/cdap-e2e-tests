@@ -60,8 +60,8 @@ public class NameSpaceadminSteps implements CdfHelper {
   }
 
   @Then("Set namespace preferences with key: {string} and value: {string}")
-  public void setSystemPreferencesWithKeyAndValue(String pluginProperty, String keyValuePairs) {
-    CdfNameSpaceAdminActions.enterKeyValuePreferences(pluginProperty, keyValuePairs);
+  public void setNamespacePreferencesWithKeyAndValue(String keyProperty, String keyValuePairs) {
+    CdfNameSpaceAdminActions.enterKeyValuePreferences(keyProperty, keyValuePairs);
   }
 
   @Then("Switch to the newly created Namespace")
