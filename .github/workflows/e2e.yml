@@ -19,13 +19,11 @@ on:
     branches: [ develop, release/** ]
   pull_request:
     branches: [ develop, release/** ]
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
     runs-on: k8s-runner-e2e
-
-    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
@@ -45,7 +43,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-${{ github.workflow }}
       - name: Run required e2e tests
-        if: ${{ github.event_name != 'workflow_dispatch' && github.event_name != 'push' }}
         run: python3 e2e/src/main/scripts/run_e2e_test.py --testRunner TestRunnerRequired.java --framework yes
       - name: Upload debug files
         uses: actions/upload-artifact@v3
