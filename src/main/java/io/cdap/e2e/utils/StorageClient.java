@@ -107,7 +107,7 @@ public class StorageClient {
         .setLifecycleRules(
             ImmutableList.of(
                 new LifecycleRule(
-                    LifecycleAction.newAbortIncompleteMPUploadAction(),
+                    LifecycleAction.newLifecycleAction("AbortIncompleteMultipartUpload"),
                     LifecycleCondition.newBuilder().setAge(ageInDays).build()))).build().update();
   }
 
