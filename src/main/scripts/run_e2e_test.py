@@ -24,6 +24,8 @@ import sys
 import argparse
 import urllib.request
 import yaml
+import re
+
 
 def run_shell_command(cmd):
     process = subprocess.run(cmd.split(" "), stderr=subprocess.PIPE)
@@ -95,6 +97,7 @@ else:
         run_shell_command("mvn clean package -DskipTests")
 
 # Get plugin artifact name and version from pom.xml.
+plugin_name = ""
 root = ET.parse('pom.xml').getroot()
 plugin_version = root.find('{http://maven.apache.org/POM/4.0.0}version').text
 if module_to_build:
@@ -124,8 +127,7 @@ assert res.ok or print(res.text)
 res=requests.put(f"http://localhost:11015/v3/namespaces/default/artifacts/{plugin_name}/versions/{plugin_version}/properties", json=plugin_properties)
 assert res.ok or print(res.text)
 
-if module_to_build:
-    os.chdir("../../..")
+def upload_drivers(module_to_build):
     driver_details_file = open(os.path.join('e2e', 'src', 'main', 'scripts', 'driver_details.yaml'))
     driver_details = yaml.load(driver_details_file, Loader=yaml.FullLoader)
     if module_to_build in driver_details['modules']:
@@ -137,10 +139,28 @@ if module_to_build:
         assert get_driver_jar.ok or print(get_driver_jar.text)
         driverData = get_driver_jar.content
         print(f"Installing {artifact_name} driver")
-        res=requests.post(f"http://localhost:11015/v3/namespaces/default/artifacts/{artifact_name}", headers={"Content-Type": "application/octet-stream", "Artifact-Version": artifact_version, "Artifact-Plugins": driver_prop }, data=driverData)
+        res=requests.post(f"http://localhost:11015/v3/namespaces/default/artifacts/{artifact_name}", headers={"Content-Type": "application/octet-stream", "Artifact-Version": artifact_version, "Artifact-Plugins": driver_prop}, data=driverData)
         assert res.ok or print(res.text)
+
+if module_to_build:
+    os.chdir("../../..")
+    upload_drivers(module_to_build)
 else:
     os.chdir("../..")
+
+# Uploading MySQL Driver while building BQMT-Plugin in Google Cloud repo.
+# Checking if the submodule to build is BigQuery Multi Table, only then driver should be downloaded.
+if plugin_name == 'google-cloud':
+    input_string = args.testRunner
+    pattern = r'bigquerymultitable'
+    submodule = re.search(pattern, input_string)
+    desired_module = ''
+    if submodule:
+        desired_module = submodule.group(0)
+        if desired_module == 'bigquerymultitable':
+            os.chdir("../../..")
+            print("Uploading MySql Driver..")
+            upload_drivers('mysql-plugin')
 
 print("cwd:", os.getcwd())
 print("ls:", os.listdir())
