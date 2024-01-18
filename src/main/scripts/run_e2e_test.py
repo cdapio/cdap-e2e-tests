@@ -158,8 +158,7 @@ if plugin_name == 'google-cloud':
     if submodule:
         desired_module = submodule.group(0)
         if desired_module == 'bigquerymultitable':
-            os.chdir("../../..")
-            print("Uploading MySql Driver..")
+            print("Uploading MySql Driver.")
             upload_drivers('mysql-plugin')
 
 print("cwd:", os.getcwd())
