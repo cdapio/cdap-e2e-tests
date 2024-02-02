@@ -43,8 +43,8 @@ parser.add_argument('--mvnProjectBuildProfiles', help='Maven project build profi
 args=parser.parse_args()
 
 # Start CDAP sandbox
-print("Downloading CDAP sandbox")
 sandbox_url = "https://github.com/cdapio/cdap-build/releases/download/latest/cdap-sandbox-6.11.0-SNAPSHOT.zip"
+print("Downloading CDAP sandbox from",sandbox_url)
 sandbox_dir = sandbox_url.split("/")[-1].split(".zip")[0]
 r = requests.get(sandbox_url)
 z = zipfile.ZipFile(io.BytesIO(r.content))
