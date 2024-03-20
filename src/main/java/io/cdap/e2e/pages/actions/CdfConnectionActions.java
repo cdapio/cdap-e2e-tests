@@ -126,7 +126,8 @@ public class CdfConnectionActions {
    * Example : For GCS pass actual bucket name as parameter.
    */
   private static void selectConnectionDataRow(String dataRow) {
-    waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeClickable(CdfConnectionLocators.searchDirectoryInput,
+                                           ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.sendKeys(CdfConnectionLocators.searchDirectoryInput, dataRow);
     WaitHelper.waitForTextToBePresentInElementValue(CdfConnectionLocators.searchDirectoryInput, dataRow);
     int attempts = 0;
