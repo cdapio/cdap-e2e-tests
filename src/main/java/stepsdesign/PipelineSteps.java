@@ -71,6 +71,11 @@ public class PipelineSteps implements CdfHelper {
     openCdf();
   }
 
+  @Given("Open Datafusion BYOID sign in page")
+  public void openDatafusionByoidSignInPage() throws IOException, InterruptedException {
+    openCdfForByoid();
+  }
+
   @When("Select data pipeline type as: {string}")
   public void selectDataPipelineType(String type) {
     CdfStudioActions.selectDataPipelineType(type);

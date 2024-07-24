@@ -68,6 +68,12 @@ public interface CdfHelper {
       CdfStudioLocators.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
   }
 
+  default void openCdfForByoid() throws IOException, InterruptedException {
+    SeleniumDriver.openPage(SeleniumHelper.readParameters(ConstantsUtil.CDFBYOIDURL));
+    WaitHelper.waitForPageToLoad();
+    CdfSignInActions.byoidLogin();
+  }
+
   default int countOfNoOfRecordsTransferredToBigQueryIn(String tableName) throws IOException, InterruptedException {
     int countRecords;
     countRecords = BigQueryClient.countBqQuery(PluginPropertyUtils.pluginProp(tableName));

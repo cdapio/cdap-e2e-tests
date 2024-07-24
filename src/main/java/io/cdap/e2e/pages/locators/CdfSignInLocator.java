@@ -55,4 +55,19 @@ public class CdfSignInLocator {
                 "//div[contains(@class, 'PluginNameContainer')][normalize-space(text()) = '" + pluginName + "' " +
                 "or translate(normalize-space(text()),' ','') = '" + pluginName + "']");
     }
+
+    @FindBy(how = How.XPATH, using = "//input[@name='providerName']")
+    public WebElement byoidProvider;
+
+    @FindBy(how = How.XPATH, using = "//*[@id='kc-header']")
+    public WebElement keycloakLogo;
+
+    @FindBy(how = How.XPATH, using = "//*[@id='kc-form-login']//*[@id='username']")
+    public WebElement byoidUsername;
+
+    @FindBy(how = How.XPATH, using = "//*[@id='kc-form-login']//*[@id='password']")
+    public WebElement byoidPassword;
+
+    @FindBy(how = How.XPATH, using = "//*[@id='kc-form-buttons']//*[@id='kc-login']")
+    public WebElement byoidSignInButton;
 }

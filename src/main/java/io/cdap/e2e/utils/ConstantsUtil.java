@@ -42,6 +42,11 @@ public class ConstantsUtil {
   public static final String WRANGLER_CONNECTIONS_URL = "cdfConnectionsUrl";
   public static final String REPLICATION_URL = "replicationUrl";
   public static final String TESTONHDF = "testOnHdf";
+  public static final String CDFBYOIDURL = "cdfbyoidurl";
+  public static final String TESTBYOID = "testByoid";
+  public static final String BYOID_PROVIDER = "byoidProvider";
+  public static final String BYOID_USERNAME = "byoidUsername";
+  public static final String BYOID_PASSWORD = "byoidPassword";
   public static final String BATCH = "Batch";
   public static final String REALTIME = "Realtime";
   public static final String ERROR = "ERROR";
