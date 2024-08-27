@@ -55,4 +55,16 @@ public class CdfSignInActions {
         return !WaitHelper.waitForElementToBeOptionallyDisplayed(
                 CdfSignInLocator.locatorOfEmailTextBox(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
     }
+
+    public static void byoidLogin() throws IOException, InterruptedException {
+        ElementHelper.sendKeys(cdfSignInLocator.byoidProvider,
+                SeleniumHelper.readParameters(ConstantsUtil.BYOID_PROVIDER));
+        ElementHelper.clickOnElement(cdfSignInLocator.nextButton);
+        WaitHelper.waitForElementToBeDisplayed(cdfSignInLocator.keycloakLogo);
+        ElementHelper.sendKeys(cdfSignInLocator.byoidUsername,
+                SeleniumHelper.readParameters(ConstantsUtil.BYOID_USERNAME));
+        ElementHelper.sendKeys(cdfSignInLocator.byoidPassword,
+                SeleniumHelper.readParameters(ConstantsUtil.BYOID_PASSWORD));
+        ElementHelper.clickOnElement(cdfSignInLocator.byoidSignInButton);
+    }
 }
