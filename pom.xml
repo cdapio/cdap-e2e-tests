@@ -18,7 +18,7 @@ the License.-->
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.cdap.tests.e2e</groupId>
   <artifactId>cdap-e2e-framework</artifactId>
-  <version>0.3.1</version>
+  <version>0.3.2</version>
 
   <name>CDAP e2e Framework</name>
   <description>Framework for CDAP e2e Tests</description>
