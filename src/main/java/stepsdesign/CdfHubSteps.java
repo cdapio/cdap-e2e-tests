@@ -38,17 +38,17 @@ public class CdfHubSteps implements CdfHelper {
     CdfHubActions.clickOnHub();
   }
 
-  @Then("Click on {string} plugin")
+  @Then("Click on {string} plugin in hub")
   public static void openPlugin(String pluginName) {
     CdfHubActions.clickOnOptionsFromHub(pluginName);
   }
 
-  @Then("Click on {string} pipeline")
+  @Then("Click on {string} pipeline in hub")
   public static void openPipeline(String pipelineName) {
     CdfHubActions.clickOnOptionsFromHub(pipelineName);
   }
 
-  @Then("Click on {string} option")
+  @Then("Click on {string} option in hub")
   public static void openOptions(String option) {
     CdfHubActions.clickOnOptions(option);
   }
@@ -58,7 +58,7 @@ public class CdfHubSteps implements CdfHelper {
     CdfHubActions.clickOnCloseButton();
   }
 
-  @Then("Deploy the plugin")
+  @Then("Deploy the plugin from hub")
   public static void deployPlugin() {
     CdfHubActions.clickOnDeploy();
     CdfHubActions.clickOnFinish();
@@ -94,7 +94,7 @@ public class CdfHubSteps implements CdfHelper {
     CdfHubActions.verifyPluginIsDeleted();
   }
 
-  @Then("Click on {string} button")
+  @Then("Click on {string} button in hub")
   public static void clickOnButton(String buttonName) {
     CdfHubActions.clickOnButton(buttonName);
   }
