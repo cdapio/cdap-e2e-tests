@@ -33,6 +33,7 @@ public class PluginPropertyUtils {
   private static final Logger logger = LoggerFactory.getLogger(PluginPropertyUtils.class);
   protected static Properties pluginProperties = new Properties();
   private static final Properties pluginPropertyDataCyAttributes = new Properties();
+  private static final Properties pluginPropertyDataTestIdAttributes = new Properties();
 
   static {
     try {
@@ -52,6 +53,13 @@ public class PluginPropertyUtils {
                              .getResourceAsStream("/" + ConstantsUtil.DEFAULT_DATACY_ATTRIBUTES_FILE));
     } catch (Exception e) {
       logger.error("Error while reading " + ConstantsUtil.DEFAULT_DATACY_ATTRIBUTES_FILE + " file " + e.getMessage());
+    }
+    try {
+      pluginPropertyDataTestIdAttributes.load
+        (PluginPropertyUtils.class.getResourceAsStream("/" + ConstantsUtil.DEFAULT_DATATESTID_ATTRIBUTES_FILE));
+    } catch (Exception e) {
+      logger.error("Error while reading " + ConstantsUtil.DEFAULT_DATATESTID_ATTRIBUTES_FILE
+                     + " file " + e.getMessage());
     }
   }
 
@@ -73,6 +81,10 @@ public class PluginPropertyUtils {
 
   public static String getPluginPropertyDataCyAttribute(String property) {
     return pluginPropertyDataCyAttributes.getProperty(property);
+  }
+
+  public static String getPluginPropertyDataTestIdAttribute(String property) {
+    return pluginPropertyDataTestIdAttributes.getProperty(property);
   }
 
   /**
@@ -138,5 +150,14 @@ public class PluginPropertyUtils {
     }
 
     return CdfPluginPropertiesLocators.locatePropertyInput(pluginPropertyDataCyAttribute);
+  }
+
+  public static String getPluginPropertyElementTestId(String pluginProperty) {
+    String pluginPropertyDataTestIdAttribute = PluginPropertyUtils.getPluginPropertyDataTestIdAttribute(pluginProperty);
+    if (pluginPropertyDataTestIdAttribute == null) {
+      pluginPropertyDataTestIdAttribute = pluginProperty;
+    }
+
+    return pluginPropertyDataTestIdAttribute;
   }
 }
