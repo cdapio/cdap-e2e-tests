@@ -159,7 +159,7 @@ public class WaitHelper {
    * @return WebElement
    */
   public static WebElement waitForElementToBeClickable(WebElement element) {
-    return waitForElementToBeDisplayed(element, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    return waitForElementToBeClickable(element, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
