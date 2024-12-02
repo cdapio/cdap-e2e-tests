@@ -29,17 +29,17 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: data-integrations/google-cloud
           path: plugin
           ref: release/0.23
       - name: Checkout e2e test repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: e2e
       - name: Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ github.workflow }}-${{ hashFiles('**/pom.xml') }}
@@ -58,7 +58,7 @@ jobs:
           name: Cucumber report
           path: ./plugin/target/cucumber-reports
       - name: Upload debug files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Debug files
