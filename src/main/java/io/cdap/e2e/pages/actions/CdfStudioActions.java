@@ -534,4 +534,39 @@ public class CdfStudioActions {
     FileImportUtil.uploadFile(CdfStudioLocators.importPipelineInputTag(), filePath);
     clickOnFixAllButtonIfDisplayed();
   }
+
+  /**
+   * Wait till the Pipeline's preview run status banner is displayed within error details
+   */
+  public static void waitTillPipelinePreviewRunCompletesWithError() {
+    waitTillPipelinePreviewRunCompletesWithErrorDetails();
+  }
+
+  /**
+   * Wait till the Pipeline's preview run status banner is displayed with error text on banner
+   */
+  public static void waitTillPipelinePreviewRunCompletesWithErrorDetails() {
+    WaitHelper.waitForElementToBePresent(CdfStudioLocators.errorDetailsTextOnBanner());
+  }
+
+  /**
+   * Click on the View Details button on the Pipeline preview error banner
+   */
+  public static void clickOnViewDetailsButtonOnErrorBanner() {
+    ElementHelper.clickOnElement(CdfStudioLocators.errorDetailsBannerViewDetailsButton);
+  }
+
+  /**
+   * Click on the Close button on the Pipeline preview error banner
+   */
+  public static void clickOnCloseButtonOnErrorBanner() {
+    ElementHelper.clickOnElement(CdfStudioLocators.errorDetailsBannerCloseButton);
+  }
+
+  /**
+   * Click on the View Logs button on the Pipeline preview error banner
+   */
+  public static void clickOnViewLogsButtonOnErrorBanner() {
+    ElementHelper.clickOnElement(CdfStudioLocators.errorStatusBannerViewLogsButton);
+  }
 }

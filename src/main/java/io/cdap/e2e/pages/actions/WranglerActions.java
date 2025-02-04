@@ -16,6 +16,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.WranglerLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
@@ -44,7 +45,8 @@ public class WranglerActions {
    * @param directive  The directive to be selected for the column.
    */
   public static void selectDirective(String columnName, String directive) {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
@@ -60,7 +62,8 @@ public class WranglerActions {
    */
   public static void selectDirectiveAndOption(String columnName, String directive, String option)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(option);
@@ -145,7 +148,8 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithDropdownAndText(String columnName, String directive, String directiveType,
                                                             String text) throws
     InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
@@ -192,7 +196,8 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithThreeOptions(String columnName, String directive, String directiveType,
                                                          String option)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(directiveType);
@@ -278,7 +283,8 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithFourOption(String columnName, String directive, String directiveType,
                                                        String option, String text)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(directiveType);
@@ -328,7 +334,8 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithFiveOption(String columnName, String directive, String option1,
                                                        String option2, String option3, String option4)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.locateTransformationButton(columnName));
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
@@ -364,7 +371,8 @@ public class WranglerActions {
    * @throws InterruptedException If interrupted while waiting.
    */
   public static void enterDirectiveFromCommandLine(String directive) throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeEnabled(WranglerLocators.directiveCommandLine);
     WaitHelper.waitForElementToBeClickable(WranglerLocators.directiveCommandLine);
     ElementHelper.sendKeys(WranglerLocators.directiveCommandLine, directive);
     Actions act = new Actions(SeleniumDriver.getDriver());
@@ -378,6 +386,7 @@ public class WranglerActions {
    * @param column2 The second column's name to select its checkbox.
    */
   public static void selectCheckboxOnTwoColumns(String column1, String column2) {
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateCheckboxOfColumn(column1));
     ElementHelper.clickOnElement(WranglerLocators.locateCheckboxOfColumn(column2));
   }
