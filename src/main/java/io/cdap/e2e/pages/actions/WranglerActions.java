@@ -16,6 +16,7 @@
 package io.cdap.e2e.pages.actions;
 
 import io.cdap.e2e.pages.locators.WranglerLocators;
+import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumDriver;
@@ -44,10 +45,11 @@ public class WranglerActions {
    * @param directive  The directive to be selected for the column.
    */
   public static void selectDirective(String columnName, String directive) {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
+    CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
@@ -60,7 +62,7 @@ public class WranglerActions {
    */
   public static void selectDirectiveAndOption(String columnName, String directive, String option)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(option);
@@ -70,6 +72,7 @@ public class WranglerActions {
         ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
         ElementHelper.sendKeysToTextarea(WranglerLocators.enterTextArea(pluginPropertyDirective), option);
         ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "MaskData":
@@ -79,6 +82,7 @@ public class WranglerActions {
         ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOptionsTag(pluginPropertyDirective,
                                                                                 pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Filter":
@@ -90,6 +94,7 @@ public class WranglerActions {
                                                                            pluginPropertyDirectiveOption));
         selectDropdown.selectByVisibleText(PluginPropertyUtils.pluginProp("filterEmptyProperty"));
         ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "FillNullOrEmptyCells":
@@ -101,6 +106,7 @@ public class WranglerActions {
           ElementHelper.replaceElementValue(WranglerLocators.enterText(pluginPropertyDirective), option);
         }
         ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Hash":
@@ -111,6 +117,7 @@ public class WranglerActions {
         ElementHelper.scrollToElementUsingJsExecutor(WranglerLocators.selectHashOption(option));
         select.selectByVisibleText(option);
         ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Decode":
@@ -123,12 +130,14 @@ public class WranglerActions {
           ElementHelper.clickOnElement(WranglerLocators.decodeDirective);
         }
         ElementHelper.clickOnElement(WranglerLocators.encodeDecodeOptions(option));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       default:
         ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOption(pluginPropertyDirective
           , pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     }
 
   }
@@ -145,7 +154,7 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithDropdownAndText(String columnName, String directive, String directiveType,
                                                             String text) throws
     InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
@@ -154,6 +163,7 @@ public class WranglerActions {
       ElementHelper.sendKeys(WranglerLocators.enterOldValue, directiveType);
       ElementHelper.sendKeys(WranglerLocators.enterNewValue, text);
       ElementHelper.clickOnElement(WranglerLocators.replaceAllButton);
+      CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     } else {
 
       switch (directiveType) {
@@ -171,6 +181,7 @@ public class WranglerActions {
             ElementHelper.sendKeysToTextarea(WranglerLocators.enterText(pluginPropertyDirective), text);
           }
           ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+          CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
           break;
 
         case "Custom condition":
@@ -183,6 +194,8 @@ public class WranglerActions {
             selectCustom.selectByVisibleText(directiveType);
             ElementHelper.sendKeysToTextarea(WranglerLocators.enterTextArea(pluginPropertyDirective), text);
           }
+          ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+          CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
           break;
       }
     }
@@ -192,7 +205,7 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithThreeOptions(String columnName, String directive, String directiveType,
                                                          String option)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(directiveType);
@@ -205,6 +218,7 @@ public class WranglerActions {
                                                                             pluginPropertyDirectiveOption));
         ElementHelper.sendKeys(WranglerLocators.scaleText, optionType);
         ElementHelper.clickOnElement(WranglerLocators.applyButtonUppercase);
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "CSV":
@@ -215,6 +229,7 @@ public class WranglerActions {
         ElementHelper.clickOnElement(WranglerLocators.parseModalOption(pluginPropertyDirective,
                                                                        pluginPropertyDirectiveOption, optionType));
         ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Character_count":
@@ -222,30 +237,35 @@ public class WranglerActions {
                                                                             pluginPropertyDirectiveOption));
         ElementHelper.replaceElementValue(WranglerLocators.enterText(pluginPropertyDirective), optionType);
         ElementHelper.clickOnElement(WranglerLocators.subMenuApplyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "FIXEDLENGTH":
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOption(pluginPropertyDirective, directiveType));
         ElementHelper.sendKeys(WranglerLocators.columnWidths, optionType);
         ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "XMLTOJSON":
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOption(pluginPropertyDirective, directiveType));
         ElementHelper.replaceElementValue(WranglerLocators.enterDepthXmlToJson, optionType);
         ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "JSON":
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOption(pluginPropertyDirective, directiveType));
         ElementHelper.replaceElementValue(WranglerLocators.enterDepthJson, optionType);
         ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "EXCEL":
         ElementHelper.clickOnElement(WranglerLocators.selectDirectiveOption(pluginPropertyDirective, directiveType));
         ElementHelper.replaceElementValue(WranglerLocators.excelSheetNumber, optionType);
         ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Using_patterns":
@@ -254,6 +274,7 @@ public class WranglerActions {
         ElementHelper.clickOnElement(WranglerLocators.selectPatternButton);
         ElementHelper.clickOnElementUsingJsExecutor(WranglerLocators.selectOptionForPatterns(optionType));
         ElementHelper.clickOnElement(WranglerLocators.extractFieldsApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "Using_delimiters":
@@ -261,6 +282,7 @@ public class WranglerActions {
                                                                                 pluginPropertyDirectiveOption));
         ElementHelper.clickOnElement(WranglerLocators.selectDelimiterOptions(option));
         ElementHelper.clickOnElement(WranglerLocators.extractFieldsApplyButton(pluginPropertyDirectiveOption));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
     }
   }
@@ -278,7 +300,7 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithFourOption(String columnName, String directive, String directiveType,
                                                        String option, String text)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     String pluginPropertyDirectiveOption = PluginPropertyUtils.getPluginPropertyElementTestId(directiveType);
@@ -292,6 +314,7 @@ public class WranglerActions {
         Select selectDropdown = new Select(WranglerLocators.selectDropdownOption(pluginPropertyDirective));
         selectDropdown.selectByVisibleText(option);
         ElementHelper.clickOnElement(WranglerLocators.subMenuApplyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
 
       case "SIMPLEDATE":
@@ -302,6 +325,7 @@ public class WranglerActions {
                                                                          pluginPropertyDirectiveOption, optionType));
           ElementHelper.sendKeys(WranglerLocators.customDate, text);
           ElementHelper.clickOnElement(WranglerLocators.parseModalApplyButton(pluginPropertyDirectiveOption));
+          CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         }
         break;
       case "Always":
@@ -310,6 +334,7 @@ public class WranglerActions {
         ElementHelper.sendKeysToTextarea(WranglerLocators.enterCounterName, text);
         ElementHelper.replaceElementValue(WranglerLocators.incrementCount, option);
         ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+        CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
         break;
     }
   }
@@ -328,7 +353,7 @@ public class WranglerActions {
   public static void selectDirectiveTypeWithFiveOption(String columnName, String directive, String option1,
                                                        String option2, String option3, String option4)
     throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateTransformationButton(columnName));
     String pluginPropertyDirective = PluginPropertyUtils.getPluginPropertyElementTestId(directive);
     ElementHelper.clickOnElement(WranglerLocators.locateDirectivesTitle(pluginPropertyDirective));
@@ -355,6 +380,7 @@ public class WranglerActions {
         break;
     }
     ElementHelper.clickOnElement(WranglerLocators.applyButton(pluginPropertyDirective));
+    CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
@@ -364,11 +390,12 @@ public class WranglerActions {
    * @throws InterruptedException If interrupted while waiting.
    */
   public static void enterDirectiveFromCommandLine(String directive) throws InterruptedException {
-    WaitHelper.waitForPageToLoad();
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     WaitHelper.waitForElementToBeClickable(WranglerLocators.directiveCommandLine);
     ElementHelper.sendKeys(WranglerLocators.directiveCommandLine, directive);
     Actions act = new Actions(SeleniumDriver.getDriver());
     act.sendKeys(new CharSequence[]{Keys.ENTER}).perform();
+    CdfConnectionActions.waitTillConnectionDataLoadingCompletes(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
   }
 
   /**
@@ -378,6 +405,7 @@ public class WranglerActions {
    * @param column2 The second column's name to select its checkbox.
    */
   public static void selectCheckboxOnTwoColumns(String column1, String column2) {
+    WaitHelper.waitForPageToLoad(ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
     ElementHelper.clickOnElement(WranglerLocators.locateCheckboxOfColumn(column1));
     ElementHelper.clickOnElement(WranglerLocators.locateCheckboxOfColumn(column2));
   }

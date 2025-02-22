@@ -280,4 +280,20 @@ public class CdfStudioLocators {
     return SeleniumDriver.getDriver().findElement(By.xpath
       ("//input[@id='resource-center-import-pipeline']"));
   }
+
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='features-pipelineDetails-errorDetails-errorCountMessage']")
+  public static WebElement errorDetailsBannerText;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='features-pipelineDetails-errorDetails-closeButton']")
+  public static WebElement errorDetailsBannerCloseButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='features-pipelineDetails-errorDetails-viewDetailsButton']")
+  public static WebElement errorDetailsBannerViewDetailsButton;
+
+  @FindBy(how = How.XPATH, using = "//*[@data-testid='features-pipelineDetails-errorDetails-viewLogsButton']")
+  public static WebElement errorStatusBannerViewLogsButton;
+
+  public static By errorDetailsTextOnBanner()  {
+    return By.xpath("//*[@data-testid='features-pipelineDetails-errorDetails-errorCountMessage']");
+  }
 }
