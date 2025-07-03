@@ -54,7 +54,7 @@ the License.-->
     </repository>
     <snapshotRepository>
       <id>sonatype.snapshots</id>
-      <url>https://central.sonatype.com/repositories/snapshots</url>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
     </snapshotRepository>
   </distributionManagement>
   
@@ -71,7 +71,7 @@ the License.-->
     </repository>
     <repository>
       <id>sonatype-snapshots</id>
-      <url>https://central.sonatype.com/repositories/snapshots</url>
+      <url>https://central.sonatype.com/repository/maven-snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
