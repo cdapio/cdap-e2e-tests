@@ -63,6 +63,7 @@ jobs:
 
       - name: Check if version already exists in Maven Central
         id: check_maven
+        working-directory: e2e
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
     
