@@ -61,7 +61,22 @@ jobs:
           echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
           echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
 
+      - name: Check if version already exists in Maven Central
+        id: check_maven
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+    
+          URL="https://repo1.maven.org/maven2/io.cdap.tests.e2e/cdap-e2e-framework/${VERSION}/"
+          echo "Checking if artifact exists: $URL"
+    
+          if curl --silent --fail --head "$URL"; then
+           echo "exists=true" >> $GITHUB_OUTPUT
+          else
+           echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and Deploy
+        if: steps.check_maven.outputs.exists == 'false'
         working-directory: e2e
         run: mvn -B -V -DskipTests clean deploy -P release -Dgpg.passphrase=$CDAP_GPG_PASSPHRASE -Dmaven.wagon.http.retryHandler.count=5 -Dmaven.wagon.httpconnectionManager.ttlSeconds=30
         env:
