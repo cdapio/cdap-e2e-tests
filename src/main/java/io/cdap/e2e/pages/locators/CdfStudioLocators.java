@@ -185,19 +185,19 @@ public class CdfStudioLocators {
   }
 
   public static WebElement locatePluginNameInList(String pluginName, String  pluginGroupName) {
-    String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group']" +
+    String xpath = "//div[@data-testid='plugin-" + pluginGroupName + "-group']" +
       "//div[contains(@class, 'PluginNameContainer')][normalize-space(text()) = '" + pluginName + "' " +
       "or translate(normalize-space(text()),' ','') = '" + pluginName + "']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
   public static WebElement locateSinkPluginNameInList(String pluginName) {
-    String xpath = "//*[@data-cy='plugin-" + pluginName + "-batchsink']";
+    String xpath = "//*[@data-testid='plugin-" + pluginName + "-batchsink']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
   public static WebElement locateRealtimeSourcePluginNameInList(String pluginName) {
-    String xpath = "//*[@data-cy='plugin-" + pluginName + "-streamingsource']";
+    String xpath = "//*[@data-testid='plugin-" + pluginName + "-streamingsource']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
