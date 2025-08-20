@@ -25,6 +25,7 @@ import io.cdap.e2e.utils.CdfHelper;
 import io.cdap.e2e.utils.ConstantsUtil;
 import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.e2e.utils.SeleniumHelper;
+import io.cdap.e2e.utils.WaitHelper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -89,6 +90,7 @@ public class PipelineSteps implements CdfHelper {
   @When("Select plugin: {string} from the plugins list as: {string}")
   public void selectPlugin(String pluginName, String pluginGroupName) {
     logger.info("Click on plugin: " + pluginName + " from the Plugin group: " + pluginGroupName);
+    WaitHelper.waitForPageToLoad();
     CdfStudioActions.selectPluginFromList(pluginName, pluginGroupName);
   }
 
@@ -109,6 +111,7 @@ public class PipelineSteps implements CdfHelper {
 
   @When("Navigate to the properties page of plugin: {string}")
   public void navigateToPluginPropertiesPage(String pluginName) {
+    WaitHelper.waitForPageToLoad();
     CdfStudioActions.navigateToPluginPropertiesPage(pluginName);
   }
 
