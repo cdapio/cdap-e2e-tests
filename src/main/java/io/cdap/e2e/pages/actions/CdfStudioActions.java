@@ -105,6 +105,7 @@ public class CdfStudioActions {
    */
   public static void verifyPluginNodeIsDisplayedOnCanvas(String pluginName, long timeoutInSeconds) {
     logger.info("Waiting for plugin : " + pluginName + " node to displayed on the canvas");
+    WaitHelper.waitForPageToLoad();
     WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), timeoutInSeconds);
     AssertionHelper.verifyElementDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName)
       , "Plugin : " + pluginName + " node should be displayed on the canvas");
@@ -178,8 +179,9 @@ public class CdfStudioActions {
     pipelineName();
     pipelineNameIp(pipelineName);
     pipelineSave();
-    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBanner);
-    WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfStudioLocators.statusBannerDisplay(),
+                                                     ConstantsUtil.SMALL_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBannerDisplay(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
   }
 
   /**
@@ -294,8 +296,10 @@ public class CdfStudioActions {
    * Click on the Deploy button
    */
   public static void pipelineDeploy() {
+    WaitHelper.waitForPageToLoad();
     ElementHelper.clickOnElement(CdfStudioLocators.pipelineDeploy);
-    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.deployingPipelineMessage);
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfStudioLocators.locatorOfdeployingPipelineMessage(),
+                                                     ConstantsUtil.SMALL_TIMEOUT_SECONDS);
     WaitHelper.waitForElementToBeHidden(
       CdfStudioLocators.locatorOfdeployingPipelineMessage(), ConstantsUtil.PIPELINE_DEPLOY_TIMEOUT_SECONDS);
   }
@@ -533,6 +537,7 @@ public class CdfStudioActions {
     WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.importPipelineButton);
     FileImportUtil.uploadFile(CdfStudioLocators.importPipelineInputTag(), filePath);
     clickOnFixAllButtonIfDisplayed();
+    WaitHelper.waitForPageToLoad();
   }
 
   /**

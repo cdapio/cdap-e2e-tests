@@ -60,6 +60,7 @@ public interface CdfHelper {
       isUserLoggedInCDF()) {
       CdfSignInActions.login();
       PageHelper.acceptAlertIfPresent();
+      PageHelper.refreshCurrentPage();
       WaitHelper.waitForPageToLoad();
     }
 
