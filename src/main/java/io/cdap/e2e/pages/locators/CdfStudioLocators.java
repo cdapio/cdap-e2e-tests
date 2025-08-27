@@ -171,12 +171,12 @@ public class CdfStudioLocators {
   }
 
   public static WebElement locatePluginGroupExpanded(String pluginGroupName) {
-    String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group-summary' and @aria-expanded='true']";
+    String xpath = "//div[@data-testid='plugin-" + pluginGroupName + "-group-summary' and @aria-expanded='true']";
     return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
   }
 
   public static By locatorOfPluginGroupCollapsed(String pluginGroupName) {
-    String xpath = "//div[@data-cy='plugin-" + pluginGroupName + "-group-summary' and @aria-expanded='false']";
+    String xpath = "//div[@data-testid='plugin-" + pluginGroupName + "-group-summary' and @aria-expanded='false']";
     return By.xpath(xpath);
   }
 
@@ -274,6 +274,10 @@ public class CdfStudioLocators {
 
   public static By fixAllButton()  {
     return By.xpath("//button[@data-cy='fix-all-btn']");
+  }
+
+  public static By statusBannerDisplay() {
+    return By.xpath("//*[@data-cy='valium-banner-hydrator']");
   }
 
   public static WebElement importPipelineInputTag() {

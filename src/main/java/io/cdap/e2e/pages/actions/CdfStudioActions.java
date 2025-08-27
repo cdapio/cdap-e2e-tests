@@ -179,8 +179,9 @@ public class CdfStudioActions {
     pipelineName();
     pipelineNameIp(pipelineName);
     pipelineSave();
-    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.statusBanner);
-    WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBanner);
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfStudioLocators.statusBannerDisplay(),
+                                                     ConstantsUtil.SMALL_TIMEOUT_SECONDS);
+    WaitHelper.waitForElementToBeHidden(CdfStudioLocators.statusBannerDisplay(), ConstantsUtil.SMALL_TIMEOUT_SECONDS);
   }
 
   /**
@@ -297,7 +298,8 @@ public class CdfStudioActions {
   public static void pipelineDeploy() {
     WaitHelper.waitForPageToLoad();
     ElementHelper.clickOnElement(CdfStudioLocators.pipelineDeploy);
-    WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.deployingPipelineMessage);
+    WaitHelper.waitForElementToBeOptionallyDisplayed(CdfStudioLocators.locatorOfdeployingPipelineMessage(),
+                                                     ConstantsUtil.SMALL_TIMEOUT_SECONDS);
     WaitHelper.waitForElementToBeHidden(
       CdfStudioLocators.locatorOfdeployingPipelineMessage(), ConstantsUtil.PIPELINE_DEPLOY_TIMEOUT_SECONDS);
   }

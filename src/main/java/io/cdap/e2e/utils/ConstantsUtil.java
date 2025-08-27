@@ -111,4 +111,6 @@ public class ConstantsUtil {
   public static final int PIPELINE_RUN_TIMEOUT_SECONDS = 900;
 
   public static final int PIPELINE_REFRESH_TIMEOUT_SECONDS = 120;
+
+  public static final int MAX_PAGE_REFRESH_ATTEMPTS = 10;
 }
