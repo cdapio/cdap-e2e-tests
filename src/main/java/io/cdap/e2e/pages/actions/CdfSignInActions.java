@@ -22,7 +22,7 @@ import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.e2e.utils.WaitHelper;
 
 import java.io.IOException;
-
+import java.time.Duration;
 
 
 /**
@@ -41,13 +41,17 @@ public class CdfSignInActions {
         ElementHelper.clickOnElement(cdfSignInLocator.nextButton);
 
         ElementHelper.clickIfDisplayed(cdfSignInLocator.selectTestAccount(ConstantsUtil.CDF_TEST_ACCOUNT_NAME),
-          ConstantsUtil.SMALL_TIMEOUT_SECONDS, cdfSignInLocator.clickOnContinueButton());
+          ConstantsUtil.CDF_LOGIN_TIMEOUT_SECONDS, cdfSignInLocator.clickOnContinueButton());
 
-        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnContinueButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS,
-          cdfSignInLocator.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
+        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnContinueButton());
+        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnAllowButton());
+        Thread.sleep(20000);
 
-        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnAllowButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS,
-          cdfSignInLocator.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
+//        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnContinueButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS,
+//          cdfSignInLocator.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
+//
+//        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnAllowButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS,
+//          cdfSignInLocator.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
 
     }
 

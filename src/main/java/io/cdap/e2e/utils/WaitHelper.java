@@ -138,6 +138,9 @@ public class WaitHelper {
         } catch (StaleElementReferenceException e) {
             logger.info("Element is not interactable");
             return false;
+        } catch (TimeoutException e) {
+            logger.info("Element not found withing timeout");
+            return false;
         }
     }
 

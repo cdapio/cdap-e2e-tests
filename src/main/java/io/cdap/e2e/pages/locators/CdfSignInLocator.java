@@ -51,7 +51,7 @@ public class CdfSignInLocator {
     }
 
     public static By locatePluginNameInList(String pluginName, String  pluginGroupName) {
-        return By.xpath("//div[@data-cy='plugin-" + pluginGroupName + "-group']" +
+        return By.xpath("//div[@data-testid='plugin-" + pluginGroupName + "-group']" +
                 "//div[contains(@class, 'PluginNameContainer')][normalize-space(text()) = '" + pluginName + "' " +
                 "or translate(normalize-space(text()),' ','') = '" + pluginName + "']");
     }
