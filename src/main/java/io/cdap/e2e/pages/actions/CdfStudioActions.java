@@ -221,7 +221,6 @@ public class CdfStudioActions {
    * @param value              actual value to enter
    */
   public static void enterRuntimeArgumentValue(String runtimeArgumentKey, String value) throws InterruptedException {
-    Thread.sleep(3000);
     ElementHelper.sendKeys(CdfStudioLocators.runtimeArgsValue(runtimeArgumentKey), value);
   }
 

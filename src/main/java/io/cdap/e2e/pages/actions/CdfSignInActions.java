@@ -45,7 +45,6 @@ public class CdfSignInActions {
 
         ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnContinueButton());
         ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnAllowButton());
-        Thread.sleep(20000);
 
 //        ElementHelper.clickIfDisplayed(cdfSignInLocator.clickOnContinueButton(), ConstantsUtil.SMALL_TIMEOUT_SECONDS,
 //          cdfSignInLocator.locatePluginNameInList(ConstantsUtil.FIRST_PLUGIN_IN_LIST, "Source"));
