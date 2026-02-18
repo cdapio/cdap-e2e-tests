@@ -50,7 +50,7 @@ public class SeleniumDriver {
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--disable-setuid-sandbox");
     chromeOptions.addArguments("--headless");
-    chromeOptions.addArguments("--window-size=" + SeleniumHelper.readParameters("windowSize"));
+    chromeOptions.addArguments("window-size=1920,1040");
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--disable-dev-shm-usage");
     chromeOptions.addArguments("--disable-features=VizDisplayCompositor");
