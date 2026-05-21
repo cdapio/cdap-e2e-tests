@@ -17,3 +17,5 @@ Modify the key cdfurl in [connectionParameters.properties](src/main/resources/co
 ##2. How to debug test failures. where logs and screenshots can be found. REFER [Debugtest.md](Debugtest.md)
 
 ##3. (a) How to add new tests. ex - for new plugin in google-cloud. (b) How to enable e2e tests for a new plugin repository. REFER [Addnewplugin.md](Addnewplugin.md)
+
+Documentation note: this repository contains end-to-end test assets for CDAP plugin validation.
