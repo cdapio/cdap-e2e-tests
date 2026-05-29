@@ -12,6 +12,9 @@
 name: Maven Deploy
 
 on:
+  workflow_dispatch:
+  push:
+    branches: [ develop ]
   workflow_call:
     inputs:
       ref:
