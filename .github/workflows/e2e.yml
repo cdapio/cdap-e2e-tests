@@ -51,12 +51,6 @@ jobs:
       - name: Run all e2e tests
         if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
         run: python3 e2e/src/main/scripts/run_e2e_test.py --framework yes
-      - name: Upload report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: Cucumber report
-          path: ./plugin/target/cucumber-reports
       - name: Upload debug files
         uses: actions/upload-artifact@v4
         if: always()
@@ -69,6 +63,10 @@ jobs:
         with:
           path: ./plugin/target/cucumber-reports
           destination: e2e-tests-cucumber-reports/${{ github.event.repository.name }}/${{ github.ref }}
+      - name: Cucumber Report URL
+        if: always()
+        run: echo "https://storage.googleapis.com/e2e-tests-cucumber-reports/${{ github.event.repository.name }}/${{ github.ref }}/cucumber-reports/advanced-reports/cucumber-html-reports/overview-features.html"
+
 
   maven-deploy:
     if: ${{ github.event_name == 'push' }}
