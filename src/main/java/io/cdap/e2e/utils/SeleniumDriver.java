@@ -49,7 +49,7 @@ public class SeleniumDriver {
     ChromeOptions chromeOptions = new ChromeOptions();
     chromeOptions.addArguments("--no-sandbox");
     chromeOptions.addArguments("--disable-setuid-sandbox");
-    chromeOptions.addArguments("--headless");
+    chromeOptions.addArguments("--headless=new");
     chromeOptions.addArguments("--window-size=" + SeleniumHelper.readParameters("windowSize"));
     chromeOptions.addArguments("--disable-gpu");
     chromeOptions.addArguments("--disable-dev-shm-usage");
@@ -62,7 +62,6 @@ public class SeleniumDriver {
     chromePrefs.put("download.default_directory", downloadDir);
     chromeOptions.setExperimentalOption("prefs", chromePrefs);
     chromeDriver = new ChromeDriver(service, chromeOptions);
-    chromeDriver.manage().window().maximize();
     HttpCommandExecutor executor = (HttpCommandExecutor) chromeDriver.getCommandExecutor();
     url = executor.getAddressOfRemoteServer();
     waitDriver = new WebDriverWait(chromeDriver, ConstantsUtil.DEFAULT_TIMEOUT_SECONDS);
