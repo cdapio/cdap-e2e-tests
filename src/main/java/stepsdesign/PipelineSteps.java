@@ -767,4 +767,24 @@ public class PipelineSteps implements CdfHelper {
   public void enterValueInTableKey(String pluginProperty, String value) {
     CdfPluginPropertiesActions.enterValueInTableKey(pluginProperty, value);
   }
+
+  @Then("Wait till pipeline preview is in running state and check if any error occurs")
+  public void waitTillPipelinePreviewIsInRunningStateAndCheckIfAnyErrorOccurs() {
+    CdfStudioActions.waitTillPipelinePreviewRunCompletesWithError();
+  }
+
+  @Then("Click on view details button of pipeline preview error")
+  public void clickOnViewDetailsButtonOfPipelinePreviewError() {
+    CdfStudioActions.clickOnViewDetailsButtonOnErrorBanner();
+  }
+
+  @Then("Click on close button of pipeline preview error")
+  public void clickOnCloseButtonOfPipelinePreviewError() {
+    CdfStudioActions.clickOnCloseButtonOnErrorBanner();
+  }
+
+  @Then("Click on view logs button of pipeline preview error")
+  public void clickOnViewLogsOfPipelinePreviewError() {
+    CdfStudioActions.clickOnViewLogsButtonOnErrorBanner();
+  }
 }

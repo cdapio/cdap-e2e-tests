@@ -306,7 +306,7 @@ the License.-->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-chrome-driver</artifactId>
-      <version>4.11.0</version>
+      <version>4.13.0</version>
     </dependency>
 
     <dependency>

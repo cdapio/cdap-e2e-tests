@@ -105,6 +105,7 @@ public class CdfStudioActions {
    */
   public static void verifyPluginNodeIsDisplayedOnCanvas(String pluginName, long timeoutInSeconds) {
     logger.info("Waiting for plugin : " + pluginName + " node to displayed on the canvas");
+    WaitHelper.waitForPageToLoad();
     WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName), timeoutInSeconds);
     AssertionHelper.verifyElementDisplayed(CdfStudioLocators.locatePluginNodeInCanvas(pluginName)
       , "Plugin : " + pluginName + " node should be displayed on the canvas");
@@ -294,6 +295,7 @@ public class CdfStudioActions {
    * Click on the Deploy button
    */
   public static void pipelineDeploy() {
+    WaitHelper.waitForPageToLoad();
     ElementHelper.clickOnElement(CdfStudioLocators.pipelineDeploy);
     WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.deployingPipelineMessage);
     WaitHelper.waitForElementToBeHidden(
@@ -533,6 +535,7 @@ public class CdfStudioActions {
     WaitHelper.waitForElementToBeDisplayed(CdfStudioLocators.importPipelineButton);
     FileImportUtil.uploadFile(CdfStudioLocators.importPipelineInputTag(), filePath);
     clickOnFixAllButtonIfDisplayed();
+    WaitHelper.waitForPageToLoad();
   }
 
   /**
